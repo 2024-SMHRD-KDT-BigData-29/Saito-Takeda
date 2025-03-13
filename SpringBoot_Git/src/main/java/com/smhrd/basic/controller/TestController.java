@@ -1,8 +1,9 @@
 package com.smhrd.basic.controller;
 
 public class TestController {
-	// 이선홍 덱스 인가.....덱스 선스틱의 효과는????
+	// 테스트용 컨트롤러 생성 
 	
-	
+	// pull
+	// 
 	
 }
