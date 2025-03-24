@@ -1,9 +1,25 @@
 package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.sql.Date;
 
-public class ContractEntity {
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "TB_RENT_CONTRACT")
+public class Contract {
 	
 	// 계약서 식별자 
     private int ctrtIdx;
@@ -149,7 +165,7 @@ public class ContractEntity {
     }
 
     // tbRentContract 모델 복사
-    public void CopyData(ContractEntity param)
+    public void CopyData(Contract param)
     {
         this.ctrtIdx = param.getCtrtIdx();
         this.userEmail = param.getUserEmail();

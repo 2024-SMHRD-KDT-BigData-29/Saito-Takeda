@@ -2,7 +2,10 @@ package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
 
-public class MessageEntity {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Message {
 	
 	// 메시지 식별자 
     private int msgIdx;
@@ -71,7 +74,7 @@ public class MessageEntity {
     }
 
     // Message 모델 복사
-    public void CopyData(MessageEntity param)
+    public void CopyData(Message param)
     {
         this.msgIdx = param.getMsgIdx();
         this.senderId = param.getSenderId();

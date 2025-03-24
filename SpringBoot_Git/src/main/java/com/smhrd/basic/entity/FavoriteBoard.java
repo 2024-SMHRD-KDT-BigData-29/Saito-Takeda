@@ -2,7 +2,10 @@ package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
 
-public class FavoriteBoardEntity {
+import jakarta.persistence.Entity;
+
+@Entity
+public class FavoriteBoard {
 	
 	// 관심 식별자 
     private int favIdx;
@@ -49,7 +52,7 @@ public class FavoriteBoardEntity {
     }
 
     // tbFavorite 모델 복사
-    public void CopyData(FavoriteBoardEntity param)
+    public void CopyData(FavoriteBoard param)
     {
         this.favIdx = param.getFavIdx();
         this.userEmail = param.getUserEmail();

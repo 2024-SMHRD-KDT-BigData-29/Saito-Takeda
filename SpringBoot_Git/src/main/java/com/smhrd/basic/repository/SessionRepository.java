@@ -1,9 +1,11 @@
 package com.smhrd.basic.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import com.smhrd.basic.entity.SessionEntity;
+import com.smhrd.basic.entity.Session;
 
-public interface SessionRepository extends JpaRepository<SessionEntity, Long>{
+@Repository
+public interface SessionRepository extends JpaRepository<Session, Long>{
 
 }

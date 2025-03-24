@@ -1,6 +1,9 @@
 package com.smhrd.basic.entity;
 
-public class ProfileEntity {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Profile {
 	
 	// 사용자 이메일 
     private String userEmail;
@@ -91,7 +94,7 @@ public class ProfileEntity {
     }
 
     // tbProfile 모델 복사
-    public void CopyData(ProfileEntity param)
+    public void CopyData(Profile param)
     {
         this.userEmail = param.getUserEmail();
         this.profileImg = param.getProfileImg();

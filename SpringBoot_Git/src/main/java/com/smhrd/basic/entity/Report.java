@@ -2,7 +2,10 @@ package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
 
-public class ReportEntity {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Report {
 	
 	// 신고 식별자 
     private int rpIdx;
@@ -93,7 +96,7 @@ public class ReportEntity {
     }
 
     // tbReport 모델 복사
-    public void CopyData(ReportEntity param)
+    public void CopyData(Report param)
     {
         this.rpIdx = param.getRpIdx();
         this.userEmail = param.getUserEmail();

@@ -2,7 +2,10 @@ package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
 
-public class SessionEntity {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Session {
 	
 	 // 세션 식별자 
     private int sessionIdx;
@@ -71,7 +74,7 @@ public class SessionEntity {
     }
 
     // Session 모델 복사
-    public void CopyData(SessionEntity param)
+    public void CopyData(Session param)
     {
         this.sessionIdx = param.getSessionIdx();
         this.userEmail = param.getUserEmail();

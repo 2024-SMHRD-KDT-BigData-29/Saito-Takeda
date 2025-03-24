@@ -1,9 +1,13 @@
 package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
+
+import jakarta.persistence.Entity;
+
 import java.sql.Date;
 
-public class CrimeEntity {
+@Entity
+public class Crime {
 	
 	// 회보서 식별자 
     private int crimIdx;
@@ -116,7 +120,7 @@ public class CrimeEntity {
     }
 
     // tbCriminalRecord 모델 복사
-    public void CopyData(CrimeEntity param)
+    public void CopyData(Crime param)
     {
         this.crimIdx = param.getCrimIdx();
         this.userEmail = param.getUserEmail();

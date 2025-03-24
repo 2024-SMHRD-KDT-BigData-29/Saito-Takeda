@@ -2,7 +2,22 @@ package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
 
-public class CommentEntity {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "TB_USER")
+public class Comment {
 	
 	// 댓글 식별자 
     private int cmtIdx;
@@ -60,7 +75,7 @@ public class CommentEntity {
     }
 
     // Comment 모델 복사
-    public void CopyData(CommentEntity param)
+    public void CopyData(Comment param)
     {
         this.cmtIdx = param.getCmtIdx();
         this.bIdx = param.getBIdx();
