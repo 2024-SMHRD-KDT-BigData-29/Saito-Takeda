@@ -1,63 +1,36 @@
 package com.smhrd.basic.entity;
 
-import java.sql.Timestamp;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "TB_FAVORITE")
 public class FavoriteBoard {
-	
-	// 관심 식별자 
+    
+    @Id
+    @Column(name = "FAV_IDX", nullable = false)
     private int favIdx;
-
-    // 회원 이메일 
+    
+    @Column(name = "USER_EMAIL", nullable = true, length = 50)
     private String userEmail;
-
-    // 글 식별자 
+    
+    @Column(name = "B_IDX", nullable = false)
     private int bIdx;
-
-    // 등록 일자 
-    private Timestamp createdAt;
-
-    public int getFavIdx() {
-        return favIdx;
-    }
-
-    public void setFavIdx(int favIdx) {
-        this.favIdx = favIdx;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public int getBIdx() {
-        return bIdx;
-    }
-
-    public void setBIdx(int bIdx) {
-        this.bIdx = bIdx;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    // tbFavorite 모델 복사
-    public void CopyData(FavoriteBoard param)
-    {
-        this.favIdx = param.getFavIdx();
-        this.userEmail = param.getUserEmail();
-        this.bIdx = param.getBIdx();
-        this.createdAt = param.getCreatedAt();
-    }
-
+    
+    @Column(name = "CREATED_AT", nullable = true)
+    private java.sql.Timestamp createdAt;
 }

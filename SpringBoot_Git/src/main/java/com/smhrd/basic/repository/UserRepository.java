@@ -5,11 +5,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-<<<<<<< HEAD
-import com.smhrd.basic.model.User;
-=======
+
 import com.smhrd.basic.entity.User;
->>>>>>> branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
+
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
@@ -43,10 +41,5 @@ public interface UserRepository extends JpaRepository<User, Long>{
 		// 메소드를 만들 때는 반드시 카멜표기법으로 만들기
 		
 
-<<<<<<< HEAD
-public interface UserRepository extends JpaRepository<User, Long>{
-=======
->>>>>>> branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
-	
-}
+
 

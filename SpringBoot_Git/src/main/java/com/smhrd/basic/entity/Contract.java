@@ -1,16 +1,18 @@
 package com.smhrd.basic.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.sql.Date;
 
 @Entity
 @Getter
@@ -20,168 +22,44 @@ import java.sql.Date;
 @Builder
 @Table(name = "TB_RENT_CONTRACT")
 public class Contract {
-	
-	// 계약서 식별자 
+    
+    @Id
+    @Column(name = "CTRT_IDX", nullable = false)
     private int ctrtIdx;
-
-    // 회원 이메일 
+    
+    @Column(name = "USER_EMAIL", nullable = true, length = 50)
     private String userEmail;
-
-    // 계약 시작일 
+    
+    @Column(name = "CTRT_ST_DT", nullable = true)
     private Date ctrtStDt;
-
-    // 계약 종료일 
+    
+    @Column(name = "CTRT_ED_DT", nullable = true)
     private Date ctrtEdDt;
-
-    // 보증금 
+    
+    @Column(name = "DEPOSIT", nullable = true)
     private Integer deposit;
-
-    // 임대료 
+    
+    @Column(name = "RENT", nullable = true)
     private Integer rent;
-
-    // 주소 
+    
+    @Column(name = "ADDR", nullable = true, length = 1000)
     private String addr;
-
-    // 계약 상태 
+    
+    @Column(name = "CTRT_STATUS", nullable = true, length = 50)
     private String ctrtStatus;
-
-    // 계약서 이미지 
+    
+    @Column(name = "CTRT_IMG", nullable = true, length = 1000)
     private String ctrtImg;
-
-    // 제출 일시 
-    private Timestamp summitedAt;
-
-    // 관리자 아이디 
+    
+    @Column(name = "SUBMITTED_AT", nullable = true)
+    private Timestamp submittedAt;
+    
+    @Column(name = "ADMIN_EMAIL", nullable = true, length = 50)
     private String adminEmail;
-
-    // 확인 일시 
+    
+    @Column(name = "CONFIRMED_AT", nullable = true)
     private Timestamp confirmedAt;
-
-    // 확인 여부 
+    
+    @Column(name = "CONFIRM_YN", nullable = true, length = 1)
     private String confirmYn;
-
-    public int getCtrtIdx() {
-        return ctrtIdx;
-    }
-
-    public void setCtrtIdx(int ctrtIdx) {
-        this.ctrtIdx = ctrtIdx;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public Date getCtrtStDt() {
-        return ctrtStDt;
-    }
-
-    public void setCtrtStDt(Date ctrtStDt) {
-        this.ctrtStDt = ctrtStDt;
-    }
-
-    public Date getCtrtEdDt() {
-        return ctrtEdDt;
-    }
-
-    public void setCtrtEdDt(Date ctrtEdDt) {
-        this.ctrtEdDt = ctrtEdDt;
-    }
-
-    public Integer getDeposit() {
-        return deposit;
-    }
-
-    public void setDeposit(Integer deposit) {
-        this.deposit = deposit;
-    }
-
-    public Integer getRent() {
-        return rent;
-    }
-
-    public void setRent(Integer rent) {
-        this.rent = rent;
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
-
-    public String getCtrtStatus() {
-        return ctrtStatus;
-    }
-
-    public void setCtrtStatus(String ctrtStatus) {
-        this.ctrtStatus = ctrtStatus;
-    }
-
-    public String getCtrtImg() {
-        return ctrtImg;
-    }
-
-    public void setCtrtImg(String ctrtImg) {
-        this.ctrtImg = ctrtImg;
-    }
-
-    public Timestamp getSummitedAt() {
-        return summitedAt;
-    }
-
-    public void setSummitedAt(Timestamp summitedAt) {
-        this.summitedAt = summitedAt;
-    }
-
-    public String getAdminEmail() {
-        return adminEmail;
-    }
-
-    public void setAdminEmail(String adminEmail) {
-        this.adminEmail = adminEmail;
-    }
-
-    public Timestamp getConfirmedAt() {
-        return confirmedAt;
-    }
-
-    public void setConfirmedAt(Timestamp confirmedAt) {
-        this.confirmedAt = confirmedAt;
-    }
-
-    public String getConfirmYn() {
-        return confirmYn;
-    }
-
-    public void setConfirmYn(String confirmYn) {
-        this.confirmYn = confirmYn;
-    }
-
-    // tbRentContract 모델 복사
-    public void CopyData(Contract param)
-    {
-        this.ctrtIdx = param.getCtrtIdx();
-        this.userEmail = param.getUserEmail();
-        this.ctrtStDt = param.getCtrtStDt();
-        this.ctrtEdDt = param.getCtrtEdDt();
-        this.deposit = param.getDeposit();
-        this.rent = param.getRent();
-        this.addr = param.getAddr();
-        this.ctrtStatus = param.getCtrtStatus();
-        this.ctrtImg = param.getCtrtImg();
-        this.summitedAt = param.getSummitedAt();
-        this.adminEmail = param.getAdminEmail();
-        this.confirmedAt = param.getConfirmedAt();
-        this.confirmYn = param.getConfirmYn();
-    }
-	
-	
-
 }

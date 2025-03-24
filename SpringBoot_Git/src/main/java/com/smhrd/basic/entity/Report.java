@@ -1,111 +1,49 @@
 package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "TB_REPORT")
 public class Report {
-	
-	// 신고 식별자 
+    
+    @Id
+    @Column(name = "RP_IDX", nullable = false)
     private int rpIdx;
-
-    // 신고자 아이디 
+    
+    @Column(name = "USER_EMAIL", nullable = true, length = 50)
     private String userEmail;
-
-    // 신고 대상자 
+    
+    @Column(name = "RP_EMAIL", nullable = true, length = 50)
     private String rpEmail;
-
-    // 신고 사유 
+    
+    @Column(name = "RP_REASON", nullable = true)
     private String rpReason;
-
-    // 신고 날짜 
+    
+    @Column(name = "REPORTED_AT", nullable = true)
     private Timestamp reportedAt;
-
-    // 처리 여부 
+    
+    @Column(name = "IS_HANDLED", nullable = true, length = 1)
     private String isHandled;
-
-    // 회신 내용 
+    
+    @Column(name = "HANDLED_CONTENT", nullable = true)
     private String handledContent;
-
-    // 회신 날짜 
+    
+    @Column(name = "HANDLED_AT", nullable = true)
     private Timestamp handledAt;
-
-    public int getRpIdx() {
-        return rpIdx;
-    }
-
-    public void setRpIdx(int rpIdx) {
-        this.rpIdx = rpIdx;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getRpEmail() {
-        return rpEmail;
-    }
-
-    public void setRpEmail(String rpEmail) {
-        this.rpEmail = rpEmail;
-    }
-
-    public String getRpReason() {
-        return rpReason;
-    }
-
-    public void setRpReason(String rpReason) {
-        this.rpReason = rpReason;
-    }
-
-    public Timestamp getReportedAt() {
-        return reportedAt;
-    }
-
-    public void setReportedAt(Timestamp reportedAt) {
-        this.reportedAt = reportedAt;
-    }
-
-    public String getIsHandled() {
-        return isHandled;
-    }
-
-    public void setIsHandled(String isHandled) {
-        this.isHandled = isHandled;
-    }
-
-    public String getHandledContent() {
-        return handledContent;
-    }
-
-    public void setHandledContent(String handledContent) {
-        this.handledContent = handledContent;
-    }
-
-    public Timestamp getHandledAt() {
-        return handledAt;
-    }
-
-    public void setHandledAt(Timestamp handledAt) {
-        this.handledAt = handledAt;
-    }
-
-    // tbReport 모델 복사
-    public void CopyData(Report param)
-    {
-        this.rpIdx = param.getRpIdx();
-        this.userEmail = param.getUserEmail();
-        this.rpEmail = param.getRpEmail();
-        this.rpReason = param.getRpReason();
-        this.reportedAt = param.getReportedAt();
-        this.isHandled = param.getIsHandled();
-        this.handledContent = param.getHandledContent();
-        this.handledAt = param.getHandledAt();
-    }
-
 }

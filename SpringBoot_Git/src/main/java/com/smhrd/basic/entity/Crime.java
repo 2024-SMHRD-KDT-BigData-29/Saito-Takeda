@@ -1,137 +1,56 @@
 package com.smhrd.basic.entity;
 
-import java.sql.Timestamp;
-
-import jakarta.persistence.Entity;
-
 import java.sql.Date;
+import java.sql.Timestamp;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "TB_TERMINAL_BOARD")
 public class Crime {
-	
-	// 회보서 식별자 
-    private int crimIdx;
-
-    // 회원 이메일 
+    
+    @Id
+    @Column(name = "CRUX_IDX", nullable = false)
+    private int cruxIdx;
+    
+    @Column(name = "USER_EMAIL", nullable = true, length = 50)
     private String userEmail;
-
-    // 발급 일자 
+    
+    @Column(name = "PRINTED_AT", nullable = true)
     private Date printedAt;
-
-    // 유효 기한 
+    
+    @Column(name = "EXPIRED_AT", nullable = true)
     private Date expiredAt;
-
-    // 발급 기관 
+    
+    @Column(name = "ISSUE_ORG", nullable = true, length = 50)
     private String issueOrg;
-
-    // 회보서 파일 
-    private String crimFile;
-
-    // 제출 일시 
-    private Timestamp summitedAt;
-
-    // 검증 상태 
+    
+    @Column(name = "CRUX_FILE", nullable = true, length = 1000)
+    private String cruxFile;
+    
+    @Column(name = "SUBMITTED_AT", nullable = true)
+    private Timestamp submittedAt;
+    
+    @Column(name = "VERI_STATUS", nullable = true, length = 1)
     private String veriStatus;
-
-    // 관리자 아이디 
+    
+    @Column(name = "ADMIN_EMAIL", nullable = true, length = 50)
     private String adminEmail;
-
-    // 검증 일시 
+    
+    @Column(name = "VERIFIED_AT", nullable = true)
     private Timestamp verifiedAt;
-
-    public int getCrimIdx() {
-        return crimIdx;
-    }
-
-    public void setCrimIdx(int crimIdx) {
-        this.crimIdx = crimIdx;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public Date getPrintedAt() {
-        return printedAt;
-    }
-
-    public void setPrintedAt(Date printedAt) {
-        this.printedAt = printedAt;
-    }
-
-    public Date getExpiredAt() {
-        return expiredAt;
-    }
-
-    public void setExpiredAt(Date expiredAt) {
-        this.expiredAt = expiredAt;
-    }
-
-    public String getIssueOrg() {
-        return issueOrg;
-    }
-
-    public void setIssueOrg(String issueOrg) {
-        this.issueOrg = issueOrg;
-    }
-
-    public String getCrimFile() {
-        return crimFile;
-    }
-
-    public void setCrimFile(String crimFile) {
-        this.crimFile = crimFile;
-    }
-
-    public Timestamp getSummitedAt() {
-        return summitedAt;
-    }
-
-    public void setSummitedAt(Timestamp summitedAt) {
-        this.summitedAt = summitedAt;
-    }
-
-    public String getVeriStatus() {
-        return veriStatus;
-    }
-
-    public void setVeriStatus(String veriStatus) {
-        this.veriStatus = veriStatus;
-    }
-
-    public String getAdminEmail() {
-        return adminEmail;
-    }
-
-    public void setAdminEmail(String adminEmail) {
-        this.adminEmail = adminEmail;
-    }
-
-    public Timestamp getVerifiedAt() {
-        return verifiedAt;
-    }
-
-    public void setVerifiedAt(Timestamp verifiedAt) {
-        this.verifiedAt = verifiedAt;
-    }
-
-    // tbCriminalRecord 모델 복사
-    public void CopyData(Crime param)
-    {
-        this.crimIdx = param.getCrimIdx();
-        this.userEmail = param.getUserEmail();
-        this.printedAt = param.getPrintedAt();
-        this.expiredAt = param.getExpiredAt();
-        this.issueOrg = param.getIssueOrg();
-        this.crimFile = param.getCrimFile();
-        this.summitedAt = param.getSummitedAt();
-        this.veriStatus = param.getVeriStatus();
-        this.adminEmail = param.getAdminEmail();
-        this.verifiedAt = param.getVerifiedAt();
-    }
-
 }

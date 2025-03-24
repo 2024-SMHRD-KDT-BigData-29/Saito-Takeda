@@ -1,87 +1,43 @@
 package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "TB_MESSAGE")
 public class Message {
-	
-	// 메시지 식별자 
+    
+    @Id
+    @Column(name = "MSG_IDX", nullable = false)
     private int msgIdx;
-
-    // 발신자 아이디 
+    
+    @Column(name = "SENDER_ID", nullable = true, length = 50)
     private String senderId;
-
-    // 수신자 아이디 
-    private String recevierId;
-
-    // 메시지 내용 
+    
+    @Column(name = "RECEIVER_ID", nullable = true, length = 50)
+    private String receiverId;
+    
+    @Column(name = "MSG_CONTENT", nullable = true, length = 1000)
     private String msgContent;
-
-    // 전송 날짜 
-    private Timestamp sendedAt;
-
-    // 읽음 여부 
+    
+    @Column(name = "SENDER_AT", nullable = true)
+    private Timestamp senderAt;
+    
+    @Column(name = "IS_READ", nullable = true, length = 1)
     private String isRead;
-
-    public int getMsgIdx() {
-        return msgIdx;
-    }
-
-    public void setMsgIdx(int msgIdx) {
-        this.msgIdx = msgIdx;
-    }
-
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
-
-    public String getRecevierId() {
-        return recevierId;
-    }
-
-    public void setRecevierId(String recevierId) {
-        this.recevierId = recevierId;
-    }
-
-    public String getMsgContent() {
-        return msgContent;
-    }
-
-    public void setMsgContent(String msgContent) {
-        this.msgContent = msgContent;
-    }
-
-    public Timestamp getSendedAt() {
-        return sendedAt;
-    }
-
-    public void setSendedAt(Timestamp sendedAt) {
-        this.sendedAt = sendedAt;
-    }
-
-    public String getIsRead() {
-        return isRead;
-    }
-
-    public void setIsRead(String isRead) {
-        this.isRead = isRead;
-    }
-
-    // Message 모델 복사
-    public void CopyData(Message param)
-    {
-        this.msgIdx = param.getMsgIdx();
-        this.senderId = param.getSenderId();
-        this.recevierId = param.getRecevierId();
-        this.msgContent = param.getMsgContent();
-        this.sendedAt = param.getSendedAt();
-        this.isRead = param.getIsRead();
-    }
-
 }

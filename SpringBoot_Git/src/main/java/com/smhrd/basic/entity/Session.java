@@ -1,87 +1,41 @@
 package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "TB_SESSION")
 public class Session {
-	
-	 // 세션 식별자 
+    
+    @Id
+    @Column(name = "SESSION_IDX", nullable = false)
     private int sessionIdx;
-
-    // 유저 이메일 
+    
+    @Column(name = "USER_EMAIL", nullable = true, length = 50)
     private String userEmail;
-
-    // 로그 유형 
+    
+    @Column(name = "LOG_TYPE", nullable = true, length = 1)
     private String logType;
-
-    // 로그 시간 
+    
+    @Column(name = "LOG_TIME", nullable = true)
     private Timestamp logTime;
-
-    // IP 주소 
+    
+    @Column(name = "IP_ADDR", nullable = true, length = 20)
     private String ipAddr;
-
-    // 기기 정보 
+    
+    @Column(name = "MAC_ADDR", nullable = true, length = 20)
     private String macAddr;
-
-    public int getSessionIdx() {
-        return sessionIdx;
-    }
-
-    public void setSessionIdx(int sessionIdx) {
-        this.sessionIdx = sessionIdx;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getLogType() {
-        return logType;
-    }
-
-    public void setLogType(String logType) {
-        this.logType = logType;
-    }
-
-    public Timestamp getLogTime() {
-        return logTime;
-    }
-
-    public void setLogTime(Timestamp logTime) {
-        this.logTime = logTime;
-    }
-
-    public String getIpAddr() {
-        return ipAddr;
-    }
-
-    public void setIpAddr(String ipAddr) {
-        this.ipAddr = ipAddr;
-    }
-
-    public String getMacAddr() {
-        return macAddr;
-    }
-
-    public void setMacAddr(String macAddr) {
-        this.macAddr = macAddr;
-    }
-
-    // Session 모델 복사
-    public void CopyData(Session param)
-    {
-        this.sessionIdx = param.getSessionIdx();
-        this.userEmail = param.getUserEmail();
-        this.logType = param.getLogType();
-        this.logTime = param.getLogTime();
-        this.ipAddr = param.getIpAddr();
-        this.macAddr = param.getMacAddr();
-    }
-
 }
