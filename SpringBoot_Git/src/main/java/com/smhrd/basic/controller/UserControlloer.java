@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.smhrd.basic.entity.MemberEntity;
-import com.smhrd.basic.model.Member;
+import com.smhrd.basic.entity.Member;
+import com.smhrd.basic.entity1.MemberEntity;
 import com.smhrd.basic.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;

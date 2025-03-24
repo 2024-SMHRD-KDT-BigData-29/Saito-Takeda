@@ -2,8 +2,8 @@ package com.smhrd.basic.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.smhrd.basic.entity.ReportEntity;
+import com.smhrd.basic.model.Report;
 
-public interface ReportRepository extends JpaRepository<ReportEntity, Long>{
+public interface ReportRepository extends JpaRepository<Report, Long>{
 
 }
