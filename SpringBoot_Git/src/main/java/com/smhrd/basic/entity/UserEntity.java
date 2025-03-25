@@ -1,6 +1,9 @@
 package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
+
+import com.smhrd.basic.dto.UserDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,10 +19,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Table(name = "TB_USER")
+@Table(name = "tb_user")
 public class UserEntity {
     
     @Id
@@ -52,4 +52,20 @@ public class UserEntity {
     
     @Column(name = "JOINED_AT", nullable = true)
     private Timestamp joinedAt;
+    
+    public static UserEntity toMemberEntity(UserDTO userDTO) {
+    	UserEntity userEntity = new UserEntity();
+    	userEntity.setUserEmail(userDTO.getUserEmail());
+//    	userEntity.setUserEmail(userDTO.getUserEmail());
+//    	userEntity.setUserEmail(userDTO.getUserEmail());
+//    	userEntity.setUserEmail(userDTO.getUserEmail());
+//    	userEntity.setUserEmail(userDTO.getUserEmail());
+//    	userEntity.setUserEmail(userDTO.getUserEmail());
+//    	userEntity.setUserEmail(userDTO.getUserEmail());
+    	
+    	
+    	
+    	return userEntity;
+    }
+    
 }

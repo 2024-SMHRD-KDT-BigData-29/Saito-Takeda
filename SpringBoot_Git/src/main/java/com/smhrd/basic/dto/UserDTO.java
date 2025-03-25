@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UserDTO {
 
 	// 이메일, 비밀번호, 이름, 전화번호, 성별, 주민번호
@@ -48,6 +50,8 @@ public class UserDTO {
 
     // 사용자 닉네임 
     private String userNickname;
+    
+    
 
 
 	
