@@ -1,4 +1,4 @@
-package com.smhrd.basic.model;
+package com.smhrd.basic.dto;
 
 public class Profile {
 	

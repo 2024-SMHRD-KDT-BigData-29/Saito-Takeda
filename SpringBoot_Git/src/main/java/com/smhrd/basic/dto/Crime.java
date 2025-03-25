@@ -1,4 +1,4 @@
-package com.smhrd.basic.model;
+package com.smhrd.basic.dto;
 
 import java.sql.Timestamp;
 import java.sql.Date;
