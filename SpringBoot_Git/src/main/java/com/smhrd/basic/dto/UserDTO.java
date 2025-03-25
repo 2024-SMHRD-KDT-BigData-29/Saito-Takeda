@@ -22,6 +22,8 @@ public class UserDTO {
 
     // 사용자 이메일 
     private String userEmail;
+    
+    private int useridx;
 
     // 사용자 비밀번호 
     private String userPw;

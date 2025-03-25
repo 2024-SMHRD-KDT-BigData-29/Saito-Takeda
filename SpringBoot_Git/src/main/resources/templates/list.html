@@ -17,15 +17,21 @@
 	</tr>
 	
 	<tr th:each="user: ${userList}">
-		<td th:text="${user.id}"></td>
+	<!-- user.id는 칼럼에 없어서
+			count 같은 리스트 갯수세는 방식을 쓸 예정	
+		<td th:text="${user.idx}"></td>
+	-->
 		<td th:text="${user.pw}"></td>
 		<td th:text="${user.name}"></td>
 		<td th:text="${user.addr}"></td>
 		<td>
-			<a th:href="@{|/user/${user.id}|}">조회</a>
+		<!-- query string/member?id=1 
+			rest api /member/1
+		-->
+			<a th:href="@{|/user/${user.idx}|}">조회</a>
 		</td>
 		<td>
-			<a th:href="@{|/user/${user.id}|}">삭제</a>
+			<a th:href="@{|/user/${user.idx}|}">삭제</a>
 		</td>
 	</tr>
 </table>

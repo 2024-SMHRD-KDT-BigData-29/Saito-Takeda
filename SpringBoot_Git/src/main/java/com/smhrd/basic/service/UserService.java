@@ -69,6 +69,13 @@ public class UserService {
 		return userDTOList;
 	}
 
+	public UserDTO findByEmail(Integer idx) {
+		userRepository<UserE
+		
+		
+		return null;
+	}
+
     
  
 }
