@@ -1,23 +1,14 @@
 package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
-<<<<<<< HEAD
 
 import com.smhrd.basic.dto.UserDTO;
-=======
-import java.time.LocalDateTime;
->>>>>>> branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity

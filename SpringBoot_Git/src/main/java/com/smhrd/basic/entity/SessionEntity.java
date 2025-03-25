@@ -1,16 +1,12 @@
 package com.smhrd.basic.entity;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;

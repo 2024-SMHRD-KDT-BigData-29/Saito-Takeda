@@ -8,10 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -42,7 +39,7 @@ public class BoardEntity {
     private String bFile;
 
     // 글 작성일자 
-	@Column(nullable = false,)
+	@Column(nullable = false)
     private Timestamp createdAt;
 
     // 글 조회수 
