@@ -1,6 +1,5 @@
 package com.smhrd.basic.repository;
 
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -29,12 +28,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String>{
 
 	
 	// 로그인 메소드
-		UserEntity findByEmailAndPw(String email, String pw);
-		
-		// 유저 이름으로 검색
-	    Optional<UserEntity> findByUsername(String username);
-	    
-	    Optional<UserEntity> findByEmail(String email);
+
 		
 		// 위의 sql문 필요한 매개변수 : email, pw
 		// 메소드를 만들 때는 반드시 카멜표기법으로 만들기

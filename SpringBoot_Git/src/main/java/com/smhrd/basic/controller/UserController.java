@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-
-    private final UserService userService;
-
-    
-    
-    @GetMapping("/")
+	
+	// 회원가입 페이지 출력 요청
+    @GetMapping("save")
 	public String index() {
 		
-		return "index"; // .html 
+		return "userSave";
 	}
 }
