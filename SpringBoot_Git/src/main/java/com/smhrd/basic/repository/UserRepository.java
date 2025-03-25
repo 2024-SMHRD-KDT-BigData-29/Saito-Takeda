@@ -5,12 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 import com.smhrd.basic.entity.User;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, String>{
 	
 	// 기본적으로 제공하는 CRUD
 		// 1. findAll()
@@ -41,5 +40,5 @@ public interface UserRepository extends JpaRepository<User, Long>{
 		// 메소드를 만들 때는 반드시 카멜표기법으로 만들기
 		
 
-
+}
 
