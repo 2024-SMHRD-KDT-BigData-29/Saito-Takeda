@@ -33,8 +33,8 @@ public class UserEntity {
     @Column(name = "user_gender", nullable = true, length = 1)
     private String userGender;
     
-    @Column(name = "user_region", nullable = true, length = 14)
-    private String userRegion;
+    @Column(name = "user_regnum", nullable = true, length = 14)
+    private String userRegnum;
     
     @Column(name = "user_addr", nullable = true, length = 500)
     private String userAddr;
@@ -47,6 +47,9 @@ public class UserEntity {
     
     @Column(name = "joined_at", nullable = true)
     private Timestamp joinedAt;
+    
+    @Column(name = "user_nickname", nullable = true)
+    private String userNickname;
     
     public static UserEntity toMemberEntity(UserDTO userDTO) {
     	UserEntity userEntity = new UserEntity();

@@ -55,14 +55,17 @@ public class UserDTO {
     
     public static UserDTO toUserDTO(UserEntity userEntity) {
 		UserDTO userDTO = new UserDTO();
-		// 해줭
+		
 		userDTO.setUserEmail(userEntity.getUserEmail());
-//		userDTO.setUserEmail(userEntity.getUserEmail());
-//		userDTO.setUserEmail(userEntity.getUserEmail());
-//		userDTO.setUserEmail(userEntity.getUserEmail());
-//		userDTO.setUserEmail(userEntity.getUserEmail());
-//		userDTO.setUserEmail(userEntity.getUserEmail());
-//		userDTO.setUserEmail(userEntity.getUserEmail());
+		userDTO.setUserPw(userEntity.getUserPw());
+		userDTO.setUserName(userEntity.getUserName());
+		userDTO.setUserPhone(userEntity.getUserPhone());
+		userDTO.setUserGender(userEntity.getUserGender());
+		userDTO.setUserRegnum(userEntity.getUserRegnum());
+		userDTO.setUserAddr(userEntity.getUserAddr());
+		userDTO.setUserStatus(userEntity.getUserStatus());
+		userDTO.setUserNickname(userEntity.getUserNickname());
+		
     	
     	
     	return null;
