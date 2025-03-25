@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "TB_REPORT")
-public class Report {
+public class ReportEntity {
     
     @Id
     @Column(name = "RP_IDX", nullable = false)

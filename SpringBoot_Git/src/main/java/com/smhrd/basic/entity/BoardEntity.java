@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "TB_BOARD")
-public class Board {
+public class BoardEntity {
 	
     // 글 식별자
 	@Id

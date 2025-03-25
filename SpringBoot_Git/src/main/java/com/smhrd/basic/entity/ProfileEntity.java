@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "TB_USER_PROFILE")
-public class Profile {
+public class ProfileEntity {
     
     @Id
     @Column(name = "USER_EMAIL", nullable = false, length = 50)
