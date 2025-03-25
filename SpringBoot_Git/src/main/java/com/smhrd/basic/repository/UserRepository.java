@@ -16,7 +16,10 @@ public interface UserRepository extends JpaRepository<UserEntity, String>{
 // select * from tb_user where user_email=?
 	// Optional은 주로 JPA 쿼리문을 통해 DB에서 데이터를 호출할때 만약 데이터가 없을때 null값을 피하기 위해 사용한다.
 	Optional<UserEntity> findByUserEmail(String userEmail);
-	
+
+	Optional<UserEntity> findByIdx(Integer idx);
+
+
 	
 	
 	

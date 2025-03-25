@@ -69,8 +69,13 @@ public class UserService {
 		return userDTOList;
 	}
 
-	public UserDTO findByEmail(Integer idx) {
-		userRepository<UserE
+	public UserDTO findByIdx(Integer idx) {
+		Optional<UserEntity> optionalUserEntity = userRepository.findByIdx(idx);
+		if(optionalUserEntity.isPresent()) {
+			return UserDTO.toUserDTO(optionalUserEntity.get());
+		}
+		// https://www.youtube.com/watch?v=yRh4ti3cKJQ&list=PLV9zd3otBRt5ANIjawvd-el3QU594wyx7&index=11
+		// 13분 20초
 		
 		
 		return null;
