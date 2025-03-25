@@ -1,5 +1,7 @@
 package com.smhrd.basic.entity;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,25 +15,22 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Table(name = "TB_USER_PROFILE")
+@Table(name = "tb_profile")
 public class ProfileEntity {
-    
+	
     @Id
-    @Column(name = "USER_EMAIL", nullable = false, length = 50)
+    @Column(name = "user_email", nullable = false, length = 50)
     private String userEmail;
     
-    @Column(name = "PROFILE_IMG", nullable = true, length = 1000)
+    @Column(name = "profile_img", nullable = true, length = 1000)
     private String profileImg;
     
-    @Column(name = "USER_INTRODUCTION", nullable = true)
+    @Column(name = "user_introduction", nullable = true)
     private String userIntroduction;
     
-    @Column(name = "USER_URL", nullable = true, length = 4)
+    @Column(name = "user_url", nullable = true, length = 4)
     private String userUrl;
     
-    @Column(name = "PARTNER_MBTI", nullable = true, length = 4)
+    @Column(name = "partner_mbti", nullable = true, length = 4)
     private String partnerMbti;
 }

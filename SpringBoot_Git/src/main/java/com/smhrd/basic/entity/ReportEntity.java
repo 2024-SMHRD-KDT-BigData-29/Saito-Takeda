@@ -16,34 +16,33 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Table(name = "TB_REPORT")
+@Table(name = "tb_report")
 public class ReportEntity {
+	
     
-    @Id
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RP_IDX", nullable = false)
     private int rpIdx;
     
-    @Column(name = "USER_EMAIL", nullable = true, length = 50)
+    @Column(name = "user_email", nullable = true, length = 50)
     private String userEmail;
     
-    @Column(name = "RP_EMAIL", nullable = true, length = 50)
+    @Column(name = "rp_email", nullable = true, length = 50)
     private String rpEmail;
     
-    @Column(name = "RP_REASON", nullable = true)
+    @Column(name = "rp_reason", nullable = true)
     private String rpReason;
     
-    @Column(name = "REPORTED_AT", nullable = true)
+    @Column(name = "reported_at", nullable = true)
     private Timestamp reportedAt;
     
-    @Column(name = "IS_HANDLED", nullable = true, length = 1)
+    @Column(name = "is_handled", nullable = true, length = 1)
     private String isHandled;
     
-    @Column(name = "HANDLED_CONTENT", nullable = true)
+    @Column(name = "handled_content", nullable = true)
     private String handledContent;
     
-    @Column(name = "HANDLED_AT", nullable = true)
+    @Column(name = "handled_at", nullable = true)
     private Timestamp handledAt;
 }

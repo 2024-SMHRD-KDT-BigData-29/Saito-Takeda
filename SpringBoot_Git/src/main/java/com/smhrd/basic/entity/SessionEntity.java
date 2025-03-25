@@ -1,5 +1,6 @@
 package com.smhrd.basic.entity;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -7,13 +8,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@Entity
 @Getter
+@Setter
+@Table(name = "tb_session")
 public class SessionEntity {
 	// 시간정보를 다룰 수 있또록 하는
 	// 세션 엔터티가 될 거 같음

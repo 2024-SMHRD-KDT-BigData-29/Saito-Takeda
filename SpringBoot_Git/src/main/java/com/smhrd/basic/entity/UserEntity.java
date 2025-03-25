@@ -1,8 +1,12 @@
 package com.smhrd.basic.entity;
 
 import java.sql.Timestamp;
+<<<<<<< HEAD
 
 import com.smhrd.basic.dto.UserDTO;
+=======
+import java.time.LocalDateTime;
+>>>>>>> branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,34 +27,34 @@ import lombok.Setter;
 public class UserEntity {
     
     @Id
-    @Column(name = "USER_EMAIL", nullable = false)
+    @Column(name = "user_email", nullable = false, length = 50)
     private String userEmail;
     
-    @Column(name = "USER_PW", nullable = false, length = 255)
+    @Column(name = "user_pw", nullable = false, length = 255)
     private String userPw;
     
-    @Column(name = "USER_NAME", nullable = false, length = 100)
+    @Column(name = "user_name", nullable = false, length = 50)
     private String userName;
     
-    @Column(name = "USER_PHONE", nullable = true, length = 20)
+    @Column(name = "user_phone", nullable = true, length = 20)
     private String userPhone;
     
-    @Column(name = "USER_GENDER", nullable = true, length = 1)
+    @Column(name = "user_gender", nullable = true, length = 1)
     private String userGender;
     
-    @Column(name = "USER_REGION", nullable = true, length = 4)
+    @Column(name = "user_region", nullable = true, length = 14)
     private String userRegion;
     
-    @Column(name = "USER_ADDR", nullable = true, length = 500)
+    @Column(name = "user_addr", nullable = true, length = 500)
     private String userAddr;
     
-    @Column(name = "USER_STATUS", nullable = true, length = 10)
+    @Column(name = "user_status", nullable = true, length = 10)
     private String userStatus;
     
-    @Column(name = "USER_ROLE", nullable = true, length = 1)
+    @Column(name = "user_role", nullable = true, length = 1)
     private String userRole;
     
-    @Column(name = "JOINED_AT", nullable = true)
+    @Column(name = "joined_at", nullable = true)
     private Timestamp joinedAt;
     
     public static UserEntity toMemberEntity(UserDTO userDTO) {
