@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "TB_USER")
-public class User {
+public class UserEntity {
     
     @Id
     @Column(name = "USER_EMAIL", nullable = false)

@@ -5,11 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.smhrd.basic.entity.User;
+import com.smhrd.basic.entity.UserEntity;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String>{
+public interface UserRepository extends JpaRepository<UserEntity, String>{
 	
 	// 기본적으로 제공하는 CRUD
 		// 1. findAll()
@@ -29,12 +29,12 @@ public interface UserRepository extends JpaRepository<User, String>{
 
 	
 	// 로그인 메소드
-		User findByEmailAndPw(String email, String pw);
+		UserEntity findByEmailAndPw(String email, String pw);
 		
 		// 유저 이름으로 검색
-	    Optional<User> findByUsername(String username);
+	    Optional<UserEntity> findByUsername(String username);
 	    
-	    Optional<User> findByEmail(String email);
+	    Optional<UserEntity> findByEmail(String email);
 		
 		// 위의 sql문 필요한 매개변수 : email, pw
 		// 메소드를 만들 때는 반드시 카멜표기법으로 만들기

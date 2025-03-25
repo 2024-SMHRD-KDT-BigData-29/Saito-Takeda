@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.smhrd.basic.entity.User;
+import com.smhrd.basic.entity.UserEntity;
 import com.smhrd.basic.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     //  1. 회원가입
-    public String register(User user) {
+    public String register(UserEntity user) {
         if (userRepository.findByUsername(user.getUserName()).isPresent()) {
             return "이미 존재하는 사용자입니다.";
         }
@@ -33,7 +33,7 @@ public class UserService {
 
     //  3. 회원탈퇴
     public String deleteUser(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
+        Optional<UserEntity> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
             userRepository.delete(user.get());
             return "회원탈퇴 완료.";

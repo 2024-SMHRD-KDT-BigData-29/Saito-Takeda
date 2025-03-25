@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "TB_MESSAGE")
-public class Message {
+public class MessageEntity {
     
     @Id
     @Column(name = "MSG_IDX", nullable = false)

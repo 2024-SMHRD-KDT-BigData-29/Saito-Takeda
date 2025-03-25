@@ -1,5 +1,6 @@
 package com.smhrd.basic.entity;
 
+import java.sql.Timestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,19 +19,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "TB_FAVORITE")
-public class FavoriteBoard {
+@Table(name = "TB_COMMENT")
+public class CommentEntity {
     
     @Id
-    @Column(name = "FAV_IDX", nullable = false)
-    private int favIdx;
-    
-    @Column(name = "USER_EMAIL", nullable = true, length = 50)
-    private String userEmail;
+    @Column(name = "CMT_IDX", nullable = false)
+    private int cmtIdx;
     
     @Column(name = "B_IDX", nullable = false)
     private int bIdx;
     
+    @Column(name = "CMT_CONTENT", nullable = true, length = 500)
+    private String cmtContent;
+    
     @Column(name = "CREATED_AT", nullable = true)
-    private java.sql.Timestamp createdAt;
+    private Timestamp createdAt;
+    
+    @Column(name = "USER_EMAIL", nullable = true, length = 50)
+    private String userEmail;
 }

@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "TB_RENT_CONTRACT")
-public class Contract {
+public class ContractEntity {
     
     @Id
     @Column(name = "CTRT_IDX", nullable = false)

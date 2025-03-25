@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Table(name = "TB_TERMINAL_BOARD")
-public class Crime {
+public class CrimeEntity {
     
     @Id
     @Column(name = "CRUX_IDX", nullable = false)
