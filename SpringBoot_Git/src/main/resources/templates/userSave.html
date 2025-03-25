@@ -8,13 +8,12 @@
 <!-- 이메일, 비밀번호, 이름, 전화번호, 성별, 주민번호
 	주소, 계정상태, 구분, 가입일자, 닉네임  -->
 <!-- action속성 : form에 작성한 데이터를 어디로 보낼지 지정 -->
-<form action="/member/save" method="post">
+<form action="/user/save" method="post">
 	이메일: <input type="text" name="userEmail"><br>
 	비밀번호: <input type="text" name="userPw"><br>
 	이름: <input type="text" name="userName"><br>
 	닉네임: <input type="text" name="userNickname"><br>
-	전화번호: <input type="text" name="userPhone"><br>
-	성별: <input type="radio" name="userGender" value="M">남자<input type="radio" name="userGender" value="여자">여자<br>
+	성별: <input type="radio" name="userGender" value="m">남자<input type="radio" name="userGender" value="w">여자<br>
 	주민번호: <input type="text" name="userRegnum"><br>
 	주소: <input type="text" name="userAddr"><br>
 	<input type="submit" value="회원가입">

@@ -40,7 +40,7 @@ public class BoardDTO {
     private Integer bLikes;
 
     // 글 작성자 
-    private String userEmail;
+    private String bwriter;
 
 
 }

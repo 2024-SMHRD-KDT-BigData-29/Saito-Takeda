@@ -23,7 +23,7 @@ public class UserService {
 		// 1. dto -> entity 변환
 		// 2. repository의 save 메서드 호출
 //		userDTO를 담아서 userEntity에 저장 
-		UserEntity userEntity = UserEntity.toMemberEntity(userDTO);
+		UserEntity userEntity = UserEntity.toUserEntity(userDTO);
 		userRepository.save(userEntity);
 		// repository의 save메서드 호출 (조건. entity객체를 넘겨줘야 함)
 		
@@ -69,16 +69,34 @@ public class UserService {
 		return userDTOList;
 	}
 
-	public UserDTO findByIdx(Integer idx) {
-		Optional<UserEntity> optionalUserEntity = userRepository.findByIdx(idx);
+	public UserDTO findByUserIdx(Integer userIdx) {
+		Optional<UserEntity> optionalUserEntity = userRepository.findByUserIdx(userIdx);
+		if(optionalUserEntity.isPresent()) {
+			
+//			UserEntity userEntity = optionalUserEntity.get();
+//			UserDTO userDTO = UserDTO.toUserDTO(userEntity);
+//			return userDTO
+//			위의 코드 3줄을 아래 한줄로 요약한것
+			return UserDTO.toUserDTO(optionalUserEntity.get());
+		}else {
+			return null;
+		}
+		
+	
+	}
+
+	public UserDTO mypageUpdateForm(String myEmail) {
+		Optional<UserEntity> optionalUserEntity = userRepository.findByUserEmail(myEmail);
 		if(optionalUserEntity.isPresent()) {
 			return UserDTO.toUserDTO(optionalUserEntity.get());
+		}else {
+			return null;
 		}
-		// https://www.youtube.com/watch?v=yRh4ti3cKJQ&list=PLV9zd3otBRt5ANIjawvd-el3QU594wyx7&index=11
-		// 13분 20초
-		
-		
-		return null;
+	
+	}
+
+	public void update(UserDTO userDTO) {
+		userRepository.save(UserEntity.toUpdateUserEntity(userDTO));
 	}
 
     

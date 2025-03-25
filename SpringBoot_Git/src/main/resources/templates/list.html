@@ -25,8 +25,8 @@
 		<td th:text="${user.name}"></td>
 		<td th:text="${user.addr}"></td>
 		<td>
-		<!-- query string/member?id=1 
-			rest api /member/1
+		<!-- query string/User?id=1 
+			rest api /User/1
 		-->
 			<a th:href="@{|/user/${user.idx}|}">조회</a>
 		</td>

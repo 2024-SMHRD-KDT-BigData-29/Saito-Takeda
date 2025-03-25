@@ -24,8 +24,8 @@ public class ProfileEntity {
     @Column(name = "user_introduction", nullable = true)
     private String userIntroduction;
     
-    @Column(name = "user_url", nullable = true, length = 4)
-    private String userUrl;
+//    @Column(name = "user_url", nullable = true, length = 4)
+//    private String userUrl;
     
     @Column(name = "partner_mbti", nullable = true, length = 4)
     private String partnerMbti;

@@ -3,12 +3,12 @@ package com.smhrd.basic.controller;
 
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.smhrd.basic.dto.UserDTO;
 import com.smhrd.basic.service.UserService;
@@ -16,7 +16,7 @@ import com.smhrd.basic.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequiredArgsConstructor	// 생성자 주입 어노테이션
 public class UserController {
 	// 생성자 주입
@@ -38,11 +38,11 @@ public class UserController {
     	
     	userService.save(userDTO);
     	
-    	return "login";
+    	return "index";
     }
     
 //    로그인페이지 이동
-    @GetMapping("/member/login")
+    @GetMapping("/user/login")
     public String loginForm() {
     	
     	return "login";
@@ -64,7 +64,7 @@ public class UserController {
     	
     }
     
-    @GetMapping("/member/")
+    @GetMapping("/user")
     public String findAll(Model model) {
     	List<UserDTO> userDTOList = userService.findAll();
 //    	어떠한 html로 가져갈 데이터가 있다면 model 사용
@@ -75,12 +75,12 @@ public class UserController {
     	return "list";
     }
     
-    @GetMapping("/member/{idx}")
-    public String findByEmail(@PathVariable Integer idx, Model model) {
-    	UserDTO userDTO = userService.findByIdx(idx);
+    @GetMapping("/user/{idx}")
+    public String findByUserIdx(@PathVariable Integer idx, Model model) {
+    	UserDTO userDTO = userService.findByUserIdx(idx);
     	model.addAttribute("user", userDTO);
     	
-    	return "userDetail";
+    	return "myDetail";
     }
     
     

@@ -23,7 +23,7 @@ public class UserDTO {
     // 사용자 이메일 
     private String userEmail;
     
-    private int useridx;
+    private int userIdx;
 
     // 사용자 비밀번호 
     private String userPw;
@@ -32,7 +32,7 @@ public class UserDTO {
     private String userName;
 
     // 사용자 전화번호 
-    private String userPhone;
+//    private String userPhone;
 
     // 사용자 성별 
     private String userGender;
@@ -43,14 +43,14 @@ public class UserDTO {
     // 사용자 주소 
     private String userAddr;
 
-    // 사용자 계정상태 
-    private String userStatus;
-
-    // 사용자 구분 
-    private String userRole;
-
-    // 가입 일자 
-    private Timestamp joinedAt;
+//    // 사용자 계정상태 
+//    private String userStatus;
+//
+//    // 사용자 구분 
+//    private String userRole;
+//
+//    // 가입 일자 
+//    private Timestamp joinedAt;
 
     // 사용자 닉네임 
     private String userNickname;
@@ -58,14 +58,14 @@ public class UserDTO {
     public static UserDTO toUserDTO(UserEntity userEntity) {
 		UserDTO userDTO = new UserDTO();
 		
+		userDTO.setUserIdx(0);
 		userDTO.setUserEmail(userEntity.getUserEmail());
 		userDTO.setUserPw(userEntity.getUserPw());
 		userDTO.setUserName(userEntity.getUserName());
-		userDTO.setUserPhone(userEntity.getUserPhone());
 		userDTO.setUserGender(userEntity.getUserGender());
 		userDTO.setUserRegnum(userEntity.getUserRegnum());
 		userDTO.setUserAddr(userEntity.getUserAddr());
-		userDTO.setUserStatus(userEntity.getUserStatus());
+//		userDTO.setUserStatus(userEntity.getUserStatus());
 		userDTO.setUserNickname(userEntity.getUserNickname());
 		
     	
