@@ -2,6 +2,8 @@ package com.smhrd.basic.dto;
 
 import java.sql.Timestamp;
 
+import com.smhrd.basic.entity.UserEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,7 +53,20 @@ public class UserDTO {
     // 사용자 닉네임 
     private String userNickname;
     
-    
+    public static UserDTO toUserDTO(UserEntity userEntity) {
+		UserDTO userDTO = new UserDTO();
+		// 해줭
+		userDTO.setUserEmail(userEntity.getUserEmail());
+//		userDTO.setUserEmail(userEntity.getUserEmail());
+//		userDTO.setUserEmail(userEntity.getUserEmail());
+//		userDTO.setUserEmail(userEntity.getUserEmail());
+//		userDTO.setUserEmail(userEntity.getUserEmail());
+//		userDTO.setUserEmail(userEntity.getUserEmail());
+//		userDTO.setUserEmail(userEntity.getUserEmail());
+    	
+    	
+    	return null;
+	}
 
 
 	

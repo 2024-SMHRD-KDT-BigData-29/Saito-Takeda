@@ -1,6 +1,8 @@
 package com.smhrd.basic.repository;
 
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +11,18 @@ import com.smhrd.basic.entity.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String>{
+	
+	// 이메일로 회원 정보 조회
+// select * from tb_user where user_email=?
+	// Optional은 주로 JPA 쿼리문을 통해 DB에서 데이터를 호출할때 만약 데이터가 없을때 null값을 피하기 위해 사용한다.
+	Optional<UserEntity> findByUserEmail(String userEmail);
+	
+	
+	
+	
+	
+	
+	
 	
 	// 기본적으로 제공하는 CRUD
 		// 1. findAll()
