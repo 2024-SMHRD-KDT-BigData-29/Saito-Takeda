@@ -3,12 +3,12 @@ package com.smhrd.basic.controller;
 
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.smhrd.basic.dto.UserDTO;
 import com.smhrd.basic.service.UserService;
@@ -16,7 +16,7 @@ import com.smhrd.basic.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-@RestController
+@Controller
 @RequiredArgsConstructor	// 생성자 주입 어노테이션
 public class UserController {
 	// 생성자 주입

@@ -19,27 +19,27 @@ public class ReportEntity {
     
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RP_IDX", nullable = false)
+    @Column(nullable = false)
     private int rpIdx;
     
-    @Column(name = "user_email", nullable = true, length = 50)
+    @Column(nullable = true, length = 50)
     private String userEmail;
     
-    @Column(name = "rp_email", nullable = true, length = 50)
+    @Column(nullable = true, length = 50)
     private String rpEmail;
     
-    @Column(name = "rp_reason", nullable = true)
+    @Column(nullable = true)
     private String rpReason;
     
-    @Column(name = "reported_at", nullable = true)
+    @Column(nullable = true)
     private Timestamp reportedAt;
     
-    @Column(name = "is_handled", nullable = true, length = 1)
+    @Column(nullable = true, length = 1)
     private String isHandled;
     
-    @Column(name = "handled_content", nullable = true)
+    @Column(nullable = true)
     private String handledContent;
     
-    @Column(name = "handled_at", nullable = true)
+    @Column(nullable = true)
     private Timestamp handledAt;
 }
