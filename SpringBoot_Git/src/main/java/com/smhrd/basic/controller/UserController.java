@@ -1,5 +1,7 @@
 package com.smhrd.basic.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class UserController {
 	
 	
 	// 회원가입 페이지 출력 요청
-    @GetMapping("/user/save")
+    @GetMapping("/user/save")		
 	public String saveForm() {
 		return "userSave";
 	}
