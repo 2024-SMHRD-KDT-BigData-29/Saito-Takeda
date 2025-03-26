@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>userSave</title>
+</head>
+
+<link rel="stylesheet" href="./join.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<body>
+<!-- 이메일, 비밀번호, 이름, 전화번호, 성별, 주민번호
+   주소, 계정상태, 구분, 가입일자, 닉네임  -->
+<!-- action속성 : form에 작성한 데이터를 어디로 보낼지 지정 -->
+
+<div>
+   
+<div class="container"> 
+
+
+   <div id="joinTitle">
+
+      <span class="joinTitle-item">
+         <span class="back-icon"><a href="#"><i class="fa-solid fa-chevron-left"></i></a></span>
+     </span>
+
+      <span id="joinTitle-item2">
+      회원가입
+      </span>
+      
+      
+   
+   </div>
+<form action="/member/save" method="post">
+
+<table border="1px">
+   <tr>
+      <td id="rowLenght1">이메일</td>
+      <td id="rowLenght2">
+         <input type="text" name="userEmail">
+      </td>
+   </tr>
+
+   <tr>
+      <td id="rowLenght1">비밀번호</td>
+      <td id="rowLenght2">
+         <input type="text" name="userPw">
+      </td>
+   </tr>
+
+   <tr>
+      <td id="rowLenght1">별명</td>
+      <td id="rowLenght2">
+         <input type="text" name="userNickname" >
+      </td>
+   </tr>
+   <tr>
+      <td id="rowLenght1">성별</td>
+      <td >
+         <input type="radio" name="userGender" value="M">남자 <input type="radio" name="userGender" value="여자">여자
+      </td>
+   </tr>
+   <tr>
+      <td id="rowLenght1">주민등록번호</td>
+      <td id="rowLenght2">
+         <input type="text" name="userRegnum">
+      </td>
+   </tr>
+   <tr>
+      <td id="rowLenght1">주소</td>
+      <td id="rowLenght2">
+         <input type="text" name="userAddr">
+      </td>
+   </tr>
+
+</table>
+
+
+</form>
+
+
+</div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+/* 상단바 */
+/* .status-bar{
+
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    max-width: 360px;
+    z-index:1000;
+    /* border-bottom: 1px solid #ddd; */
+/* } 
+.status-icons>img{
+    width: 20px;
+    height: 20px;
+    padding-top: 5px;
+
+} */ 
+
+
+div.container{
+   
+    width: 360px;
+    height: 740px;
+    text-align: center;
+    margin:0 auto; 
+    border: 1px solid ;
+    border-radius: 12px;
+  
+}
+#content{
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+
+#index_title{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 35px;
+    padding: 100px 0 50px 0 ;
+    
+    
+}
+
+form{
+ margin: 20px;
+ 
+
+}
+
+
+
+
+#userEmail{
+
+    padding: 7px 150px 7px  10px;
+    margin-bottom: 5px;
+    border-color: lightgray;
+    border-radius: 5px;
+    margin-bottom: 12px;
+   
+}
+#userPw{
+    padding: 7px 150px 7px  10px;
+    margin-bottom: 10px;
+    border-color: lightgray;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+
+
+#btn_login{
+    width: 170;
+    height: 25;
+    padding: 4px 141px 4px  141px;
+    background-color: black;
+    color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+#findUser{
+    font-weight: bold;
+    font-size: 15px;
+    text-align: right;
+    padding-right: 15px;
+    color:black;
+    
+    
+}
+
+#icon-join{
+
+    border-left: 3px solid;
+    border-color: rgb(224, 223, 223);
+    color:black;
+    width: 50px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 15px;
+     
+
+}
+#findUser>td{
+
+    padding-right: 15px;
+}
+/* #find{
+
+    text-align: left;
+}
+
+#empty{
+    text-align: right;
+} */

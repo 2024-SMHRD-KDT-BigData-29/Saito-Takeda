@@ -1,0 +1,168 @@
+@charset "UTF-8";
+div.container{
+   
+    width: 360px;
+    height: 740px;
+    border-radius: 12px  ;
+    text-align: center;
+    margin:0 auto; 
+    border: 1px solid ;
+    
+    position: relative;
+  
+}
+
+#mainTitle{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 35px;
+    padding: 100px 0 50px 0 ;
+}
+
+.write{
+    
+    text-align:  right;
+    
+}
+.write-icon{
+    padding-right: 20px;
+    padding-top: 10px;
+   
+
+}
+/* 
+.container{
+   
+    width: 500px;
+    height: 700px;
+    text-align: center;
+    margin:0 auto; 
+  
+}  */
+
+/* 검색창  */
+.tf-search{
+            
+    height: 35px;
+    width: 300px;
+    font-size: 20px;
+    border-radius: 4px;
+    padding: 0 0 0 30px;
+
+}
+.box-tf{
+    position: relative;
+}
+.icon-search{
+    position: absolute;
+    top: 13px;
+    left: 23px;
+    cursor: pointer;
+}
+
+/* 탭메뉴  */
+ul,li{margin:0; padding:0;}
+
+.tab{float:left; width:360px; height: 500px;}
+.tabnav{font-size:0; width:330px; border:0.1px solid #ddd; border-radius: 12px; margin-left :15px; margin-top:12px;}
+.tabnav li{display: inline-block;  height:40px; text-align:center; }
+.tabnav li a:before{content:""; position:absolute; left:0; top:0px; width:100%; height:3px; }
+.tabnav li a.active:before{background:#fff;}
+
+
+.tabnav li a.active{border-bottom:1px solid #fff;}
+.tabnav li a{ position:relative; display:block; background: #fff; color: #000; padding:0 50px; line-height:36px; text-decoration:none; font-size:16px; border-radius: 12px;}
+.tabnav li a:hover,
+.tabnav li a.active{background:#f8f8f8; color:#000; }
+.tabcontent{padding: 20px; height: 500px; border:1px solid #ddd; border-top:none;}
+
+
+
+
+
+
+
+
+ /* 하단 네비게이션 */
+ .bottom-nav {
+    position: absolute;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    justify-content: space-around;
+    background: #ffffff;
+    border-top: 1px solid #f1f1f1;
+    padding: 10px 0;
+    z-index: 100;
+    
+}
+
+.nav-item {
+    text-align: center;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    /* background-color: #f1f1f1; */
+    border-radius: 50%;
+    margin: 0 auto 4px;
+}
+
+.nav-label {
+    font-size: 10px;
+   
+    letter-spacing: -0.5px;
+}
+
+.nav-item.active .nav-label {
+    color: #000;
+    font-weight: bold;
+}
+
+/* 버튼 스타일 */
+.cta-button {
+    position: fixed;
+    bottom: 70px;
+    right: 16px;
+    background-color: #000;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 90;
+}
+
+/* 룸메 찾기 */
+.roommate-card {
+    display: flex;
+    padding: 16px 0;
+    border-bottom: 1px solid #f1f1f1;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    margin-right: 15px;
+    flex-shrink: 0;
+    
+}
+
+.feature-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    min-height: 100px;
+}
