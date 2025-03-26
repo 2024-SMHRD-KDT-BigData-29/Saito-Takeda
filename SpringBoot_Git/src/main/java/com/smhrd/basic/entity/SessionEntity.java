@@ -22,6 +22,7 @@
 //	
 //	
 //	// 생성됐을 때 시간 정보를 담고
+
 //	@CreationTimestamp
 //	@Column(updatable = false) // 수정시에는 관여안하게끔
 //	private LocalDateTime createdTime;
