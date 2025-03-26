@@ -75,9 +75,9 @@ public class UserController {
     	return "list";
     }
     
-    @GetMapping("/user/{idx}")
-    public String findByUserIdx(@PathVariable Integer idx, Model model) {
-    	UserDTO userDTO = userService.findByUserIdx(idx);
+    @GetMapping("/user/{userEmail}")
+    public String findByUserIdx(@PathVariable String userEmail, Model model) {
+    	UserDTO userDTO = userService.findByUserEmail(userEmail);
     	model.addAttribute("user", userDTO);
     	
     	return "myDetail";
