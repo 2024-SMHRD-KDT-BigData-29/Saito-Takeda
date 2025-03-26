@@ -2,6 +2,17 @@ package com.smhrd.basic.dto;
 
 import java.sql.Timestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class BoardDTO {
 	
     // 글 식별자 
@@ -29,7 +40,7 @@ public class BoardDTO {
     private Integer bLikes;
 
     // 글 작성자 
-    private String userEmail;
+    private String bwriter;
 
 
 }

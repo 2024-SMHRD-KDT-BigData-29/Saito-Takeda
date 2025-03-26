@@ -8,32 +8,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Table(name = "TB_BOARD")
+@Table(name = "tb_board")
 public class BoardEntity {
 	
     // 글 식별자
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id // 기본키 설정
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // 인덱스 자동 1증가 어노테이션
     private int bIdx;
 
     // 글 유형
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
     private String bType;
 
     // 글 제목 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 1000)
     private String bTitle;
 
     // 글 내용 
@@ -41,7 +35,7 @@ public class BoardEntity {
     private String bContent;
 
     // 글 첨부파일 
-	@Column(nullable = true)
+	@Column(nullable = true, length = 1000)
     private String bFile;
 
     // 글 작성일자 
@@ -57,7 +51,7 @@ public class BoardEntity {
     private Integer bLikes;
 
     // 글 작성자 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 50)
     private String userEmail;
 
 

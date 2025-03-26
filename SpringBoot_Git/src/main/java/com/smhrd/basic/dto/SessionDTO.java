@@ -2,6 +2,17 @@ package com.smhrd.basic.dto;
 
 import java.sql.Timestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class SessionDTO {
 	
 	 // 세션 식별자 
