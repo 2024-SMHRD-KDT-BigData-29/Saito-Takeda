@@ -22,6 +22,10 @@
 //	
 //	
 //	// 생성됐을 때 시간 정보를 담고
+<<<<<<< Upstream, based on branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
+=======
+//	
+>>>>>>> 54d305b asdf
 //	@CreationTimestamp
 //	@Column(updatable = false) // 수정시에는 관여안하게끔
 //	private LocalDateTime createdTime;
