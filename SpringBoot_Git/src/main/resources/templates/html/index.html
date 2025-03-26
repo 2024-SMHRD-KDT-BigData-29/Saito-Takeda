@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css"> 
+   
+</head>
+<body>
+    <div class="container">
+
+    <!-- 상단바 
+    <div class="status-bar">
+        <span id="time">16:38</span>
+        <div class="status-icons">
+            <span><i class="fa-solid fa-wifi"></i></span>
+            <!-- <img src="./wifi.png" alt="Wi-Fi Icon" class="icon"> -->
+            <!-- <img src="./battery.png" alt="Battery Icon" class="icon"> 
+            <span id="battery-level">80%</span>
+        </div>
+    </div> -->
+
+
+
+
+
+
+<div class="container">
+<div id="index_title">
+<align="center">룸메 있어¿?
+</div>
+<p id="content">새로운 룸메이트를 찾아 보세요.<br></p>
+당신의 삶에 새로움을 가져다 줍니다.
+<form action="#" > 
+    
+ 
+<table align="center">
+
+<tr>
+    
+    <td id="inputLogin" colspan="2"> 
+        <input type="text"  placeholder="email@domain.com" id="userEmail" maxlength="50"  > 
+    </td>
+    <td ></td>
+
+</tr>
+<tr>
+    <td id="inputLogin" colspan="2">
+        <input type="password"  placeholder="password" id="userPw" maxlength="255" >  
+    </td>
+    <td></td>
+</tr>
+
+<tr>
+    <td colspan="2">
+        
+<button id="btn_login"> 로그인
+    <td></td>
+
+</button>
+    </td>
+</tr>
+
+
+<tr id="findUser">
+    <td >       
+        <a href="#로그인" > 까먹었어?</a></td>
+
+    <td id="icon-join" > <a href="#회원가입" >없어!</a></td>
+  
+    </table>  
+</form> 
+
+
+<script>
+//  상단바 구현 
+// 시간 업데이트
+function updateTime() {
+    const timeElement = document.getElementById('time');
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    timeElement.textContent = `${hours}:${minutes}`;
+}
+
+// // 1초마다 시간 업데이트
+// setInterval(updateTime, 1000);
+// updateTime();
+
+// // 배터리 상태 (가정: 80%로 고정, 실제 구현 시 navigator.getBattery() 사용 가능)
+// const batteryLevel = document.getElementById('battery-level');
+// batteryLevel.textContent = '80%';
+
+// // 로그인 폼 동작
+// document.getElementById('loginForm').addEventListener('submit', function(event) {
+//     event.preventDefault(); // 폼 제출 기본 동작 방지
+
+//     const email = document.getElementById('userEmail').value;
+//     const password = document.getElementById('userPw').value;
+
+//     // 간단한 유효성 검사
+//     if (!email || !password) {
+//         alert('이메일과 비밀번호를 모두 입력해주세요.');
+//         return;
+//     }
+
+//     // 콘솔에 입력값 출력 (실제로는 서버로 전송)
+//     console.log('로그인 시도:', { email, password });
+//     alert('로그인 버튼이 클릭되었습니다! 이메일: ' + email);
+// });
+
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
