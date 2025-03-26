@@ -4,105 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>룸메찾기_메인화면</title>
+    <link rel="stylesheet" href="./main.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+
+
 <body>
-    룸메 있어?<br>
-    <!-- [UserController]  login() => session.setAttribute("loginEmail", loginResult.getUserEmail());-->
-    session 값 확인: <p th:text="${session.loginEmail}"></p>
-    <a href="/mypage">마이페이지</a><br>
-    <input type="text" name="search" placeholder="검색어를 입력하세요."><br>
-	<button>룸메 찾기</button>  
-	<button>방찾기</button>
-	
-    <a href="/board/search">검색화면이동</a>
-	<a href="/board/new">게시글 작성</a>
-	
-	
-	
-<!--게시판 db에서 가지고 옴-->
+    
 
-<!-- 룸메이트 리스트 섹션 -->
-<div class="section-title">추천 룸메이트</div>
-<div class="roommate-list">
-     <!-- 룸메이트 카드 1 -->
-     <div class="roommate-card">
-        <div class="profile-img"></div>
-        <div class="roommate-info">
-            <div class="roommate-name">김민지</div>
-            <div class="roommate-tags">
-                <span class="tag">강남구</span>
-                <span class="tag">25세</span>
+    <div class="container">
+
+        <div class="write">
+            <div class="write-icon"><a href="/board/new"><i class="fa-solid fa-pen-to-square fa-xl" ></i></a></div>
+            <!-- <div class="nav-label"></div> -->
+        </div>
+
+
+
+       <div id="mainTitle"> 룸메 있어¿?</div>
+
+        <!-- [UserController]  login() => session.setAttribute("loginEmail", loginResult.getUserEmail());-->
+        
+        <div class="box-tf">    
+            <input type="text" class="tf-search" placeholder=" ">
+            <i class="fa-solid fa-magnifying-glass icon-search"></i>
+        </div>
+
+<!-- 룸메찾기/ 방찾기 탭메뉴  -->
+<div class="tab">
+    <ul class="tabnav">
+      <li><a href="#tab01">룸메찾기</a></li>
+      <li><a href="#tab02">방찾기</a></li>
+    </ul>
+    <div class="tabcontent">
+    <!-- 룸메이트 탭탭 -->
+      <div id="tab01">
+        <div class="roommate-list">
+            <!-- 룸메이트 카드 1 -->
+            <div class="roommate-card">
+                <div class="profile-img"></div>
+                <div class="roommate-info">
+                    <div class="roommate-name">이렇게는 못살아</div>
+                    <div class="roommate-tags">
+                        <span class="tag" >전라남도 목포시 중앙하이츠 </span><br>
+                        <span class="tag">예산 80만원/월월 </span>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="roommate-card">
+                <div class="profile-img"></div>
+                <div class="roommate-info">
+                    <div class="roommate-name">개미는뚠뚠오늘도</div>
+                    <div class="roommate-tags">
+                        <span class="tag">만 27세 </span><br>
+                        <span class="tag">예산 300~350만원 </span><br>
+                        <span class="tag">서울시 강남구</span>
+                    
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+        
+
+      </div>
+
+<!-- 방찾기 탭-->
+    <div id="tab02"> 
+
+        <div class="roommate-card">
+            <div class="profile-img"></div>
+            <div class="roommate-info">
+                <div class="roommate-name">퐈이아아</div>
+                <div class="roommate-tags">
+                    <span class="tag">목포시청부근 풀옵션션 </span><br>
+                    <span class="tag">월세 40만원 </span><br>
+                    
+                </div>
                 
             </div>
-            <div class="roommate-description">
-                 조용하고 깔끔한 생활을 지향합니다. 밤늦게 들어오는 경우가 많지만, 소음에 주의하는 편이에요. 주말에는 주로 외출합니다.
-            </div>
-             
         </div>
+
+
+
     </div>
 
-    <!-- 룸메이트 카드 2 -->
-    <div class="roommate-card">
-        <div class="profile-img"></div>
-        <div class="roommate-info">
-            <div class="roommate-name">이준호</div>
-            <div class="roommate-tags">
-                <span class="tag">서대문구</span>
-                <span class="tag">27세</span>
-                
-            </div>
-            <div class="roommate-description">
-                IT 회사에 다니고 있어요. 평일 저녁에는 주로 집에 있고, 주말에는 운동을 즐깁니다. 음주나 흡연은 하지 않아요.
-            </div>
-            
-        </div>
+      
     </div>
+  </div>
 
-    <!-- 룸메이트 카드 3 -->
-    <div class="roommate-card">
-        <div class="profile-img"></div>
-        <div class="roommate-info">
-            <div class="roommate-name">박서연</div>
-            <div class="roommate-tags">
-                <span class="tag">마포구</span>
-                <span class="tag">24세</span>
-                
-            </div>
-            <div class="roommate-description">
-                대학원에서 디자인을 전공하고 있어요. 조용한 환경을 선호하고, 깔끔한 편이에요. 취미는 그림 그리기와 요리입니다.
-            </div>
-             
-        </div>
-    </div>
-</div>
 
+
+        <!-- session 값 확인: <p th:text="${session.loginEmail}"></p><br>
+        <a href="/user/mypage">마이페이지 이동하기</a> -->
+        
+
+    
+    
+
+<!-- 순서대로 -->
 <!-- 하단 네비게이션 -->
 <nav class="bottom-nav">
     <div class="nav-item active">
-        <div class="nav-icon" ></div>
-        <div class="nav-label">홈</div>
+        <div class="nav-icon" ><a href="#"><i class="fa-solid fa-house"></i></a></div>
+        
+        <!-- <div class="nav-label"></div> -->
     </div>
     <div class="nav-item">
-        <div class="nav-icon"></div>
-        <div class="nav-label">검색</div>
+        <div class="nav-icon"><a href="/board/search"><i class="fa-solid fa-magnifying-glass"></i></a></div>
+        
     </div>
     <div class="nav-item">
-        <div class="nav-icon"></div>
-        <div class="nav-label">메시지</div>
+        <div class="nav-icon"><a href="#"><i class="fa-solid fa-envelope"></i></a></div>
+        <!-- <div class="nav-label"></div> -->
     </div>
 
     <div class="nav-item">
-        <div class="nav-icon"></div>
-        <div class="nav-label">알림</div>
+        <div class="nav-icon"><a href="#"><i class="fa-solid fa-bell"></i></a></div>
+        <!-- <div class="nav-label"></div> -->
     </div>
-
-
-
+    
     <div class="nav-item">
-        <div class="nav-icon"></div>
-        <div class="nav-label">마이</div>
+        <div class="nav-icon"><a href="#"><i class="fa-solid fa-user"></i></a></div>
+        <!-- <div class="nav-label"></div> -->
     </div>
 </nav>
+
+<!-- 플로팅 버튼 -->
+<div class="cta-button"><i class="fa-solid fa-arrow-up"></i></div>
+</div>
+</div>
+
+
+
+
+
+
+<script>
+
+$(function(){
+  $('.tabcontent > div').hide();
+  $('.tabnav a').click(function () {
+    $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+    $('.tabnav a').removeClass('active');
+    $(this).addClass('active');
+    return false;
+  }).filter(':eq(1)').click();
+  });
+</script>
 
 
 </body>
