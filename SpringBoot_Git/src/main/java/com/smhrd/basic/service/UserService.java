@@ -81,7 +81,6 @@ public class UserService {
 		}else {
 			return null;
 		}
-		
 	
 	}
 
@@ -103,7 +102,12 @@ public class UserService {
 		Optional<UserEntity> optionalUserEntity = userRepository.findByUserEmail(userEmail);
 		return UserDTO.toUserDTO(optionalUserEntity.get());
 	}
-
-    
  
 }
+
+
+
+
+
+
+

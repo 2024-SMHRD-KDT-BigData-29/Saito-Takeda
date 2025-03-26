@@ -3,10 +3,13 @@ package com.smhrd.basic.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.smhrd.basic.entity.BoardEntity;
+import com.smhrd.basic.entity.ProfileEntity;
 
 @Repository
-public interface BoardRepositroy extends JpaRepository<BoardEntity, Integer>{
+public interface MypageRepository extends JpaRepository<ProfileEntity, String> {
 
-
+	
+	
+	
+	
 }

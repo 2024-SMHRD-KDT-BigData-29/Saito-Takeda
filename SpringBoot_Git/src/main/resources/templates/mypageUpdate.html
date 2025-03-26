@@ -7,12 +7,18 @@
 </head>
 <body>
 <form action="/mypage/update" method="post">
-<!-- type="hidden" 사용자에게 보이지않음 					readonly 말그대로 읽기 전용 -->
-  <input type="hidden" th:value="${updateUser.idx}" name="idx"><br>
+  <input type="hidden" name="idx"><br>
+  이메일: <input type="text" name="userEmail" readonly> <br>
+  비밀번호: <input type="text" name="userPassword"> <br>
+  이름: <input type="text" name="userName"> <br>
+  <input type="submit" value="정보수정">
+  
+  <!-- type="hidden" 사용자에게 보이지않음 					readonly 말그대로 읽기 전용 -->
+  <!-- <input type="hidden" th:value="${updateUser.idx}" name="idx"><br>
   이메일: <input type="text" th:value="${updateUser.userEmail}" name="userEmail" readonly> <br>
   비밀번호: <input type="text" th:value="${updateUser.userPassword}" name="userPassword"> <br>
   이름: <input type="text" th:value="${updateUser.userName}" name="userName"> <br>
-  <input type="submit" value="정보수정">
+  <input type="submit" value="정보수정"> -->
 </form>
 </body>
 </html>
