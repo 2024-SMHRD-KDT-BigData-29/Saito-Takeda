@@ -1,14 +1,8 @@
 package com.smhrd.basic.controller;
 
-<<<<<<< HEAD
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-=======
->>>>>>> branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
 
-<<<<<<< HEAD
-@Controller
-=======
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -26,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor	// 생성자 주입 어노테이션
->>>>>>> branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
 public class UserController {
 	// 생성자 주입
 	private final UserService userService;
@@ -34,13 +27,8 @@ public class UserController {
 	
 	
 	// 회원가입 페이지 출력 요청
-    @GetMapping("/user/save")
-<<<<<<< HEAD
-	public String index() {
-		
-=======
+    @GetMapping("/user/save")		
 	public String saveForm() {
->>>>>>> branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
 		return "userSave";
 	}
     
