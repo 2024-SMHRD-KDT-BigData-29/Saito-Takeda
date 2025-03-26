@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시글 작성</title>
+</head>
+<body>
+    <h1>게시글 작성</h1>
+    <form th:action="@{/boards}" method="post" enctype="multipart/form-data">
+        <input type="text" name="bTitle" th:field="*{bTitle}" placeholder="제목">
+        <textarea name="bContent" th:field="*{bContent}" placeholder="내용"></textarea>
+        <input type="text" name="bType" th:field="*{bType}" placeholder="유형 (room/mate)">
+        <input type="text" name="bwriter" th:field="*{bwriter}" placeholder="작성자 이메일">
+        <input type="file" name="file" accept="image/*"> <!-- 파일 업로드 필드 -->
+        <button type="submit">저장</button>
+    </form>
+</body>
+</html>

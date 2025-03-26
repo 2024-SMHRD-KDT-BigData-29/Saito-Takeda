@@ -55,24 +55,5 @@ public class UserDTO {
     // 사용자 닉네임 
     private String userNickname;
     
-    public static UserDTO toUserDTO(UserEntity userEntity) {
-		UserDTO userDTO = new UserDTO();
-		
-		userDTO.setUserIdx(0);
-		userDTO.setUserEmail(userEntity.getUserEmail());
-		userDTO.setUserPw(userEntity.getUserPw());
-		userDTO.setUserName(userEntity.getUserName());
-		userDTO.setUserGender(userEntity.getUserGender());
-		userDTO.setUserRegnum(userEntity.getUserRegnum());
-		userDTO.setUserAddr(userEntity.getUserAddr());
-//		userDTO.setUserStatus(userEntity.getUserStatus());
-		userDTO.setUserNickname(userEntity.getUserNickname());
-		
-    	
-    	
-    	return userDTO;
-	}
-
-
 	
 }

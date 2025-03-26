@@ -2,6 +2,8 @@ package com.smhrd.basic.dto;
 
 import java.sql.Timestamp;
 
+import com.smhrd.basic.entity.CommentEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +21,7 @@ public class CommentDTO {
     private int cmtIdx;
 
     // 원글 식별자 
-    private int bIdx;
+    private int bidx;
 
     // 댓글 내용 
     private String cmtContent;
@@ -29,6 +31,18 @@ public class CommentDTO {
 
     // 댓글 작성자 
     private String userEmail;
+    
+    
+    
+    public CommentDTO toDto(CommentEntity entity) {
+        return new CommentDTO(
+            entity.getCmtIdx(),
+            entity.getBidx(),
+            entity.getCmtContent(),
+            entity.getCreatedAt(),
+            entity.getUserEmail()
+        );
+    }
 
     
 	

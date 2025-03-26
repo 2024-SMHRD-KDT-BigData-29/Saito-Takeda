@@ -1,8 +1,6 @@
 package com.smhrd.basic.entity;
 
 
-import org.hibernate.annotations.ColumnDefault;
-
 import com.smhrd.basic.dto.UserDTO;
 
 import jakarta.persistence.Column;

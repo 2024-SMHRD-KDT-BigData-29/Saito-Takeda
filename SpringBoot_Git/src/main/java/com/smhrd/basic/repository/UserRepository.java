@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.smhrd.basic.entity.BoardEntity;
 import com.smhrd.basic.entity.UserEntity;
 
 // 이메일로 회원 정보 조회
@@ -17,7 +18,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer>{
 	
 	Optional<UserEntity> findByUserEmail(String userEmail);
 
-	Optional<UserEntity> findByUserIdx(Integer userIdx);
+
+	void save(BoardEntity board);
+
 
 
 

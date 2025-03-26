@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>프로필 수정</title>
+</head>
+<body>
+    <h1>프로필 수정</h1>
+    <form th:action="@{/mypage/profile}" method="post" th:object="${profile}" enctype="multipart/form-data">
+        <input type="hidden" name="userEmail" th:field="*{userEmail}">
+        <label>소개</label>
+        <textarea name="userIntroduction" th:field="*{userIntroduction}"></textarea>
+        <label>파트너 MBTI</label>
+        <input type="text" name="partnerMbti" th:field="*{partnerMbti}">
+        <label>프로필 이미지</label>
+        <input type="file" name="profileFile" accept="image/*">
+        <button type="submit">저장</button>
+    </form>
+</body>
+</html>

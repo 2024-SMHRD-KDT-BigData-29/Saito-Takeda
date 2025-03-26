@@ -1,17 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
 </head>
 <body>
-	<h1>마이페이지</h1><br>
-	<h2>이건나오니?</h2>
-    <a href="#">내 정보 수정하기</a>
-    <a href="#">내 프로필 수정하기</a>
-    <a href="#">내 게시글 보기</a>
-    <a href="#">찜한 게시글 보기</a>
-    <a href="#">신고</a>
+    <h1>마이페이지</h1>
+    <h2>유저 정보</h2>
+    <p>이메일: <span th:text="${user.userEmail}"></span></p>
+    <p>이름: <span th:text="${user.userName}"></span></p>
+    <p>닉네임: <span th:text="${user.userNickname}"></span></p>
+    <a th:href="@{/mypage/update}">정보 수정</a>
+
+    <h2>프로필</h2>
+    <p>소개: <span th:text="${profile.userIntroduction} ?: '미설정'}"></span></p>
+    <p>파트너 MBTI: <span th:text="${profile.partnerMbti} ?: '미설정'}"></span></p>
+    <p>프로필 이미지: <img th:src="${profile.profileImg}" th:unless="${profile.profileImg == null}" alt="프로필 이미지"></p>
+    <a th:href="@{/mypage/profile}">프로필 수정</a>
+
+    <h2>찜한 게시글</h2>
+    <ul>
+        <li th:each="board : ${favoriteBoards}">
+            <a th:href="@{/boards/{bIdx}(bIdx=${board.bIdx})}" th:text="${board.bTitle}"></a>
+        </li>
+        <li th:unless="${#lists.isEmpty(favoriteBoards)}" th:text="'찜한 게시글이 없습니다.'"></li>
+    </ul>
 </body>
 </html>
