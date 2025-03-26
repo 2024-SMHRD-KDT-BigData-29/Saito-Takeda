@@ -3,22 +3,26 @@ package com.smhrd.basic.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.smhrd.basic.service.UserService;
 
-//@RequiredArgsConstructor
+import lombok.RequiredArgsConstructor;
+
+
+@RequiredArgsConstructor
 @Controller
 public class MypageController {
 	
 	// 생성자 주입
-//	private final UserService userService;
+	private final UserService userService;
 	
 	@GetMapping("/mypage")
 	public String mypageForm() {
-		return "mypage";
+		return "myPage";
 	}
 	
 	@GetMapping("/mypage/update")
 	public String mypageUpdateForm() {
-		return "mypageUpdate";
+		return "myPageUpdate";
 	}
 	
 	
