@@ -19,12 +19,12 @@ public class MypageController {
 	// 생성자 주입
 	private final UserService userService;
 	
-	@GetMapping("/mypage")
+	@GetMapping("/user/mypage")
 	public String mypageForm() {
 		return "mypage";
 	}
 	
-	@GetMapping("/mypage/update")
+	@GetMapping("/user/mypage/update")
 	public String mypageUpdateForm(HttpSession session, Model model) {
 		String myEmail = (String) session.getAttribute("loginEmail");
 		UserDTO userDTO = userService.mypageUpdateForm(myEmail);
@@ -33,11 +33,11 @@ public class MypageController {
 		return "mypageUpdate";
 	}
 	
-	@PostMapping("/mypage/update")
+	@PostMapping("/user/mypage/update")
 	public String update(@ModelAttribute UserDTO userDTO) {
 		userService.update(userDTO);
 		
-		return "redirect:/mypage/"+userDTO.getUserIdx();
+		return "redirect:/user/mypage/"+userDTO.getUserIdx();
 	}
 	
 }
