@@ -81,7 +81,6 @@ public class UserService {
 		}else {
 			return null;
 		}
-		
 	
 	}
 
@@ -99,6 +98,16 @@ public class UserService {
 		userRepository.save(UserEntity.toUpdateUserEntity(userDTO));
 	}
 
-    
+	public UserDTO findByUserEmail(String userEmail) {
+		Optional<UserEntity> optionalUserEntity = userRepository.findByUserEmail(userEmail);
+		return UserDTO.toUserDTO(optionalUserEntity.get());
+	}
  
 }
+
+
+
+
+
+
+

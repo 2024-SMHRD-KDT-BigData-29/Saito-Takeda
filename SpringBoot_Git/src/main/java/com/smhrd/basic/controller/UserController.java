@@ -1,15 +1,12 @@
 package com.smhrd.basic.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.smhrd.basic.dto.UserDTO;
@@ -77,13 +74,7 @@ public class UserController {
     	return "list";
     }
     
-    @GetMapping("/user/{idx}")
-    public String findByUserIdx(@PathVariable Integer idx, Model model) {
-    	UserDTO userDTO = userService.findByUserIdx(idx);
-    	model.addAttribute("user", userDTO);
-    	
-    	return "myDetail";
-    }
+    
     
     
     
