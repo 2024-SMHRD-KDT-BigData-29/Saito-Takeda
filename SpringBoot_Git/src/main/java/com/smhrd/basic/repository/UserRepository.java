@@ -14,12 +14,15 @@ import com.smhrd.basic.entity.UserEntity;
 // Optional은 주로 JPA 쿼리문을 통해 DB에서 데이터를 호출할때 만약 데이터가 없을때 null값을 피하기 위해 사용한다.
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer>{
+public interface UserRepository extends JpaRepository<UserEntity, String>{
 	
 	Optional<UserEntity> findByUserEmail(String userEmail);
 
+	UserEntity findByUserEmailAndUserPw(String userEmail, String userPw);
 
 	void save(BoardEntity board);
+
+
 
 
 

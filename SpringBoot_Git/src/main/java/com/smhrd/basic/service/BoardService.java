@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.smhrd.basic.dto.BoardDTO;
+import com.smhrd.basic.dto.ProfileDTO;
 import com.smhrd.basic.entity.BoardEntity;
 import com.smhrd.basic.entity.FavoriteEntity;
 import com.smhrd.basic.repository.BoardRepositroy;
@@ -27,17 +28,27 @@ public class BoardService {
     private BoardRepositroy boardRepository;
 
     @Autowired
+    private ProfileService profileService;
+    
+    @Autowired
     private FavoriteRepository favoriteRepository;
+    
     
  // 파일 저장 경로 
     private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
 
-    // 게시글 작성
+ // 게시글 작성 (파일 업로드 포함)
     @Transactional
-    public BoardDTO createBoard(BoardDTO boardDTO) throws IOException {
-        // 파일 업로드 처리
+    public BoardDTO createBoardWithFile(BoardDTO boardDTO) throws IOException {
+        // 파일 업로드 처리 (bfile)
         String filePath = saveFile(boardDTO.getFile());
         boardDTO.setBfile(filePath);
+
+        // 방 찾기용 사진 업로드 처리 (userPhoto)
+        if (boardDTO.getBtype().equals("mate") && boardDTO.getUserPhotoFile() != null && !boardDTO.getUserPhotoFile().isEmpty()) {
+            String userPhotoPath = saveFile(boardDTO.getUserPhotoFile());
+            boardDTO.setUserPhoto(userPhotoPath);
+        }
 
         // DTO -> Entity 변환 및 저장
         BoardEntity entity = dtoToEntity(boardDTO);
@@ -48,26 +59,25 @@ public class BoardService {
         return entityToDto(savedEntity);
     }
     
-    // 파일 저장 로직
+ // 회원 프로필 정보 조회
+    public ProfileDTO getUserProfile(String userEmail) {
+        return profileService.findByUserEmail(userEmail);
+    }
+    
+ // 파일 저장 로직
     private String saveFile(MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) {
             return null;
         }
-
-        // 고유한 파일명 생성 (중복 방지)
         String originalFilename = file.getOriginalFilename();
         String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
         String savedFileName = UUID.randomUUID().toString() + fileExtension;
-
-        // 파일 저장
         File uploadDir = new File(UPLOAD_DIR);
         if (!uploadDir.exists()) {
-            uploadDir.mkdirs(); // 디렉토리 없으면 생성
+            uploadDir.mkdirs();
         }
         File destFile = new File(UPLOAD_DIR + savedFileName);
         file.transferTo(destFile);
-
-        // 웹에서 접근 가능한 경로 반환
         return "/uploads/" + savedFileName;
     }
 
@@ -146,7 +156,7 @@ public class BoardService {
         }
     }
 
-    // DTO -> Entity 변환
+ // DTO -> Entity 변환
     private BoardEntity dtoToEntity(BoardDTO dto) {
         BoardEntity entity = new BoardEntity();
         entity.setBidx(dto.getBidx());
@@ -158,10 +168,17 @@ public class BoardService {
         entity.setBviews(dto.getBviews());
         entity.setBlikes(dto.getBlikes());
         entity.setUserEmail(dto.getBwriter());
+        // 룸메 찾기용 필드
+        entity.setMonthlyRent(dto.getMonthlyRent());
+        entity.setManagementFee(dto.getManagementFee());
+        entity.setHouseType(dto.getHouseType());
+        // 방 찾기용 필드
+        entity.setBudget(dto.getBudget());
+        entity.setUserPhoto(dto.getUserPhoto());
         return entity;
     }
 
-    // Entity -> DTO 변환
+ // Entity -> DTO 변환
     private BoardDTO entityToDto(BoardEntity entity) {
         return new BoardDTO(
                 entity.getBidx(),
@@ -169,11 +186,17 @@ public class BoardService {
                 entity.getBtitle(),
                 entity.getBcontent(),
                 entity.getBfile(),
-                null, // file 필드는 Entity에 없고 넘어가서도 안됨
+                null, // file은 조회 시 필요 없음
                 entity.getCreatedAt(),
                 entity.getBviews(),
                 entity.getBlikes(),
-                entity.getUserEmail()
+                entity.getUserEmail(),
+                entity.getMonthlyRent(),
+                entity.getManagementFee(),
+                entity.getHouseType(),
+                entity.getBudget(),
+                entity.getUserPhoto(),
+                null // userPhotoFile은 조회 시 필요 없음
         );
     }
     
@@ -184,6 +207,13 @@ public class BoardService {
                 .map(FavoriteEntity::getBidx)
                 .collect(Collectors.toList());
         return boardRepository.findAllById(boardIds).stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+ // 게시글 목록 조회
+    public List<BoardDTO> findAll() {
+        return boardRepository.findAll().stream()
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
     }

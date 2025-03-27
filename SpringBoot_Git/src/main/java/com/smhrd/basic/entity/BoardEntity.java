@@ -54,6 +54,23 @@ public class BoardEntity {
     // 글 작성자 
 	@Column(nullable = false, length = 50)
     private String userEmail;
+	
+	// 룸메찾기용 추가 필드
+    @Column(nullable = true)
+    private Integer monthlyRent;
+
+    @Column(nullable = true)
+    private Integer managementFee;
+
+    @Column(nullable = true, length = 50)
+    private String houseType;
+
+    // 방찾기용 추가 필드
+    @Column(nullable = true)
+    private Integer budget;
+
+    @Column(nullable = true, length = 1000)
+    private String userPhoto;
 
 
 }

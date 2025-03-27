@@ -22,8 +22,6 @@ public class UserDTO {
 
     // 사용자 이메일 
     private String userEmail;
-    
-    private int userIdx;
 
     // 사용자 비밀번호 
     private String userPw;
@@ -54,6 +52,7 @@ public class UserDTO {
 
     // 사용자 닉네임 
     private String userNickname;
+    
     
 	
 }

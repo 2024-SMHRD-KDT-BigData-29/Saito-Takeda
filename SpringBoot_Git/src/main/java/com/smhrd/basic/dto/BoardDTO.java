@@ -52,6 +52,16 @@ public class BoardDTO {
 
     // 글 작성자 
     private String bwriter;
+    
+ // 룸메찾기용 추가 필드
+    private Integer monthlyRent; // 월세
+    private Integer managementFee; // 관리비
+    private String houseType; // 집의 형태 (예: 아파트, 오피스텔, 원룸)
+
+    // 방찾기용 추가 필드
+    private Integer budget; // 한달 희망 예산
+    private String userPhoto; // 자신의 사진 경로
+    private MultipartFile userPhotoFile; // 자신의 사진 업로드용
 
 
 }

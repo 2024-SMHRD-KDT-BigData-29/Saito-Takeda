@@ -28,7 +28,7 @@ public class BoardRestController {
     // 게시글 작성
     @PostMapping
     public ResponseEntity<BoardDTO> createBoard(@RequestBody BoardDTO boardDTO) throws IOException {
-        BoardDTO savedBoard = boardService.createBoard(boardDTO);
+        BoardDTO savedBoard = boardService.createBoardWithFile(boardDTO);
         return ResponseEntity.ok(savedBoard);
     }
 
@@ -41,30 +41,30 @@ public class BoardRestController {
 
     // 게시글 목록 조회 (유형별)
     @GetMapping("/type/{btype}")
-    public ResponseEntity<List<BoardDTO>> getBoardsByType(@PathVariable String bType) {
-        List<BoardDTO> boards = boardService.getBoardsByType(bType);
+    public ResponseEntity<List<BoardDTO>> getBoardsByType(@PathVariable String btype) {
+        List<BoardDTO> boards = boardService.getBoardsByType(btype);
         return ResponseEntity.ok(boards);
     }
 
     // 게시글 수정
     @PutMapping("/{bidx}")
-    public ResponseEntity<BoardDTO> updateBoard(@PathVariable int bIdx, @RequestBody BoardDTO boardDTO, 
+    public ResponseEntity<BoardDTO> updateBoard(@PathVariable int bidx, @RequestBody BoardDTO boardDTO, 
                                                 @RequestParam String userEmail) throws IOException {
-        BoardDTO updatedBoard = boardService.updateBoard(bIdx, boardDTO, userEmail);
+        BoardDTO updatedBoard = boardService.updateBoard(bidx, boardDTO, userEmail);
         return ResponseEntity.ok(updatedBoard);
     }
 
     // 게시글 삭제
     @DeleteMapping("/{bidx}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable int bIdx, @RequestParam String userEmail) {
-        boardService.deleteBoard(bIdx, userEmail);
+    public ResponseEntity<Void> deleteBoard(@PathVariable int bidx, @RequestParam String userEmail) {
+        boardService.deleteBoard(bidx, userEmail);
         return ResponseEntity.noContent().build();
     }
 
     // 게시글 찜하기/취소
     @PostMapping("/{bidx}/favorite")
-    public ResponseEntity<Boolean> toggleFavorite(@PathVariable int bIdx, @RequestParam String userEmail) {
-        boolean isFavorited = boardService.toggleFavorite(bIdx, userEmail);
+    public ResponseEntity<Boolean> toggleFavorite(@PathVariable int bidx, @RequestParam String userEmail) {
+        boolean isFavorited = boardService.toggleFavorite(bidx, userEmail);
         return ResponseEntity.ok(isFavorited);
     }
 }
