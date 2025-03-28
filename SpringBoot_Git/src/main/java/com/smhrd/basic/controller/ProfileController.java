@@ -88,4 +88,5 @@ public class ProfileController {
         profileService.save(profileDTO);
         return "redirect:/board";
     }
+    //
 }

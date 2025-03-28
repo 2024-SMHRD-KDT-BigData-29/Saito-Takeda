@@ -28,6 +28,6 @@ public class FavoriteEntity {
 
     @Column(nullable = false, length = 50)
     private String userEmail; // 찜한 사용자 이메일
-    
+    //
     
 }

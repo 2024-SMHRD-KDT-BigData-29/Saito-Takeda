@@ -8,4 +8,6 @@ import com.smhrd.basic.entity.ProfileEntity;
 public interface ProfileRepository extends JpaRepository<ProfileEntity, String> {
 
     ProfileEntity findByUserEmail(String userEmail);
+    
+    //
 }

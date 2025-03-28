@@ -51,4 +51,5 @@ public class ProfileEntity {
         profileEntity.setLifestyle(profileDTO.getLifestyle());
         return profileEntity;
     }
+    //
 }

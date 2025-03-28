@@ -18,4 +18,6 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
 
     // 특정 게시글의 댓글 수 조회 (필요 시 사용)
     long countByBidx(int bIdx);
+    
+    //
 }

@@ -32,6 +32,8 @@ public class SessionDTO {
 
     // 기기 정보 
     private String macAddr;
+    
+    //
 
 
 }

@@ -35,4 +35,6 @@ public class MessageDTO {
 	
 	// 읽음 여부
 	private String isRead;
+	
+	//
 }

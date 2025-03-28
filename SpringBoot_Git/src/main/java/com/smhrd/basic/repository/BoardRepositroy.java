@@ -18,5 +18,7 @@ public interface BoardRepositroy extends JpaRepository<BoardEntity, Integer>{
 
     // 글 유형으로 게시글 조회
     List<BoardEntity> findByBtype(String bType);
+    
+    //
 	
 }

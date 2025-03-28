@@ -52,4 +52,6 @@ public class CommentEntity {
     // @ManyToOne
     // @JoinColumn(name = "userEmail", insertable = false, updatable = false)
     // private UserEntity user;
+    
+    //
 }

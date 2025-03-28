@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping
 public class MessageController {
+<<<<<<< HEAD
 
     @Autowired
     private MessageService messageService;
@@ -65,4 +66,9 @@ public class MessageController {
     }
 
     
+=======
+	
+	//
+	
+>>>>>>> branch 'master' of https://github.com/2024-SMHRD-KDT-BigData-29/Saito-Takeda.git
 }

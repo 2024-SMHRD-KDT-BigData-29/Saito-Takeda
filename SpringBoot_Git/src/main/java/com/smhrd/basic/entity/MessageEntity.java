@@ -36,4 +36,5 @@ public class MessageEntity {
 	
 	@Column(nullable = true, length = 1)
 	private String isRead;
+	//
 }

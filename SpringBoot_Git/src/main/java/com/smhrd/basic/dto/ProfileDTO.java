@@ -38,5 +38,7 @@ public class ProfileDTO {
     private String sn; // S 또는 N
     private String ft; // F 또는 T
     private String jp; // J 또는 P
+    
+    //
 	
 }
