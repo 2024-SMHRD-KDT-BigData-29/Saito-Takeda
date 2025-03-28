@@ -1,5 +1,14 @@
 package com.smhrd.basic.service;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.smhrd.basic.dto.BoardDTO;
 import com.smhrd.basic.dto.ProfileDTO;
 import com.smhrd.basic.dto.UserDTO;
@@ -7,13 +16,6 @@ import com.smhrd.basic.entity.BoardEntity;
 import com.smhrd.basic.entity.FavoriteEntity;
 import com.smhrd.basic.repository.BoardRepository;
 import com.smhrd.basic.repository.FavoriteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BoardService {
@@ -104,7 +106,7 @@ public class BoardService {
     @Transactional
     public boolean toggleFavorite(int bidx, String userEmail) {
         BoardEntity board = boardRepository.findById(bidx).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-        FavoriteEntity favorite = favoriteRepository.findByUserEmailAndBidx(userEmail, bidx);
+        Optional<FavoriteEntity> favorite = favoriteRepository.findByUserEmailAndBidx(userEmail, bidx);
         if (favorite == null) {
             FavoriteEntity newFavorite = new FavoriteEntity();
             newFavorite.setUserEmail(userEmail);
@@ -117,15 +119,20 @@ public class BoardService {
         }
     }
 
-    @Transactional
     public List<BoardDTO> findFavoriteBoards(String userEmail) {
-        List<FavoriteEntity> favorites = favoriteRepository.findByUserEmail(userEmail);
-        return favorites.stream()
-                .map(favorite -> boardRepository.findById(favorite.getBidx()).orElse(null))
-                .filter(entity -> entity != null)
-                .map(this::entityToDtoWithProfile)
+        // 사용자가 찜한 게시글의 bidx 목록 조회
+    	List<FavoriteEntity> favorites = favoriteRepository.findByUserEmail(userEmail);
+        List<Integer> bidxList = favorites.stream()
+                .map(FavoriteEntity::getBidx)
+                .collect(Collectors.toList());
+
+        // bidx로 게시글 조회
+        return boardRepository.findByBidxIn(bidxList)
+                .stream()
+                .map(BoardDTO::fromEntity)
                 .collect(Collectors.toList());
     }
+
 
     private BoardDTO entityToDtoWithProfile(BoardEntity entity) {
         BoardDTO boardDTO = new BoardDTO();

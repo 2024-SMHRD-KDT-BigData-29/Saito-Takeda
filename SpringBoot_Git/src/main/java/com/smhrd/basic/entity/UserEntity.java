@@ -22,7 +22,7 @@ public class UserEntity {
 //    private Integer userIdx;
     
 	@Id
-    @Column(nullable = false, length = 50)
+    @Column(name = "user_email", nullable = false, length = 50)
     private String userEmail;
     
     @Column(nullable = false, length = 255)
@@ -30,9 +30,6 @@ public class UserEntity {
     
     @Column(nullable = false, length = 50)
     private String userName;
-    
-//    @Column(nullable = true, length = 20)
-//    private String userPhone;
     
     @Column(nullable = false, length = 1)
     private String userGender;
@@ -43,14 +40,8 @@ public class UserEntity {
     @Column(nullable = false, length = 500)
     private String userAddr;
     
-//    @Column(nullable = true, length = 10)
-//    private String userStatus;
-    
     @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'u'")
     private String userRole = "u";
-    
-//    @Column(nullable = true)
-//    private Timestamp joinedAt;
     
     @Column(nullable = false, length = 20)
     private String userNickname;

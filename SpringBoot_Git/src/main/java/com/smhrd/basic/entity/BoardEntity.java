@@ -71,6 +71,10 @@ public class BoardEntity {
     
     @Column(name = "criminal_record", length = 255)
     private String criminalRecordPath;
+    
+    @ManyToOne
+    @JoinColumn(name = "b_writer", insertable = false, updatable = false)
+    private UserEntity user;
 
     public static BoardEntity toBoardEntity(BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();

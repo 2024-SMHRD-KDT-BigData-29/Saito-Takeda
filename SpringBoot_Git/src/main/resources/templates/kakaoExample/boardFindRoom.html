@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글_방찾기</title>
+    <!-- Font Awesome CDN 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            font-size: 24px;
+            color: #666; /* 연한 검정색 */
+            margin-bottom: 10px;
+        }
+        hr {
+            border: solid 1px #ddd;
+            margin: 20px 0;
+        }
+        .post-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .profile-img {
+            width: 60px; /* 크기 조정: 80px -> 60px */
+            height: 60px;
+            border-radius: 50%; /* 원형으로 변경 */
+            margin-right: 15px;
+            flex-shrink: 0;
+            object-fit: cover; /* 이미지 비율 유지 */
+        }
+        .post-details p {
+            margin: 8px 0;
+            color: #555;
+        }
+        .post-details strong {
+            color: #333;
+            font-weight: bold;
+        }
+        .comment-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .comment-input {
+            width: calc(100% - 80px);
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .comment-submit {
+            padding: 10px 20px;
+            background-color: #FFEB3B; /* 부드러운 노란색 */
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .comment-submit:hover {
+            background-color: #FFD700; /* 호버 시 약간 어두운 노란색 */
+        }
+        .comment-list {
+            margin-top: 20px;
+        }
+        .comment-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .comment-item button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+            color: #ccc; /* 기본 회색 하트 */
+        }
+        .comment-item button:hover {
+            color: #FFB6C1; /* 호버 시 연한 핑크 */
+        }
+        .comment-item span {
+            margin-left: 5px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            .post-container {
+                padding: 15px;
+                flex-direction: column; /* 모바일에서 세로 정렬 */
+            }
+            .profile-img {
+                width: 50px; /* 모바일에서 더 작게 */
+                height: 50px;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .comment-input {
+                width: calc(100% - 60px);
+                font-size: 12px;
+            }
+            .comment-submit {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .comment-item {
+                font-size: 14px;
+            }
+            .comment-item button {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>방구해요</h1>
+    <div class="post-container">
+        <img src="images/profile.jpg" class="profile-img" alt="프로필 이미지">
+        <div class="post-details">
+            <p><strong>내용:</strong> 게시글의 내용을 옮겨오자!</p>
+            <p><strong>반려동물 여부:</strong> <!-- 데이터 삽입 --></p>
+            <p><strong>흡연여부:</strong> <!-- 데이터 삽입 --></p>
+            <p><strong>예산:</strong> <!-- 데이터 삽입 --></p>
+            <p><strong>MBTI:</strong> <!-- 데이터 삽입 --></p>
+            <p><strong>생활패턴:</strong> <!-- 데이터 삽입 --></p>
+        </div>
+    </div>
+
+    <div class="comment-section">
+        <input type="text" class="comment-input" id="commentInput" name="comment" placeholder="댓글 작성">
+        <button class="comment-submit" onclick="addComment()">등록</button>
+        <div class="comment-list" id="commentList">
+            <div class="comment-item">
+                댓글리스트 1 좋군요!! 
+                <button onclick="increase(1)"><i class="far fa-heart"></i></button>
+                <span id="num1">0</span>
+            </div>
+            <div class="comment-item">
+                댓글리스트 2 좋군요!! 
+                <button onclick="increase(2)"><i class="far fa-heart"></i></button>
+                <span id="num2">0</span>
+            </div>
+            <div class="comment-item">
+                댓글리스트 3 좋군요!! 
+                <button onclick="increase(3)"><i class="far fa-heart"></i></button>
+                <span id="num3">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 좋아요 버튼 기능
+        function increase(numId) {
+            var numElement = document.getElementById('num' + numId);
+            var currentValue = parseInt(numElement.innerText);
+            numElement.innerText = currentValue + 1;
+            var button = document.querySelector(`.comment-item:nth-child(${numId}) button`);
+            button.innerHTML = '<i class="fas fa-heart"></i>'; // 채워진 하트
+            button.style.color = '#FFB6C1'; // 연한 핑크
+        }
+
+        // 댓글 추가 기능
+        let commentCounter = 4; // 기존 댓글(1~3) 다음 번호부터 시작
+        function addComment() {
+            const commentInput = document.getElementById('commentInput');
+            const commentText = commentInput.value.trim();
+
+            if (commentText === '') {
+                alert('댓글을 입력해주세요!');
+                return;
+            }
+
+            const commentList = document.getElementById('commentList');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment-item';
+            newComment.innerHTML = `
+                ${commentText} 
+                <button onclick="increase(${commentCounter})"><i class="far fa-heart"></i></button>
+                <span id="num${commentCounter}">0</span>
+            `;
+
+            commentList.appendChild(newComment);
+            commentInput.value = ''; // 입력창 초기화
+            commentCounter++; // 다음 댓글을 위한 카운터 증가
+        }
+    </script>
+</body>
+</html>

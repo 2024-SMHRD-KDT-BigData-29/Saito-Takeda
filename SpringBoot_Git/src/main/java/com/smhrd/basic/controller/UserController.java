@@ -28,9 +28,9 @@ public class UserController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/user/login")
+    @GetMapping("/")
     public String loginForm() {
-        return "index";
+        return "user/login";
     }
 
     @PostMapping("/user/login")
@@ -49,7 +49,7 @@ public class UserController {
             ProfileDTO profileDTO = profileService.findByUserEmail(userEmail);
             if (profileDTO == null || profileDTO.getUserMbti() == null || profileDTO.getUserMbti().isEmpty()) {
                 System.out.println("프로필 데이터 없음 또는 MBTI 미설정: " + userEmail + " -> profileEdit.html로 이동");
-                return "redirect:/mypage/profileEdit";
+                return "redirect:/mypage/update";
             } else {
                 System.out.println("프로필 데이터 및 MBTI 설정됨: " + userEmail + " -> main.html로 이동");
                 return "redirect:/main";
@@ -61,6 +61,7 @@ public class UserController {
         }
     }
 
+    // 로그인 세션 확인 후 이동
     @GetMapping("/main")
     public String mainPage(Model model, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");

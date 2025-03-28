@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.smhrd.basic.dto.BoardDTO;
 import com.smhrd.basic.service.BoardService;
+import com.smhrd.basic.service.FavoriteService;
 import com.smhrd.basic.service.ProfileService;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,7 +29,11 @@ public class BoardController {
     
     @Autowired
     private ProfileService profileService;
+    
+    @Autowired
+    private FavoriteService favoriteService;
 
+    // 게시글 작성
     @GetMapping("/form")
     public String writeForm(Model model, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");
@@ -41,6 +46,7 @@ public class BoardController {
         return "board/form";
     }
 
+    // 게시글 작성처리
     @PostMapping("/form")
     public String saveBoard(@ModelAttribute BoardDTO boardDTO, HttpSession session, Model model) throws IOException {
         String loginEmail = (String) session.getAttribute("loginEmail");
@@ -119,6 +125,7 @@ public class BoardController {
         }
     }
 
+    // 게시글 목록가기
     @GetMapping("/list")
     public String listBoards(Model model, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");
@@ -133,6 +140,7 @@ public class BoardController {
         return "board/list";
     }
 
+    // 게시글 클릭해서 보기
     @GetMapping("/detail/{bidx}")
     public String boardDetail(@PathVariable("bidx") int bidx, Model model, HttpSession session) {
         BoardDTO boardDTO = boardService.findByBidx(bidx);
@@ -145,6 +153,7 @@ public class BoardController {
         return "board/detail";
     }
 
+    // 게시글 수정하기
     @GetMapping("/edit/{bidx}")
     public String editForm(@PathVariable("bidx") int bidx, Model model, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");
@@ -159,6 +168,7 @@ public class BoardController {
         return "board/edit";
     }
 
+    // 게시글 수정처리
     @PostMapping("/edit/{bidx}")
     public String updateBoard(@PathVariable("bidx") int bidx, @ModelAttribute BoardDTO boardDTO, HttpSession session, Model model) throws IOException {
         String loginEmail = (String) session.getAttribute("loginEmail");
@@ -215,6 +225,7 @@ public class BoardController {
         }
     }
 
+    // 게시글 삭제
     @PostMapping("/delete/{bidx}")
     public String deleteBoard(@PathVariable("bidx") int bidx, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");
@@ -225,6 +236,29 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    // 찜한 게시글 GetMapping이 없음
+    @GetMapping("/favoriteBoard/{favoriteIdx}")
+    public String favoriteBoard(@PathVariable("favoriteIdx") Integer favoriteIdx, HttpSession session) {
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail == null) {
+            return "redirect:/user/login";
+        }
+
+        // 찜 상태 확인
+        boolean isFavorite = favoriteService.isFavorite(loginEmail, favoriteIdx);
+        if (isFavorite) {
+            // 이미 찜한 상태라면 삭제
+            favoriteService.removeFavorite(loginEmail, favoriteIdx);
+        } else {
+            // 찜하지 않은 상태라면 추가
+            favoriteService.addFavorite(loginEmail, favoriteIdx);
+        }
+
+        return "redirect:/mypage/index";
+    }
+    
+    
+    // 찜한 게시글 처리
     @PostMapping("/favorite/{bidx}")
     public String toggleFavorite(@PathVariable("bidx") int bidx, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");
@@ -232,6 +266,6 @@ public class BoardController {
             return "redirect:/user/login";
         }
         boardService.toggleFavorite(bidx, loginEmail);
-        return "redirect:/board/detail/" + bidx;
+        return "redirect:/board/detail" + bidx;
     }
 }

@@ -1,9 +1,16 @@
 package com.smhrd.basic.dto;
 
-import lombok.*;
+import java.sql.Timestamp;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Timestamp;
+import com.smhrd.basic.entity.BoardEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
@@ -64,5 +71,29 @@ public class BoardDTO {
     private String leaseContractPath; // 업로드된 임대차 계약서 경로
     private MultipartFile criminalRecord; // 범죄경력회보서 (방 찾기용)
     private String criminalRecordPath; // 업로드된 범죄경력회보서 경로
+	
+    public static BoardDTO fromEntity(BoardEntity board) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setBidx(board.getBidx());
+        boardDTO.setBtype(board.getBtype());
+        boardDTO.setBtitle(board.getBtitle());
+        boardDTO.setBcontent(board.getBcontent());
+        boardDTO.setBfile(board.getBfile());
+        boardDTO.setCreatedAt(board.getCreatedAt());
+        boardDTO.setBviews(board.getBviews());
+        boardDTO.setBlikes(board.getBlikes());
+        boardDTO.setBwriter(board.getBwriter());
+        boardDTO.setMonthlyRent(board.getMonthlyRent());
+        boardDTO.setManagementFee(board.getManagementFee());
+        boardDTO.setHouseType(board.getHouseType());
+        boardDTO.setAddress(board.getAddress());
+        boardDTO.setBudget(board.getBudget());
+        boardDTO.setUserPhoto(board.getUserPhoto());
+        boardDTO.setDesiredAddress(board.getDesiredAddress());
+        boardDTO.setLeaseContractPath(board.getLeaseContractPath());
+        boardDTO.setCriminalRecordPath(board.getCriminalRecordPath());
+        boardDTO.setUserNickname(board.getUser() != null ? board.getUser().getUserNickname() : "알 수 없음");
+        return boardDTO;
+    }
     
 }
