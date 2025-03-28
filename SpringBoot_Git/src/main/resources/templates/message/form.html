@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Write New Message</title>
+    <style>
+        .form-container {
+            margin: 20px;
+            max-width: 600px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>새 메시지 작성</h2>
+        <form th:action="@{/message}" th:object="${messageDTO}" method="post">
+            <div class="form-group">
+                <label for="senderId">보내는 사람</label>
+                <input type="text" id="senderId" th:value="${senderId}" readonly />
+                <input type="hidden" th:field="*{senderId}" />
+            </div>
+            <div class="form-group">
+                <label for="receiverId">받는 사람</label>
+                <input type="text" id="receiverId" th:field="*{receiverId}" required />
+            </div>
+            <div class="form-group">
+                <label for="msgContent">내용</label>
+                <textarea id="msgContent" th:field="*{msgContent}" rows="5" required></textarea>
+            </div>
+            <button type="submit">전송</button>
+            <a href="/message">취소</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+        .message-container {
+            margin: 20px;
+        }
+        .message-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .message-table th, .message-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .message-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+	<div class="message-container">
+        <h2>Messages</h2>
+        <a href="/message/write">새 메시지 작성</a>
+        <a href="/board">게시판으로 돌아가기</a>
+
+        <!-- 받은 메시지 -->
+        <h3>받은 메시지</h3>
+        <table class="message-table">
+            <thead>
+                <tr>
+                    <th>보낸 사람</th>
+                    <th>내용</th>
+                    <th>읽음 상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="message : ${receivedMessages}">
+                    <td th:text="${message.senderId}"></td>
+                    <td>
+                        <a th:href="@{/message/{id}(id=${message.msgIdx})}" 
+                           th:text="${#strings.abbreviate(message.msgContent, 50)}"></a>
+                    </td>
+                    <td th:text="${message.isRead == 'Y' ? '읽음' : '읽지 않음'}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 보낸 메시지 -->
+        <h3>보낸 메시지</h3>
+        <table class="message-table">
+            <thead>
+                <tr>
+                    <th>받는 사람</th>
+                    <th>내용</th>
+                    <th>읽음 상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="message : ${sentMessages}">
+                    <td th:text="${message.receiverId}"></td>
+                    <td>
+                        <a th:href="@{/message/{id}(id=${message.msgIdx})}" 
+                           th:text="${#strings.abbreviate(message.msgContent, 50)}"></a>
+                    </td>
+                    <td th:text="${message.isRead == 'Y' ? '읽음' : '읽지 않음'}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
