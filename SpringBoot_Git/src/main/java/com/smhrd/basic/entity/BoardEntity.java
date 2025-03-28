@@ -63,5 +63,6 @@ public class BoardEntity {
     @Column(name = "budget")
     private Integer budget;
 
+    //
 
 }

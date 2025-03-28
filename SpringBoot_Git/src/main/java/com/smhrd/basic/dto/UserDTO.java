@@ -53,6 +53,7 @@ public class UserDTO {
     // 사용자 닉네임 
     private String userNickname;
     
+    //
     
 	
 }

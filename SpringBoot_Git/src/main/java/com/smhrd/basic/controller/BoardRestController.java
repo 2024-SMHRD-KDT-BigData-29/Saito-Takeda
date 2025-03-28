@@ -67,4 +67,5 @@ public class BoardRestController {
         boolean isFavorited = boardService.toggleFavorite(bidx, userEmail);
         return ResponseEntity.ok(isFavorited);
     }
+    //
 }

@@ -31,6 +31,6 @@
 //	@UpdateTimestamp
 //	@Column(insertable = false) // 입력(인설트)시 관여 안하게끔
 //	private LocalDateTime updatedTime;
-//	
+//	///
 //	
 //}

@@ -9,7 +9,7 @@ import com.smhrd.basic.entity.ProfileEntity;
 public interface MypageRepository extends JpaRepository<ProfileEntity, String> {
 
 	
-	
+	//
 	
 	
 }

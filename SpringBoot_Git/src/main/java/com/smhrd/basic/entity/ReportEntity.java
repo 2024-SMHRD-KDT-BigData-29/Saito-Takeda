@@ -42,4 +42,6 @@ public class ReportEntity {
     
     @Column(nullable = true)
     private Timestamp handledAt;
+    
+    //
 }

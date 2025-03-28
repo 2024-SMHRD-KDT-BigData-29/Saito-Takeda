@@ -63,5 +63,5 @@ public class BoardDTO {
     private String userPhoto; // 자신의 사진 경로
     private MultipartFile userPhotoFile; // 자신의 사진 업로드용
 
-    //
+    ////
 }

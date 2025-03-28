@@ -140,4 +140,5 @@ public class BoardController {
         boardService.deleteBoard(bidx, userEmail);
         return "redirect:/board"; // 삭제 후 목록으로 리다이렉트
     }
+    //
 }
