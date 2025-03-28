@@ -61,7 +61,7 @@ public class MessageController {
         messageDTO.setSenderId(loginEmail);
         messageDTO.setIsRead("N"); // 기본값: 읽지 않음
         messageService.sendMessage(messageDTO);
-        return "redirect:/";
+        return "redirect:/board";
     }
 
     

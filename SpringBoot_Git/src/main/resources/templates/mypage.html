@@ -6,23 +6,26 @@
 <body>
     <h1>마이페이지</h1>
     <h2>유저 정보</h2>
-    <p>이메일: <span th:text="${user.userEmail}"></span></p>
-    <p>이름: <span th:text="${user.userName}"></span></p>
-    <p>닉네임: <span th:text="${user.userNickname}"></span></p>
+    <p>이메일: <span th:text="${user.userEmail}">이메일 없음</span></p>
+    <p>이름: <span th:text="${user.userName}">이름 없음</span></p>
+    <p>닉네임: <span th:text="${user.userNickname}">닉네임 없음</span></p>
     <a th:href="@{/mypage/update}">정보 수정</a>
 
     <h2>프로필</h2>
-    <p>소개: <span th:text="${profile.userIntroduction} ?: '미설정'}"></span></p>
-    <p>파트너 MBTI: <span th:text="${profile.partnerMbti} ?: '미설정'}"></span></p>
-    <p>프로필 이미지: <img th:src="${profile.profileImg}" th:unless="${profile.profileImg == null}" alt="프로필 이미지"></p>
+    <p>소개: <span th:text="${profile.userIntroduction ?: '미설정'}">미설정</span></p>
+    <p>파트너 MBTI: <span th:text="${profile.partnerMbti ?: '미설정'}">미설정</span></p>
+    <p>프로필 이미지: 
+        <img th:if="${profile.profileImg != null}" th:src="${profile.profileImg}" alt="프로필 이미지">
+        <span th:unless="${profile.profileImg != null}">프로필 이미지 없음</span>
+    </p>
     <a th:href="@{/mypage/profile}">프로필 수정</a>
 
     <h2>찜한 게시글</h2>
     <ul>
+        <li th:if="${#lists.isEmpty(favoriteBoards)}">찜한 게시글이 없습니다.</li>
         <li th:each="board : ${favoriteBoards}">
-            <a th:href="@{/boards/{bIdx}(bIdx=${board.bIdx})}" th:text="${board.bTitle}"></a>
+            <a th:href="@{/boards/{bIdx}(bIdx=${board.bIdx})}" th:text="${board.bTitle}">게시글 제목</a>
         </li>
-        <li th:unless="${#lists.isEmpty(favoriteBoards)}" th:text="'찜한 게시글이 없습니다.'"></li>
     </ul>
 </body>
 </html>
