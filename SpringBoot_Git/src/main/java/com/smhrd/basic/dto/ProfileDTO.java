@@ -16,8 +16,6 @@ import lombok.ToString;
 @ToString
 public class ProfileDTO {
 
-
-		
     private String userEmail;
     
     private String profileImg;

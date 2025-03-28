@@ -19,9 +19,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    
-    @PersistenceContext
-    private EntityManager entityManager;
 
     // 회원가입 DTO -> Entity 변환
     public void save(UserDTO userDTO) {
@@ -61,7 +58,7 @@ public class UserService {
         UserEntity userEntity = userRepository.findByUserEmail(userEmail).orElse(null);
         UserDTO userDTO = null;
         if (userEntity != null) {
-            entityManager.refresh(userEntity);
+//            entityManager.refresh(userEntity);
             userDTO = entityToDto(userEntity);
         }
         System.out.println("UserService - findByUserEmail - userEmail: " + userEmail);

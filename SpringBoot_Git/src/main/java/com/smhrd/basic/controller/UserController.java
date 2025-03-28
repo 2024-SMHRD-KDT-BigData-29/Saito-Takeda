@@ -36,7 +36,7 @@ public class UserController {
         UserDTO loginResult = userService.login(userDTO);
         if (loginResult != null) {
             session.setAttribute("loginEmail", loginResult.getUserEmail());
-            return "main";
+            return "redirect:/board"; // /board로 리다이렉트
         } else {
             model.addAttribute("error", "이메일 또는 비밀번호가 잘못되었습니다.");
             return "index";
@@ -44,13 +44,13 @@ public class UserController {
     }
 
     // 회원가입 폼
-    @GetMapping("/user/save")
-    public String saveForm() {
-        return "userSave";
+    @GetMapping("/user/join")
+    public String joinForm() {
+        return "join";
     }
 
     // 회원가입 처리
-    @PostMapping("/user/save")
+    @PostMapping("/user/join")
     public String save(@ModelAttribute UserDTO userDTO) {
         userService.save(userDTO);
         return "index";
