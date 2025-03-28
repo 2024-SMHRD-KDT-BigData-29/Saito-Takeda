@@ -17,5 +17,8 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Intege
     // 사용자가 찜한 게시글 목록 조회
     List<FavoriteEntity> findByUserEmail(String userEmail);
     
-    //
+    // 테이블 삭제 이메일이랑 보드 인덱스 조건식
+    void deleteByUserEmailAndBidx(String userEmail, Integer bidx);
+
+	FavoriteEntity findByUserEmailAndBidx(String userEmail, int bidx);
 }

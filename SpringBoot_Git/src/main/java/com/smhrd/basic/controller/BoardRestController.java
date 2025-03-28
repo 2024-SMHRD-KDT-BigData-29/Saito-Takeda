@@ -1,25 +1,16 @@
 package com.smhrd.basic.controller;
 
+import com.smhrd.basic.dto.BoardDTO;
+import com.smhrd.basic.service.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.smhrd.basic.dto.BoardDTO;
-import com.smhrd.basic.service.BoardService;
-
 @RestController
-@RequestMapping("/api/boards")
+@RequestMapping("/api/board") // Boards → Board로 수정
 public class BoardRestController {
 
     @Autowired
@@ -36,6 +27,9 @@ public class BoardRestController {
     @GetMapping("/{bidx}")
     public ResponseEntity<BoardDTO> getBoard(@PathVariable int bidx) {
         BoardDTO board = boardService.getBoard(bidx);
+        if (board == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(board);
     }
 
@@ -48,7 +42,7 @@ public class BoardRestController {
 
     // 게시글 수정
     @PutMapping("/{bidx}")
-    public ResponseEntity<BoardDTO> updateBoard(@PathVariable int bidx, @RequestBody BoardDTO boardDTO, 
+    public ResponseEntity<BoardDTO> updateBoard(@PathVariable int bidx, @RequestBody BoardDTO boardDTO,
                                                 @RequestParam String userEmail) throws IOException {
         BoardDTO updatedBoard = boardService.updateBoard(bidx, boardDTO, userEmail);
         return ResponseEntity.ok(updatedBoard);
@@ -67,5 +61,4 @@ public class BoardRestController {
         boolean isFavorited = boardService.toggleFavorite(bidx, userEmail);
         return ResponseEntity.ok(isFavorited);
     }
-    //
 }

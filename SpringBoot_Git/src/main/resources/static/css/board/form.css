@@ -1,1 +1,170 @@
-@charset "UTF-8";<!--  -->
+
+body {
+    font-family: Arial, sans-serif;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 0 20px 40px 20px;
+    background-color: #f5f5f5;
+}
+h1 {
+    font-size: 24px;
+    color: #666; /* 연한 검정색 */
+    margin-bottom: 10px;
+   
+}
+hr{
+margin-bottom: 15px;
+}
+form{
+    padding-bottom: 50px;
+
+}
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    /* border-radius: 8px; */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    
+}
+select, input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+input[type="radio"] {
+    margin: 0 5px 0 10px;
+}
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+textarea {
+    resize: vertical; /* 세로 크기만 조정 가능 */
+}
+.file-upload {
+    margin-top: 10px;
+}
+.file-upload input[type="file"] {
+    display: none;
+}
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #666;
+}
+.file-upload-label:hover {
+    background-color: #e5e5e5;
+}
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFEB3B; /* 부드러운 노란색 */
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-top: 20px;
+}
+.submit-button:hover {
+    background-color: #FFD700; /* 호버 시 약간 어두운 노란색 */
+}
+
+/* 모바일 최적화 */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 20px;
+    }
+    .form-container {
+        padding: 15px;
+    }
+    select, input[type="text"], textarea {
+        font-size: 12px;
+    }
+    .radio-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .submit-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+/* 하단 네비게이션 */
+.bottom-nav {
+    position: absolute;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    justify-content: space-around;
+    background: #ffffff;
+    border-top: 1px solid #f1f1f1;
+    padding: 10px 0;
+    z-index: 100;
+    
+}
+
+.nav-item {
+    text-align: center;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    /* background-color: #f1f1f1; */
+    border-radius: 50%;
+    margin: 0 auto 4px;
+}
+
+.nav-label {
+    font-size: 10px;
+   
+    letter-spacing: -0.5px;
+}
+
+.nav-item.active .nav-label {
+    color: #000;
+    font-weight: bold;
+}
+
+/* 버튼 스타일 */
+.cta-button {
+    position: fixed;
+    bottom: 70px;
+    right: 16px;
+    background-color: #000;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 90;
+}

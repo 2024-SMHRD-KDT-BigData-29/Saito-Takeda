@@ -1,10 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>게시글 상세</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- 카카오맵 API 스크립트 (연동 시 사용) -->
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_APP_KEY&libraries=services"></script> -->
 </head>
 <body>
-	<!--  -->
+    <div class="container mt-5">
+        <h1 th:text="${board.btitle}"></h1>
+        <div class="mb-3">
+            <strong>작성자:</strong> <span th:text="${board.userNickname}"></span> (<span th:text="${board.userMbti}"></span>, <span th:text="${board.userAge}"></span>세)
+        </div>
+        <div class="mb-3">
+            <strong>작성일:</strong> <span th:text="${board.createdAt}"></span>
+        </div>
+        <div class="mb-3">
+            <strong>조회수:</strong> <span th:text="${board.bviews}"></span>
+        </div>
+        <div class="mb-3">
+            <strong>좋아요:</strong> <span th:text="${board.blikes}"></span>
+        </div>
+        <div class="mb-3">
+            <strong>내용:</strong>
+            <p th:text="${board.bcontent}"></p>
+        </div>
+        <div th:if="${board.bfile}" class="mb-3">
+            <strong>첨부파일:</strong>
+            <img th:src="${board.bfile}" alt="첨부파일" style="max-width: 300px;" />
+        </div>
+
+        <!-- 룸메 찾기 유형일 경우 -->
+        <div th:if="${board.btype == 'room'}">
+            <div class="mb-3">
+                <strong>월세:</strong> <span th:text="${board.monthlyRent}"></span> 원
+            </div>
+            <div class="mb-3">
+                <strong>관리비:</strong> <span th:text="${board.managementFee}"></span> 원
+            </div>
+            <div class="mb-3">
+                <strong>집 유형:</strong> <span th:text="${board.houseType}"></span>
+            </div>
+            <div class="mb-3">
+                <strong>주소:</strong> <span th:text="${board.address}"></span>
+            </div>
+            <!-- 카카오맵 표시 영역 -->
+            <div id="map" style="width: 100%; height: 400px;"></div>
+
+            <!-- 카카오맵 API 연동 예시 코드 -->
+            <!--
+            <script>
+                var mapContainer = document.getElementById('map');
+                var mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 기본 좌표
+                    level: 3 // 지도 확대 레벨
+                };
+                var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                // 주소-좌표 변환 객체 생성
+                var geocoder = new kakao.maps.services.Geocoder();
+
+                // 주소로 좌표 검색
+                var address = document.getElementById('address').value; // 실제로는 ${board.address}
+                geocoder.addressSearch(address, function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+                        map.setCenter(coords);
+                    }
+                });
+            </script>
+            -->
+        </div>
+
+        <!-- 방 찾기 유형일 경우 -->
+        <div th:if="${board.btype == 'mate'}">
+            <div class="mb-3">
+                <strong>월 예산:</strong> <span th:text="${board.budget}"></span> 원
+            </div>
+            <div class="mb-3">
+                <strong>희망 주소지:</strong> <span th:text="${board.desiredAddress}"></span>
+            </div>
+            <div th:if="${board.userPhoto}" class="mb-3">
+                <strong>자신의 사진:</strong>
+                <img th:src="${board.userPhoto}" alt="자신의 사진" style="max-width: 300px;" />
+            </div>
+        </div>
+
+        <div th:if="${board.profileImg}" class="mb-3">
+            <strong>작성자 프로필 사진:</strong>
+            <img th:src="${board.profileImg}" alt="프로필 사진" style="max-width: 100px;" />
+        </div>
+
+        <div th:if="${isOwner}">
+            <a th:href="@{/board/edit/{bidx}(bidx=${board.bidx})}" class="btn btn-primary">수정</a>
+            <form th:action="@{/board/delete/{bidx}(bidx=${board.bidx})}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger">삭제</button>
+            </form>
+        </div>
+        <form th:action="@{/board/favorite/{bidx}(bidx=${board.bidx})}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-warning">찜하기/취소</button>
+        </form>
+        <a th:href="@{/board/list}" class="btn btn-secondary">목록으로</a>
+    </div>
 </body>
 </html>

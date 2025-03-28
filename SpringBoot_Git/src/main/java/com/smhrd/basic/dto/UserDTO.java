@@ -53,7 +53,8 @@ public class UserDTO {
     // 사용자 닉네임 
     private String userNickname;
     
-    //
+    // 사용자 나이
+    private int userAge;
     
 	
 }

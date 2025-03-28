@@ -1,127 +1,92 @@
-/* 상단바 */
-/* .status-bar{
-<!--  -->
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
-    box-sizing: border-box;
-    font-family: 'Noto Sans KR', sans-serif;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+    min-height: 100vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 10px 15px;
-    background-color: #fff;
-    color: #333;
-    font-size: 14px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    max-width: 360px;
-    z-index:1000;
-    /* border-bottom: 1px solid #ddd; */
-/* } 
-.status-icons>img{
-    width: 20px;
-    height: 20px;
-    padding-top: 5px;
-
-} */ 
-
-
-div.container{
-   
-    width: 360px;
-    height: 740px;
-    text-align: center;
-    margin:0 auto; 
-    border: 1px solid ;
-    border-radius: 12px;
-  
 }
-#content{
+
+div.container {
+    width: 360px;
+    min-height: 740px;
+    text-align: center;
+    margin: 20px auto;
+    border: 1px solid black;
+    background-color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#content {
     font-weight: bold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 18px;
     margin-bottom: 5px;
 }
 
-
-#index_title{
+#index_title {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: bold;
     font-size: 35px;
-    padding: 100px 0 50px 0 ;
-    
-    
+    padding: 50px 0 30px 0; /* 패딩 조정 */
+    margin: 20px;
 }
 
-form{
- margin: 20px;
- 
-
-}
-
-
-
-
-#userEmail{
-
-    padding: 7px 150px 7px  10px;
-    margin-bottom: 5px;
+#userEmail, #userPw {
+    width: 100%;
+    max-width: 300px;
+    padding: 7px 10px;
     border-color: lightgray;
     border-radius: 5px;
-    margin-bottom: 12px;
-   
+    margin: 0 auto 12px auto;
+    box-sizing: border-box;
+    display: block;
 }
-#userPw{
-    padding: 7px 150px 7px  10px;
-    margin-bottom: 10px;
-    border-color: lightgray;
-    border-radius: 5px;
+
+#userPw {
     margin-bottom: 20px;
 }
 
-
-
-#btn_login{
-    width: 170;
-    height: 25;
-    padding: 4px 141px 4px  141px;
-    background-color: black;
-    color:white;
-    margin-bottom: 10px;
-    border-radius: 5px;
+table {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
 }
 
-#findUser{
+#btn_login {
+    width: 100%;
+    max-width: 300px;
+    height: 35px;
+    padding: 4px 10px;
+    background-color: black;
+    color: white;
+    margin: 0 auto 10px auto;
+    border-radius: 5px;
+    border: none;
+    box-sizing: border-box;
+    display: block;
+}
+
+#findUser {
     font-weight: bold;
     font-size: 15px;
-    text-align: right;
-    padding-right: 15px;
-    color:black;
-    
-    
+    color: black;
 }
 
-#icon-join{
-
+#icon-join {
     border-left: 3px solid;
     border-color: rgb(224, 223, 223);
-    color:black;
-    width: 50px;
-    text-align: right;
+    color: black;
     font-weight: bold;
     font-size: 15px;
-     
-
 }
-#findUser>td{
-
-    padding-right: 15px;
-}
-/* #find{
-
-    text-align: left;
-}
-
-#empty{
-    text-align: right;
-} */

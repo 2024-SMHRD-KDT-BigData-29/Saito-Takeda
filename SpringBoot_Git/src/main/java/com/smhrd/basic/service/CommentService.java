@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.smhrd.basic.dto.CommentDTO;
 import com.smhrd.basic.entity.BoardEntity;
 import com.smhrd.basic.entity.CommentEntity;
-import com.smhrd.basic.repository.BoardRepositroy;
+import com.smhrd.basic.repository.BoardRepository;
 import com.smhrd.basic.repository.CommentRepository;
 
 import jakarta.transaction.Transactional;
@@ -22,7 +22,7 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     @Autowired
-    private BoardRepositroy boardRepository;
+    private BoardRepository boardRepository;
 
     // 댓글 작성
     @Transactional

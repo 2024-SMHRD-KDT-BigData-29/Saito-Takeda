@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.smhrd.basic.dto.UserDTO;
+import com.smhrd.basic.entity.ProfileEntity;
 import com.smhrd.basic.entity.UserEntity;
+import com.smhrd.basic.repository.ProfileRepository;
 import com.smhrd.basic.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -18,26 +20,52 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private ProfileRepository profileRepository;
+    
+    
 
-    // 회원가입 DTO -> Entity 변환
+ // 회원가입 DTO -> Entity 변환
+    @Transactional
     public void save(UserDTO userDTO) {
+        System.out.println("회원가입 시작: userEmail = " + userDTO.getUserEmail());
+        // tb_user에 사용자 정보 저장
         UserEntity entity = new UserEntity();
         entity.setUserEmail(userDTO.getUserEmail());
-//        entity.setUserIdx(userDTO.getUserIdx());
         entity.setUserPw(userDTO.getUserPw());
         entity.setUserName(userDTO.getUserName());
         entity.setUserGender(userDTO.getUserGender());
         entity.setUserRegnum(userDTO.getUserRegnum());
         entity.setUserAddr(userDTO.getUserAddr());
         entity.setUserNickname(userDTO.getUserNickname());
+        entity.setUserAge(userDTO.getUserAge());
         userRepository.save(entity);
+        System.out.println("tb_user 저장 성공: userEmail = " + userDTO.getUserEmail());
+
+        // tb_profile에 기본 프로필 생성
+        ProfileEntity profileEntity = new ProfileEntity();
+        profileEntity.setUserEmail(userDTO.getUserEmail());
+        profileEntity.setUserMbti("");
+        profileEntity.setProfileImg("");
+        profileEntity.setUserIntroduction("");
+        profileEntity.setLifestyle("");
+        profileEntity.setPartnerMbti("");
+        if (profileRepository == null) {
+            throw new IllegalStateException("ProfileRepository is not initialized!");
+        }
+        profileRepository.save(profileEntity);
+        System.out.println("tb_profile 저장 성공: userEmail = " + userDTO.getUserEmail());
     }
 
-    // 로그인
+ // 로그인
+ // 로그인
     @Transactional
     public UserDTO login(UserDTO userDTO) {
+        System.out.println("로그인 요청: userEmail = " + userDTO.getUserEmail());
         UserEntity entity = userRepository.findByUserEmail(userDTO.getUserEmail());
         if (entity != null && entity.getUserPw().equals(userDTO.getUserPw())) {
+            System.out.println("로그인 성공: userEmail = " + userDTO.getUserEmail());
             return new UserDTO(
                     entity.getUserEmail(),
                     entity.getUserPw(),
@@ -45,9 +73,11 @@ public class UserService {
                     entity.getUserGender(),
                     entity.getUserRegnum(),
                     entity.getUserAddr(),
-                    entity.getUserNickname()
+                    entity.getUserNickname(),
+                    entity.getUserAge()
             );
         }
+        System.out.println("로그인 실패: userEmail = " + userDTO.getUserEmail());
         return null;
     }
 
@@ -58,22 +88,26 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    // 이메일로 유저 조회
+ // 이메일로 유저 조회
     @Transactional
     public UserDTO findByUserEmail(String userEmail) {
+        System.out.println("유저 조회 요청: userEmail = " + userEmail);
         UserEntity entity = userRepository.findByUserEmail(userEmail);
         if (entity == null) {
+            System.out.println("유저 조회 실패: userEmail = " + userEmail);
             return null;
         }
-        return new UserDTO(
-                entity.getUserEmail(),
-                entity.getUserPw(),
-                entity.getUserName(),
-                entity.getUserGender(),
-                entity.getUserRegnum(),
-                entity.getUserAddr(),
-                entity.getUserNickname()
-        );
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserEmail(entity.getUserEmail());
+        userDTO.setUserPw(entity.getUserPw());
+        userDTO.setUserNickname(entity.getUserNickname());
+        userDTO.setUserRegnum(entity.getUserRegnum());
+        userDTO.setUserName(entity.getUserName());
+        userDTO.setUserGender(entity.getUserGender());
+        userDTO.setUserAddr(entity.getUserAddr());
+        userDTO.setUserAge(entity.getUserAge());
+        System.out.println("유저 조회 성공: userEmail = " + userEmail);
+        return userDTO;
     }
 
 
@@ -87,10 +121,12 @@ public class UserService {
                 entity.getUserGender(),
                 entity.getUserRegnum(),
                 entity.getUserAddr(),
-                entity.getUserNickname()
+                entity.getUserNickname(),
+                entity.getUserAge()
         );
     }
     //
+
 }
 
 

@@ -1,9 +1,8 @@
 package com.smhrd.basic.controller;
 
-
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,19 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.smhrd.basic.dto.BoardDTO;
-import com.smhrd.basic.dto.ProfileDTO;
-import com.smhrd.basic.dto.UserDTO;
 import com.smhrd.basic.service.BoardService;
 import com.smhrd.basic.service.ProfileService;
-import com.smhrd.basic.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
-
-// 트러블슈팅 bIdx 변수명 <- JPA에 안맞아서 소문자로 다른컬럼들도 bidx 와 같이 다 소문자로 변경
-
 
 @Controller
 @RequestMapping("/board")
@@ -35,110 +27,211 @@ public class BoardController {
     private BoardService boardService;
     
     @Autowired
-    private UserService userService;
-    
-    @Autowired
     private ProfileService profileService;
 
-    // 유저로그인세션 확인 및 프로필 정보입력 여부 확인
-    @GetMapping
-    public String listBoards(Model model, HttpSession session) {
+    @GetMapping("/form")
+    public String writeForm(Model model, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");
-        System.out.println("BoardController - loginEmail: " + loginEmail);
         if (loginEmail == null) {
             return "redirect:/user/login";
         }
-        UserDTO userDTO = userService.findByUserEmail(loginEmail);
-        System.out.println("BoardController - userDTO: " + userDTO);
-        if (userDTO == null) {
-            session.invalidate();
-            return "redirect:/user/login";
-        }
-
-        // 프로필 정보 입력 여부 확인
-        ProfileDTO profileDTO = profileService.findByUserEmail(loginEmail);
-        if (profileDTO == null) {
-            // 프로필 정보가 없으면 프로필 입력 페이지로 리다이렉트
-            return "redirect:/profile/edit";
-        }
-
-        List<BoardDTO> allBoards = boardService.findAll();
-        List<BoardDTO> roomBoards = allBoards.stream()
-                .filter(board -> "room".equals(board.getBtype()))
-                .collect(Collectors.toList());
-        List<BoardDTO> mateBoards = allBoards.stream()
-                .filter(board -> "mate".equals(board.getBtype()))
-                .collect(Collectors.toList());
-
-        model.addAttribute("user", userDTO);
-        model.addAttribute("profile", profileDTO);
-        model.addAttribute("roomBoards", roomBoards);
-        model.addAttribute("mateBoards", mateBoards);
-        return "main";
-    }
-
-    // 게시글 상세 페이지 (HTML)
-    @GetMapping("/{bidx}")
-    public String getBoard(@PathVariable int bidx, Model model) {
-        BoardDTO board = boardService.getBoard(bidx);
-        model.addAttribute("board", board);
-        return "board/detail"; // templates/board/detail.html
-    }
-
- // 게시글 작성 폼
-    @GetMapping("/new")
-    public String createBoardForm(Model model, HttpSession session) {
-        String loginEmail = (String) session.getAttribute("loginEmail");
-        if (loginEmail == null) {
-            return "redirect:/";
-        }
-        // 프로필 정보 입력 여부 확인
-        ProfileDTO profileDTO = profileService.findByUserEmail(loginEmail);
-        if (profileDTO == null) {
-            return "redirect:/profile/edit";
-        }
-        UserDTO userDTO = userService.findByUserEmail(loginEmail);
-        model.addAttribute("user", userDTO);
-        model.addAttribute("profile", profileDTO);
-        model.addAttribute("boardDTO", new BoardDTO());
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setBwriter(loginEmail);
+        model.addAttribute("boardDTO", boardDTO);
         return "board/form";
     }
-    
- // 게시글 작성 처리
-    @PostMapping
-    public String createBoard(@ModelAttribute BoardDTO boardDTO, HttpSession session) throws IOException {
+
+    @PostMapping("/form")
+    public String saveBoard(@ModelAttribute BoardDTO boardDTO, HttpSession session, Model model) throws IOException {
         String loginEmail = (String) session.getAttribute("loginEmail");
         if (loginEmail == null) {
-            return "redirect:/";
+            return "redirect:/user/login";
         }
         boardDTO.setBwriter(loginEmail);
-        boardService.createBoardWithFile(boardDTO);
-        return "redirect:/boards";
+        
+     // 작성일 설정
+        boardDTO.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+
+        try {
+            // 첨부파일 (방 사진) 업로드 처리
+            if (boardDTO.getFile() != null && !boardDTO.getFile().isEmpty()) {
+                String contentType = boardDTO.getFile().getContentType();
+                if (contentType == null || !contentType.startsWith("image/")) {
+                    model.addAttribute("error", "이미지 파일만 업로드 가능합니다.");
+                    model.addAttribute("boardDTO", boardDTO);
+                    return "board/form";
+                }
+                String uploadDir = System.getProperty("user.dir") + "/uploads/";
+                File uploadDirFile = new File(uploadDir);
+                if (!uploadDirFile.exists()) {
+                    uploadDirFile.mkdirs();
+                }
+                String fileName = System.currentTimeMillis() + "_" + boardDTO.getFile().getOriginalFilename();
+                File destFile = new File(uploadDir + fileName);
+                boardDTO.getFile().transferTo(destFile);
+                boardDTO.setBfile("/uploads/" + fileName);
+            }
+
+            // 룸메 찾기: 임대차 계약서 업로드 처리 (선택사항, PDF와 이미지 허용)
+            if ("room".equals(boardDTO.getBtype()) && boardDTO.getLeaseContract() != null && !boardDTO.getLeaseContract().isEmpty()) {
+                String contentType = boardDTO.getLeaseContract().getContentType();
+                if (contentType == null || (!contentType.startsWith("application/pdf") && !contentType.startsWith("image/"))) {
+                    model.addAttribute("error", "임대차 계약서는 PDF 또는 이미지 파일만 업로드 가능합니다.");
+                    model.addAttribute("boardDTO", boardDTO);
+                    return "board/form";
+                }
+                String uploadDir = System.getProperty("user.dir") + "/uploads/";
+                File uploadDirFile = new File(uploadDir);
+                if (!uploadDirFile.exists()) {
+                    uploadDirFile.mkdirs();
+                }
+                String fileName = System.currentTimeMillis() + "_" + boardDTO.getLeaseContract().getOriginalFilename();
+                File destFile = new File(uploadDir + fileName);
+                boardDTO.getLeaseContract().transferTo(destFile);
+                boardDTO.setLeaseContractPath("/uploads/" + fileName);
+            }
+
+            // 방 찾기: 범죄경력회보서 업로드 처리 (선택사항, PDF와 이미지 허용)
+            if ("mate".equals(boardDTO.getBtype()) && boardDTO.getCriminalRecord() != null && !boardDTO.getCriminalRecord().isEmpty()) {
+                String contentType = boardDTO.getCriminalRecord().getContentType();
+                if (contentType == null || (!contentType.startsWith("application/pdf") && !contentType.startsWith("image/"))) {
+                    model.addAttribute("error", "범죄경력회보서는 PDF 또는 이미지 파일만 업로드 가능합니다.");
+                    model.addAttribute("boardDTO", boardDTO);
+                    return "board/form";
+                }
+                String uploadDir = System.getProperty("user.dir") + "/uploads/";
+                File uploadDirFile = new File(uploadDir);
+                if (!uploadDirFile.exists()) {
+                    uploadDirFile.mkdirs();
+                }
+                String fileName = System.currentTimeMillis() + "_" + boardDTO.getCriminalRecord().getOriginalFilename();
+                File destFile = new File(uploadDir + fileName);
+                boardDTO.getCriminalRecord().transferTo(destFile);
+                boardDTO.setCriminalRecordPath("/uploads/" + fileName);
+            }
+
+            boardService.save(boardDTO);
+            return "redirect:/board/list";
+        } catch (IOException e) {
+            model.addAttribute("error", "파일 업로드 중 오류가 발생했습니다: " + e.getMessage());
+            model.addAttribute("boardDTO", boardDTO);
+            return "board/form";
+        }
     }
 
-    // 게시글 수정 폼
-    @GetMapping("/{bidx}/edit")
-    public String editBoardForm(@PathVariable int bidx, Model model) {
-        BoardDTO board = boardService.getBoard(bidx);
-        model.addAttribute("board", board);
-        return "board/edit"; // templates/board/edit.html
+    @GetMapping("/list")
+    public String listBoards(Model model, HttpSession session) {
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail == null) {
+            return "redirect:/user/login";
+        }
+        if (profileService.findByUserEmail(loginEmail) == null) {
+            return "redirect:/mypage/myprofileEdit";
+        }
+        model.addAttribute("roomBoards", boardService.findByBtype("room"));
+        model.addAttribute("mateBoards", boardService.findByBtype("mate"));
+        return "board/list";
     }
 
-    // 게시글 수정 처리
-    @PostMapping("/{bidx}/edit")
-    public String updateBoard(@PathVariable int bidx, @ModelAttribute BoardDTO boardDTO, 
-                              @RequestParam String userEmail) throws IOException {
-    	// 파일 업로드 포함 처리예정
-//    	boardService.updateBoardWithFile(bIdx, boardDTO, userEmail);
-        boardService.updateBoard(bidx, boardDTO, userEmail);
-        return "redirect:/board/" + bidx; // 수정 후 상세 페이지로 리다이렉트
+    @GetMapping("/detail/{bidx}")
+    public String boardDetail(@PathVariable("bidx") int bidx, Model model, HttpSession session) {
+        BoardDTO boardDTO = boardService.findByBidx(bidx);
+        if (boardDTO == null) {
+            return "redirect:/board/list";
+        }
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        model.addAttribute("board", boardDTO);
+        model.addAttribute("isOwner", loginEmail != null && loginEmail.equals(boardDTO.getBwriter()));
+        return "board/detail";
     }
 
-    // 게시글 삭제
-    @PostMapping("/{bidx}/delete")
-    public String deleteBoard(@PathVariable int bidx, @RequestParam String userEmail) {
-        boardService.deleteBoard(bidx, userEmail);
-        return "redirect:/board"; // 삭제 후 목록으로 리다이렉트
+    @GetMapping("/edit/{bidx}")
+    public String editForm(@PathVariable("bidx") int bidx, Model model, HttpSession session) {
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail == null) {
+            return "redirect:/user/login";
+        }
+        BoardDTO boardDTO = boardService.findByBidx(bidx);
+        if (boardDTO == null || !boardDTO.getBwriter().equals(loginEmail)) {
+            return "redirect:/board/list";
+        }
+        model.addAttribute("boardDTO", boardDTO);
+        return "board/edit";
     }
-    //
+
+    @PostMapping("/edit/{bidx}")
+    public String updateBoard(@PathVariable("bidx") int bidx, @ModelAttribute BoardDTO boardDTO, HttpSession session, Model model) throws IOException {
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail == null) {
+            return "redirect:/user/login";
+        }
+        boardDTO.setBwriter(loginEmail);
+
+        try {
+            // 첨부파일 업로드 처리 (bfile)
+            if (boardDTO.getFile() != null && !boardDTO.getFile().isEmpty()) {
+                String contentType = boardDTO.getFile().getContentType();
+                if (contentType == null || !contentType.startsWith("image/")) {
+                    model.addAttribute("error", "이미지 파일만 업로드 가능합니다.");
+                    model.addAttribute("boardDTO", boardDTO);
+                    return "board/edit";
+                }
+                String uploadDir = System.getProperty("user.dir") + "/uploads/";
+                File uploadDirFile = new File(uploadDir);
+                if (!uploadDirFile.exists()) {
+                    uploadDirFile.mkdirs();
+                }
+                String fileName = System.currentTimeMillis() + "_" + boardDTO.getFile().getOriginalFilename();
+                File destFile = new File(uploadDir + fileName);
+                boardDTO.getFile().transferTo(destFile);
+                boardDTO.setBfile("/uploads/" + fileName);
+            }
+
+            // 방 찾기 유형일 경우 자신의 사진 업로드 처리 (userPhoto)
+            if ("mate".equals(boardDTO.getBtype()) && boardDTO.getUserPhotoFile() != null && !boardDTO.getUserPhotoFile().isEmpty()) {
+                String contentType = boardDTO.getUserPhotoFile().getContentType();
+                if (contentType == null || !contentType.startsWith("image/")) {
+                    model.addAttribute("error", "이미지 파일만 업로드 가능합니다.");
+                    model.addAttribute("boardDTO", boardDTO);
+                    return "board/edit";
+                }
+                String uploadDir = System.getProperty("user.dir") + "/uploads/";
+                File uploadDirFile = new File(uploadDir);
+                if (!uploadDirFile.exists()) {
+                    uploadDirFile.mkdirs();
+                }
+                String fileName = System.currentTimeMillis() + "_" + boardDTO.getUserPhotoFile().getOriginalFilename();
+                File destFile = new File(uploadDir + fileName);
+                boardDTO.getUserPhotoFile().transferTo(destFile);
+                boardDTO.setUserPhoto("/uploads/" + fileName);
+            }
+
+            boardService.updateBoard(bidx, boardDTO, loginEmail);
+            return "redirect:/board/detail/" + bidx;
+        } catch (IOException e) {
+            model.addAttribute("error", "파일 업로드 중 오류가 발생했습니다: " + e.getMessage());
+            model.addAttribute("boardDTO", boardDTO);
+            return "board/edit";
+        }
+    }
+
+    @PostMapping("/delete/{bidx}")
+    public String deleteBoard(@PathVariable("bidx") int bidx, HttpSession session) {
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail == null) {
+            return "redirect:/user/login";
+        }
+        boardService.deleteBoard(bidx, loginEmail);
+        return "redirect:/board/list";
+    }
+
+    @PostMapping("/favorite/{bidx}")
+    public String toggleFavorite(@PathVariable("bidx") int bidx, HttpSession session) {
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail == null) {
+            return "redirect:/user/login";
+        }
+        boardService.toggleFavorite(bidx, loginEmail);
+        return "redirect:/board/detail/" + bidx;
+    }
 }

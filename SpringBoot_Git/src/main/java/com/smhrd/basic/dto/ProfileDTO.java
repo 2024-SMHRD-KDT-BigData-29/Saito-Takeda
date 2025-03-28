@@ -40,5 +40,10 @@ public class ProfileDTO {
     private String jp; // J 또는 P
     
     //
+    
+ // userEmail만 받는 생성자
+    public ProfileDTO(String userEmail) {
+        this.userEmail = userEmail;
+    }
 	
 }

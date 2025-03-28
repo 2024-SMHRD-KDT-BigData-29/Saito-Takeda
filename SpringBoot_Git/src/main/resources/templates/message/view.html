@@ -25,8 +25,9 @@
 <body>
 	<div class="message-container">
         <h2>Messages</h2>
-        <a href="/message/write">새 메시지 작성</a>
-        <a href="/board">게시판으로 돌아가기</a>
+        <a th:href="@{/message/write}">새 메시지 작성</a>
+        <a th:href="@{/board/list}">게시글 작성</a>
+        <a th:href="@{/main}">메인화면</a>
 
         <!-- 받은 메시지 -->
         <h3>받은 메시지</h3>

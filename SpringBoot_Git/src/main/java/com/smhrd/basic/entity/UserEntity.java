@@ -55,7 +55,8 @@ public class UserEntity {
     @Column(nullable = false, length = 20)
     private String userNickname;
     
-//    인덱스 알아서 생성해서 빠짐
+    @Column(nullable = true, length = 3)
+    private int userAge;
     
     public static UserEntity toUserEntity(UserDTO userDTO) {
     	UserEntity userEntity = new UserEntity();

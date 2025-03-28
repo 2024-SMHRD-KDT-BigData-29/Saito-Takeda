@@ -20,12 +20,22 @@
     </p>
     <a th:href="@{/mypage/profile}">프로필 수정</a>
 
-    <h2>찜한 게시글</h2>
-    <ul>
-        <li th:if="${#lists.isEmpty(favoriteBoards)}">찜한 게시글이 없습니다.</li>
-        <li th:each="board : ${favoriteBoards}">
-            <a th:href="@{/boards/{bIdx}(bIdx=${board.bIdx})}" th:text="${board.bTitle}">게시글 제목</a>
-        </li>
-    </ul>
+<h2>찜한 게시글</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>제목</th>
+            <th>유형</th>
+            <th>작성자</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="board : ${favoriteBoards}">
+            <td><a th:href="@{/board/detail/{bidx}(bidx=${board.bidx})}" th:text="${board.btitle}"></a></td>
+            <td th:text="${board.btype == 'room' ? '룸메 찾기' : '방 찾기'}"></td>
+            <td th:text="${board.userNickname}"></td>
+        </tr>
+    </tbody>
+</table>
 </body>
 </html>

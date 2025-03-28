@@ -1,222 +1,173 @@
 package com.smhrd.basic.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.smhrd.basic.dto.BoardDTO;
 import com.smhrd.basic.dto.ProfileDTO;
+import com.smhrd.basic.dto.UserDTO;
 import com.smhrd.basic.entity.BoardEntity;
 import com.smhrd.basic.entity.FavoriteEntity;
-import com.smhrd.basic.repository.BoardRepositroy;
+import com.smhrd.basic.repository.BoardRepository;
 import com.smhrd.basic.repository.FavoriteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardService {
 
     @Autowired
-    private BoardRepositroy boardRepository;
+    private BoardRepository boardRepository;
+
+    @Autowired
+    private FavoriteRepository favoriteRepository;
 
     @Autowired
     private ProfileService profileService;
-    
+
     @Autowired
-    private FavoriteRepository favoriteRepository;
-    
-    
- // 파일 저장 경로 
-    private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
+    private UserService userService;
 
- // 게시글 작성 (파일 업로드 포함)
     @Transactional
-    public BoardDTO createBoardWithFile(BoardDTO boardDTO) throws IOException {
-        // 파일 업로드 처리 (bfile)
-        String filePath = saveFile(boardDTO.getFile());
-        boardDTO.setBfile(filePath);
-
-        // 방 찾기용 사진 업로드 처리 (userPhoto)
-        if (boardDTO.getBtype().equals("mate") && boardDTO.getUserPhotoFile() != null && !boardDTO.getUserPhotoFile().isEmpty()) {
-            String userPhotoPath = saveFile(boardDTO.getUserPhotoFile());
-            boardDTO.setUserPhoto(userPhotoPath);
-        }
-
-        // DTO -> Entity 변환 및 저장
-        BoardEntity entity = dtoToEntity(boardDTO);
-        entity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        entity.setBviews(0);
-        entity.setBlikes(0);
-        BoardEntity savedEntity = boardRepository.save(entity);
-        return entityToDto(savedEntity);
+    public void save(BoardDTO boardDTO) {
+        BoardEntity entity = BoardEntity.toBoardEntity(boardDTO);
+        boardRepository.save(entity);
     }
-    
- // 회원 프로필 정보 조회
-    public ProfileDTO getUserProfile(String userEmail) {
-        return profileService.findByUserEmail(userEmail);
+
+    @Transactional
+    public List<BoardDTO> findAll() {
+        List<BoardEntity> entities = boardRepository.findAll();
+        return entities.stream().map(this::entityToDtoWithProfile).collect(Collectors.toList());
     }
-    
- // 파일 저장 로직
-    private String saveFile(MultipartFile file) throws IOException {
-        if (file == null || file.isEmpty()) {
+
+    @Transactional
+    public List<BoardDTO> findByBtype(String btype) {
+        List<BoardEntity> entities = boardRepository.findByBtype(btype);
+        return entities.stream().map(this::entityToDtoWithProfile).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public BoardDTO findByBidx(int bidx) {
+        BoardEntity entity = boardRepository.findById(bidx).orElse(null);
+        if (entity == null) {
             return null;
         }
-        String originalFilename = file.getOriginalFilename();
-        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String savedFileName = UUID.randomUUID().toString() + fileExtension;
-        File uploadDir = new File(UPLOAD_DIR);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-        File destFile = new File(UPLOAD_DIR + savedFileName);
-        file.transferTo(destFile);
-        return "/uploads/" + savedFileName;
+        return entityToDtoWithProfile(entity);
     }
 
-	// 게시글 조회 (단일)
-    public BoardDTO getBoard(int bidx) {
-        BoardEntity entity = boardRepository.findById(bidx)
-                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + bidx));
-        // 조회수 증가
-        entity.setBviews(entity.getBviews() + 1);
-        boardRepository.save(entity);
-        return entityToDto(entity);
-    }
-
-    // 게시글 목록 조회 (유형별)
-    public List<BoardDTO> getBoardsByType(String btype) {
-        List<BoardEntity> entities = boardRepository.findByBtype(btype);
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    // 게시글 수정
     @Transactional
-    public BoardDTO updateBoard(int bidx, BoardDTO boardDTO, String userEmail) throws IOException {
-        BoardEntity entity = boardRepository.findById(bidx)
-                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + bidx));
+    public BoardDTO createBoardWithFile(BoardDTO boardDTO) {
+        BoardEntity entity = BoardEntity.toBoardEntity(boardDTO);
+        return entityToDtoWithProfile(boardRepository.save(entity));
+    }
 
-        if (!entity.getUserEmail().equals(userEmail)) {
-            throw new SecurityException("본인이 작성한 게시글만 수정할 수 있습니다.");
+    @Transactional
+    public BoardDTO getBoard(int bidx) {
+        return findByBidx(bidx);
+    }
+
+    @Transactional
+    public List<BoardDTO> getBoardsByType(String btype) {
+        return findByBtype(btype);
+    }
+
+    @Transactional
+    public BoardDTO updateBoard(int bidx, BoardDTO boardDTO, String userEmail) {
+        BoardEntity entity = boardRepository.findById(bidx).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+        if (!entity.getBwriter().equals(userEmail)) {
+            throw new RuntimeException("게시글을 수정할 권한이 없습니다.");
         }
-
-        // 파일 업로드 처리 (새 파일이 있으면 기존 파일 대체)
-        if (boardDTO.getFile() != null && !boardDTO.getFile().isEmpty()) {
-            String filePath = saveFile(boardDTO.getFile());
-            entity.setBfile(filePath);
-        }
-
         entity.setBtitle(boardDTO.getBtitle());
         entity.setBcontent(boardDTO.getBcontent());
-        entity.setBtype(boardDTO.getBtype());
-        BoardEntity updatedEntity = boardRepository.save(entity);
-        return entityToDto(updatedEntity);
+        entity.setBfile(boardDTO.getBfile());
+        entity.setMonthlyRent(boardDTO.getMonthlyRent());
+        entity.setManagementFee(boardDTO.getManagementFee());
+        entity.setHouseType(boardDTO.getHouseType());
+        entity.setAddress(boardDTO.getAddress());
+        entity.setBudget(boardDTO.getBudget());
+        entity.setUserPhoto(boardDTO.getUserPhoto());
+        entity.setDesiredAddress(boardDTO.getDesiredAddress());
+        return entityToDtoWithProfile(boardRepository.save(entity));
     }
 
-    
-    // 게시글 삭제
     @Transactional
     public void deleteBoard(int bidx, String userEmail) {
-        BoardEntity entity = boardRepository.findById(bidx)
-                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + bidx));
-        
-        // 작성자 확인
-        if (!entity.getUserEmail().equals(userEmail)) {
-            throw new SecurityException("본인이 작성한 게시글만 삭제할 수 있습니다.");
+        BoardEntity entity = boardRepository.findById(bidx).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+        if (!entity.getBwriter().equals(userEmail)) {
+            throw new RuntimeException("게시글을 삭제할 권한이 없습니다.");
         }
-
         boardRepository.delete(entity);
     }
 
-    // 게시글 찜하기/취소
     @Transactional
     public boolean toggleFavorite(int bidx, String userEmail) {
-        BoardEntity board = boardRepository.findById(bidx)
-                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다: " + bidx));
-
-        Optional<FavoriteEntity> favorite = favoriteRepository.findByBidxAndUserEmail(bidx, userEmail);
-        if (favorite.isPresent()) {
-            // 이미 찜한 경우 -> 취소
-            favoriteRepository.delete(favorite.get());
-            return false; // 찜 취소됨
-        } else {
-            // 찜 안 한 경우 -> 추가
+        BoardEntity board = boardRepository.findById(bidx).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+        FavoriteEntity favorite = favoriteRepository.findByUserEmailAndBidx(userEmail, bidx);
+        if (favorite == null) {
             FavoriteEntity newFavorite = new FavoriteEntity();
-            newFavorite.setBidx(bidx);
             newFavorite.setUserEmail(userEmail);
+            newFavorite.setBidx(bidx);
             favoriteRepository.save(newFavorite);
-            return true; // 찜 추가됨
+            return true;
+        } else {
+            favoriteRepository.deleteByUserEmailAndBidx(userEmail, bidx);
+            return false;
         }
     }
 
- // DTO -> Entity 변환
-    private BoardEntity dtoToEntity(BoardDTO dto) {
-        BoardEntity entity = new BoardEntity();
-        entity.setBidx(dto.getBidx());
-        entity.setBtype(dto.getBtype());
-        entity.setBtitle(dto.getBtitle());
-        entity.setBcontent(dto.getBcontent());
-        entity.setBfile(dto.getBfile());
-        entity.setCreatedAt(dto.getCreatedAt());
-        entity.setBviews(dto.getBviews());
-        entity.setBlikes(dto.getBlikes());
-        entity.setUserEmail(dto.getBwriter());
-        // 룸메 찾기용 필드
-        entity.setMonthlyRent(dto.getMonthlyRent());
-        entity.setManagementFee(dto.getManagementFee());
-        entity.setHouseType(dto.getHouseType());
-        // 방 찾기용 필드
-        entity.setBudget(dto.getBudget());
-        entity.setUserPhoto(dto.getUserPhoto());
-        return entity;
-    }
-
- // Entity -> DTO 변환
-    private BoardDTO entityToDto(BoardEntity entity) {
-        return new BoardDTO(
-                entity.getBidx(),
-                entity.getBtype(),
-                entity.getBtitle(),
-                entity.getBcontent(),
-                entity.getBfile(),
-                null, // file은 조회 시 필요 없음
-                entity.getCreatedAt(),
-                entity.getBviews(),
-                entity.getBlikes(),
-                entity.getUserEmail(),
-                entity.getMonthlyRent(),
-                entity.getManagementFee(),
-                entity.getHouseType(),
-                entity.getBudget(),
-                entity.getUserPhoto(),
-                null // userPhotoFile은 조회 시 필요 없음
-        );
-    }
-    
-    // 찜한 게시글 조회
+    @Transactional
     public List<BoardDTO> findFavoriteBoards(String userEmail) {
         List<FavoriteEntity> favorites = favoriteRepository.findByUserEmail(userEmail);
-        List<Integer> boardIds = favorites.stream()
-                .map(FavoriteEntity::getBidx)
-                .collect(Collectors.toList());
-        return boardRepository.findAllById(boardIds).stream()
-                .map(this::entityToDto)
+        return favorites.stream()
+                .map(favorite -> boardRepository.findById(favorite.getBidx()).orElse(null))
+                .filter(entity -> entity != null)
+                .map(this::entityToDtoWithProfile)
                 .collect(Collectors.toList());
     }
 
- // 게시글 목록 조회
-    public List<BoardDTO> findAll() {
-        return boardRepository.findAll().stream()
-                .map(this::entityToDto)
-                .collect(Collectors.toList());
+    private BoardDTO entityToDtoWithProfile(BoardEntity entity) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setBidx(entity.getBidx());
+        boardDTO.setBtype(entity.getBtype());
+        boardDTO.setBtitle(entity.getBtitle());
+        boardDTO.setBcontent(entity.getBcontent());
+        boardDTO.setBfile(entity.getBfile());
+        boardDTO.setCreatedAt(entity.getCreatedAt());
+        boardDTO.setBviews(entity.getBviews());
+        boardDTO.setBlikes(entity.getBlikes());
+        boardDTO.setBwriter(entity.getBwriter());
+        boardDTO.setMonthlyRent(entity.getMonthlyRent());
+        boardDTO.setManagementFee(entity.getManagementFee());
+        boardDTO.setHouseType(entity.getHouseType());
+        boardDTO.setAddress(entity.getAddress());
+        boardDTO.setBudget(entity.getBudget());
+        boardDTO.setUserPhoto(entity.getUserPhoto());
+        boardDTO.setDesiredAddress(entity.getDesiredAddress());
+
+        // 작성자의 프로필 정보 추가
+        ProfileDTO profileDTO = profileService.findByUserEmail(entity.getBwriter());
+        if (profileDTO != null) { // null 체크 추가
+            boardDTO.setUserMbti(profileDTO.getUserMbti());
+            boardDTO.setProfileImg(profileDTO.getProfileImg());
+        }
+
+        // 작성자의 유저 정보 추가
+        UserDTO userDTO = userService.findByUserEmail(entity.getBwriter());
+        if (userDTO != null) { // null 체크 추가
+            boardDTO.setUserNickname(userDTO.getUserNickname());
+            String regnum = userDTO.getUserRegnum();
+            if (regnum != null && regnum.length() >= 7) {
+                String birthYearStr = regnum.substring(0, 2);
+                int birthYear = Integer.parseInt(birthYearStr);
+                birthYear = (birthYear >= 0 && birthYear <= 23) ? 2000 + birthYear : 1900 + birthYear;
+                int currentYear = LocalDate.now().getYear();
+                int age = currentYear - birthYear;
+                boardDTO.setUserAge(age);
+            }
+        }
+
+        return boardDTO;
     }
-    ///
-    
 }
