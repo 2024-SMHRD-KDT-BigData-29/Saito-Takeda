@@ -40,6 +40,7 @@ public class BoardController {
     @Autowired
     private ProfileService profileService;
 
+    // 유저로그인세션 확인 및 프로필 정보입력 여부 확인
     @GetMapping
     public String listBoards(Model model, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");
@@ -49,12 +50,16 @@ public class BoardController {
         }
         UserDTO userDTO = userService.findByUserEmail(loginEmail);
         System.out.println("BoardController - userDTO: " + userDTO);
-        if (userDTO != null) {
-            System.out.println("BoardController - userNickname: " + userDTO.getUserNickname());
-        }
         if (userDTO == null) {
             session.invalidate();
             return "redirect:/user/login";
+        }
+
+        // 프로필 정보 입력 여부 확인
+        ProfileDTO profileDTO = profileService.findByUserEmail(loginEmail);
+        if (profileDTO == null) {
+            // 프로필 정보가 없으면 프로필 입력 페이지로 리다이렉트
+            return "redirect:/profile/edit";
         }
 
         List<BoardDTO> allBoards = boardService.findAll();
@@ -66,6 +71,7 @@ public class BoardController {
                 .collect(Collectors.toList());
 
         model.addAttribute("user", userDTO);
+        model.addAttribute("profile", profileDTO);
         model.addAttribute("roomBoards", roomBoards);
         model.addAttribute("mateBoards", mateBoards);
         return "main";
@@ -86,10 +92,14 @@ public class BoardController {
         if (loginEmail == null) {
             return "redirect:/";
         }
-        UserDTO userDTO = userService.findByUserEmail(loginEmail);
+        // 프로필 정보 입력 여부 확인
         ProfileDTO profileDTO = profileService.findByUserEmail(loginEmail);
+        if (profileDTO == null) {
+            return "redirect:/profile/edit";
+        }
+        UserDTO userDTO = userService.findByUserEmail(loginEmail);
         model.addAttribute("user", userDTO);
-        model.addAttribute("profile", profileDTO != null ? profileDTO : new ProfileDTO(loginEmail, null, null, null, null));
+        model.addAttribute("profile", profileDTO);
         model.addAttribute("boardDTO", new BoardDTO());
         return "board/form";
     }

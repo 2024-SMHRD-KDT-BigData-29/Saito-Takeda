@@ -16,7 +16,7 @@ import com.smhrd.basic.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String>{
 	
-	Optional<UserEntity> findByUserEmail(String userEmail);
+	UserEntity findByUserEmail(String userEmail);
 
 	UserEntity findByUserEmailAndUserPw(String userEmail, String userPw);
 

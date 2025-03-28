@@ -11,8 +11,7 @@ import com.smhrd.basic.dto.UserDTO;
 import com.smhrd.basic.entity.UserEntity;
 import com.smhrd.basic.repository.UserRepository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
@@ -35,15 +34,21 @@ public class UserService {
     }
 
     // 로그인
+    @Transactional
     public UserDTO login(UserDTO userDTO) {
-        UserEntity entity = userRepository.findByUserEmailAndUserPw(userDTO.getUserEmail(), userDTO.getUserPw());
-        if (entity != null) {
-            System.out.println("로그인 성공 이메일 : " + userDTO.getUserEmail());
-            return entityToDto(entity);
-        } else {
-            System.out.println("로그인 실패 이메일 : " + userDTO.getUserEmail());
-            return null;
+        UserEntity entity = userRepository.findByUserEmail(userDTO.getUserEmail());
+        if (entity != null && entity.getUserPw().equals(userDTO.getUserPw())) {
+            return new UserDTO(
+                    entity.getUserEmail(),
+                    entity.getUserPw(),
+                    entity.getUserName(),
+                    entity.getUserGender(),
+                    entity.getUserRegnum(),
+                    entity.getUserAddr(),
+                    entity.getUserNickname()
+            );
         }
+        return null;
     }
 
     // 전체 유저 조회
@@ -54,35 +59,23 @@ public class UserService {
     }
 
     // 이메일로 유저 조회
+    @Transactional
     public UserDTO findByUserEmail(String userEmail) {
-        UserEntity userEntity = userRepository.findByUserEmail(userEmail).orElse(null);
-        UserDTO userDTO = null;
-        if (userEntity != null) {
-//            entityManager.refresh(userEntity);
-            userDTO = entityToDto(userEntity);
+        UserEntity entity = userRepository.findByUserEmail(userEmail);
+        if (entity == null) {
+            return null;
         }
-        System.out.println("UserService - findByUserEmail - userEmail: " + userEmail);
-        System.out.println("UserService - findByUserEmail - userDTO: " + userDTO);
-        if (userDTO != null) {
-            System.out.println("UserService - findByUserEmail - userNickname: " + userDTO.getUserNickname());
-        }
-        return userDTO;
+        return new UserDTO(
+                entity.getUserEmail(),
+                entity.getUserPw(),
+                entity.getUserName(),
+                entity.getUserGender(),
+                entity.getUserRegnum(),
+                entity.getUserAddr(),
+                entity.getUserNickname()
+        );
     }
 
-//    // DTO -> Entity 변환
-//    private UserEntity dtoToEntity(UserDTO dto) {
-//        UserEntity entity = new UserEntity();
-////        entity.setUserIdx(dto.getUserIdx());
-//        entity.setUserEmail(dto.getUserEmail());
-//        entity.setUserPw(dto.getUserPw());
-//        entity.setUserName(dto.getUserName());
-//        entity.setUserGender(dto.getUserGender());
-//        entity.setUserRegnum(dto.getUserRegnum());
-//        entity.setUserAddr(dto.getUserAddr());
-//        entity.setUserNickname(dto.getUserNickname());
-//        entity.setUserRole("u"); // 기본값 설정
-//        return entity;
-//    }
 
     // Entity -> DTO 변환
     private UserDTO entityToDto(UserEntity entity) {

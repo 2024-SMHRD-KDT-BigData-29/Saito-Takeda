@@ -45,7 +45,7 @@ public class MypageController {
         List<BoardDTO> favoriteBoards = boardService.findFavoriteBoards(loginEmail);
 
         model.addAttribute("user", userDTO);
-        model.addAttribute("profile", profileDTO != null ? profileDTO : new ProfileDTO(loginEmail, null, null, null, null));
+        model.addAttribute("profile", profileDTO != null ? profileDTO : new ProfileDTO(loginEmail, null, null, null, null, null, null, loginEmail, loginEmail, loginEmail, loginEmail));
         model.addAttribute("favoriteBoards", favoriteBoards);
         return "mypage";
     }
@@ -82,7 +82,7 @@ public class MypageController {
             return "redirect:/user/login";
         }
         ProfileDTO profileDTO = profileService.findByUserEmail(loginEmail);
-        model.addAttribute("profile", profileDTO != null ? profileDTO : new ProfileDTO(loginEmail, null, null, null, null));
+        model.addAttribute("profile", profileDTO != null ? profileDTO : new ProfileDTO(loginEmail, null, null, null, null, null, null, loginEmail, loginEmail, loginEmail, loginEmail));
         return "profileUpdate";
     }
     

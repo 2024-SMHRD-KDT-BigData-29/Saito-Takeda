@@ -6,76 +6,69 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Spring Transactional로 변경
 import org.springframework.web.multipart.MultipartFile;
 
 import com.smhrd.basic.dto.ProfileDTO;
 import com.smhrd.basic.entity.ProfileEntity;
 import com.smhrd.basic.repository.ProfileRepository;
 
-import jakarta.transaction.Transactional;
-
 @Service
 public class ProfileService {
 
     @Autowired
     private ProfileRepository profileRepository;
-    
-    private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
 
-    // 프로필 저장 또는 업데이트 
+    // 기본키인 이메일로 유저 프로필찾기
     @Transactional
-    public void save(ProfileDTO profileDTO) throws IOException {
-        ProfileEntity profileEntity = dtoToEntity(profileDTO);
-        if (profileDTO.getProfileFile() != null && !profileDTO.getProfileFile().isEmpty()) {
-            String filePath = saveFile(profileDTO.getProfileFile());
-            profileEntity.setProfileImg(filePath);
-        }
-        profileRepository.save(profileEntity);
-    }
-    
-    // 파일 저장 로직
-    private String saveFile(MultipartFile file) throws IOException {
-        if (file == null || file.isEmpty()) {
+    public ProfileDTO findByUserEmail(String userEmail) {
+        ProfileEntity entity = profileRepository.findByUserEmail(userEmail);
+        if (entity == null) {
             return null;
         }
-        String originalFilename = file.getOriginalFilename();
-        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String savedFileName = UUID.randomUUID().toString() + fileExtension;
+        return entityToDto(entity);
+    }
 
-        File uploadDir = new File(UPLOAD_DIR);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
+    // 프로필저장 로직
+    @Transactional
+    public void save(ProfileDTO profileDTO) {
+        // MBTI 결합 및 유효성 검사
+        if (profileDTO.getEi() != null && profileDTO.getSn() != null &&
+            profileDTO.getFt() != null && profileDTO.getJp() != null) {
+            String ei = profileDTO.getEi();
+            String sn = profileDTO.getSn();
+            String ft = profileDTO.getFt();
+            String jp = profileDTO.getJp();
+            if (!ei.matches("[EI]") || !sn.matches("[SN]") ||
+                !ft.matches("[FT]") || !jp.matches("[JP]")) {
+                throw new IllegalArgumentException("유효하지 않은 MBTI 값입니다.");
+            }
+            profileDTO.setUserMbti(ei + sn + ft + jp);
+        } else {
+            throw new IllegalArgumentException("모든 MBTI 지표를 선택해야 합니다.");
         }
-        File destFile = new File(UPLOAD_DIR + savedFileName);
-        file.transferTo(destFile);
-        return "/uploads/" + savedFileName;
+
+        // 생활 패턴 유효성 검사
+        if (profileDTO.getLifestyle() != null &&
+            !profileDTO.getLifestyle().matches("morning|night")) {
+            throw new IllegalArgumentException("유효하지 않은 생활 패턴입니다.");
+        }
+
+        ProfileEntity entity = ProfileEntity.toProfileEntity(profileDTO);
+        profileRepository.save(entity);
     }
 
-    // 프로필 조회
-    public ProfileDTO findByUserEmail(String userEmail) {
-        return profileRepository.findById(userEmail)
-                .map(this::entityToDto)
-                .orElse(null);
-    }
-
-    // DTO -> Entity 변환
-    private ProfileEntity dtoToEntity(ProfileDTO dto) {
-        ProfileEntity entity = new ProfileEntity();
-        entity.setUserEmail(dto.getUserEmail());
-        entity.setProfileImg(dto.getProfileImg());
-        entity.setUserIntroduction(dto.getUserIntroduction());
-        entity.setPartnerMbti(dto.getPartnerMbti());
-        return entity;
-    }
-
-    // Entity -> DTO 변환
+    // ProfileEntity를 ProfileDTO로 변환
     private ProfileDTO entityToDto(ProfileEntity entity) {
         return new ProfileDTO(
                 entity.getUserEmail(),
                 entity.getProfileImg(),
                 entity.getUserIntroduction(),
+                entity.getUserMbti(),
                 entity.getPartnerMbti(),
-                null // <- profileFile 임
+                entity.getLifestyle(),
+                null, // profileFile
+                null, null, null, null // ei, sn, ft, jp
         );
     }
 }
