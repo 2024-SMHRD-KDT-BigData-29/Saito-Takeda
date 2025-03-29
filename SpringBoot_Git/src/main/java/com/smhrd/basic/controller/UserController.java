@@ -89,10 +89,10 @@ public class UserController {
     @GetMapping("/user/join")
     public String joinForm(Model model) {
         model.addAttribute("userDTO", new UserDTO());
-        return "join";
+        return "user/join"; // <- 성규형 UserController 이부분 join 되어있는거 이렇게 고쳐주세요 
     }
 
-    @PostMapping("/user/join")
+    @PostMapping("/user/join") 
     public String join(@ModelAttribute UserDTO userDTO, Model model) {
         try {
             // 이메일 중복 확인
