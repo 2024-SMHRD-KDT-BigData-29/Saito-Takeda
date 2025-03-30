@@ -1,52 +1,166 @@
 @charset "UTF-8";<!--  -->
-div.container{
-   
-    width: 360px;
-    height: 740px;
-    text-align: center;
-    margin:0 auto; 
-    border: 1px solid ;
-    border-radius: 12px;
-  
-}
-#joinTitle{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 18px;
-    padding: 20px 0 20px 0 ;
 
-}
-#rowLenght1{
-    border-color: lightgray;
-    text-align: right;
-    width: 150px; 
-    height:20px;
-}
-#rowLenght2{
-    border-color: lightgray;
-    text-align: left;
-    width:250px; 
-    height:20px;
-    padding-left: 10px;
-       
-}
-#rowLenght2>input{
-width: 230px;   
-height: 25px; 
-}
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 360px;
+            margin: 0 auto;
+            padding: 0 20px 40px 20px;
+            background-color: #f5f5f5;
+          
 
-/* 상단 back 버튼 */
-.joinTitle{
+        }
+        h1 {
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            /* border-radius: 8px; */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+
+
+
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+      
+
+
+
+        input[type="radio"] {
+            margin: 0 5px 0 10px;
+            
+        }
+      
+        textarea {
+            resize: vertical;
+        }
+
+        .file-upload {
+            margin-top: 10px;
+        }
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        .file-upload-label {
+            display: inline-flex;
+            align-items: right;
+            padding: 8px 12px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #666;
+            margin-left: 170px
+        }
+        .file-upload-label:hover {
+            background-color: #e5e5e5;
+        }
+
+
+
+
+
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #FFEB3B;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            margin: 0;
+        }
+        .submit-button:hover {
+            background-color: #FFD700;
+        }
+
+        
+/* 하단 네비게이션 */
+.bottom-nav {
+    position: absolute;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 360px;
     display: flex;
-}
-.joinTitle-item{
-  width: 50px;
-  height: 50px;
-
-}
-#joinTitle-item2{
-
-  margin-left: 100px;
+    justify-content: space-around;
+    background: #ffffff;
+    border-top: 1px solid #f1f1f1;
+    padding: 10px 0;
+    z-index: 100;
+    
 }
 
+.nav-item {
+    text-align: center;
+    cursor: pointer;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    /* background-color: #f1f1f1; */
+    border-radius: 50%;
+    margin: 0 auto 4px;
+}
+
+.nav-label {
+    font-size: 10px;
+   
+    letter-spacing: -0.5px;
+}
+
+.nav-item.active .nav-label {
+    color: #000;
+    font-weight: bold;
+}
+
+/* 버튼 스타일 */
+.cta-button {
+    position: fixed;
+    bottom: 70px;
+    right: 16px;
+    background-color: #000;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 90;
+}
+
+  
 

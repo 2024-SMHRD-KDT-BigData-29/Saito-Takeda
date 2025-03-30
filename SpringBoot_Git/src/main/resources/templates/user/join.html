@@ -1,104 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>userSave</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <!-- Font Awesome CDN 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/user/join.css}">
 </head>
-<!--  -->
-<link rel="stylesheet" th:href="@{/css/user/join.css}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <body>
-<!-- 이메일, 비밀번호, 이름, 전화번호, 성별, 주민번호
-   주소, 계정상태, 구분, 가입일자, 닉네임  -->
-<!-- action속성 : form에 작성한 데이터를 어디로 보낼지 지정 -->
+    <div class="form-container">
+        <h1>회원가입</h1>
+        <hr>
+        <form action="/user/join" method="post">
+            <!-- 입력 필드 -->
+            <div class="form-group">
+                <label for="userEmail">이메일</label>
+                <input type="text" name="userEmail" id="userEmail" placeholder="email@domain.com">
+            </div>
 
-<div>
-   
-<div class="container"> 
+            <div class="form-group">
+                <label for="userPw">비밀번호</label>
+                <input type="password" name="userPw" id="userPw" placeholder="비밀번호를 입력하세요.">
+            </div>
 
+            <div class="form-group">
+                <label for="userName">이름</label>
+                <input type="text" name="userName" id="userName" placeholder="이름을 입력하세요">
+            </div>
 
-   <div id="joinTitle">
+            <div class="form-group">
+                <label for="userNickname">별명</label>
+                <input type="text" name="userNickname" id="userNickname" placeholder="별명을 입력하세요">
+            </div>
 
-      <span class="joinTitle-item">
-         <span class="back-icon"><a href="#"><i class="fa-solid fa-chevron-left"></i></a></span>
-     </span>
+            <div class="form-group">
+                <label for="userAge">나이</label>
+                <input type="text" name="userAge" id="userAge" placeholder="나이를 입력하세요">
+            </div>
 
-      <span id="joinTitle-item2">
-      회원가입
-      </span>
-      
-      
-   
-   </div>
-<form action="/user/join" method="post">
+            <div class="form-group">
+                <label>성별</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="userGender" value="M"> 남자</label>
+                    <label><input type="radio" name="userGender" value="W"> 여자</label>
+                </div>
+            </div>
 
-<table border="1px">
-   <tr>
-      <td id="rowLenght1">이메일</td>
-      <td id="rowLenght2">
-         <input type="text" name="userEmail">
-      </td>
-   </tr>
+            <div class="form-group">
+                <label for="userRegnum">주민등록번호</label>
+                <input type="text" name="userRegnum" id="userRegnum" placeholder="숫자만 입력하세요.">
+            </div>
 
-   <tr>
-      <td id="rowLenght1">비밀번호</td>
-      <td id="rowLenght2">
-         <input type="text" name="userPw">
-      </td>
-   </tr>
-   <tr>
-      <td id="rowLenght1">이름</td>
-      <td id="rowLenght2">
-         <input type="text" name="userName">
-      </td>
-   </tr>
+            <div class="form-group">
+                <label for="userAddr">주소</label>
+                <input type="text" name="userAddr" id="userAddr" placeholder="주소를 입력하세요.">
+            </div>
 
-   <tr>
-      <td id="rowLenght1">별명</td>
-      <td id="rowLenght2">
-         <input type="text" name="userNickname" >
-      </td>
-   </tr>
-   <tr>
-      <td id="rowLenght1">나이</td>
-      <td >
-         <input type="text" name="userAge">
-      </td>
-   </tr>
-   <tr>
-      <td id="rowLenght1">성별</td>
-      <td >
-         <input type="radio" name="userGender" value="M">남자 <input type="radio" name="userGender" value="W">여자
-      </td>
-   </tr>
-   <tr>
-      <td id="rowLenght1">주민등록번호</td>
-      <td id="rowLenght2">
-         <input type="text" name="userRegnum">
-      </td>
-   </tr>
-   <tr>
-      <td id="rowLenght1">주소</td>
-      <td id="rowLenght2">
-         <input type="text" name="userAddr">
-      </td>
-   </tr>
-   <tr>
-   		<td>
-   		<input type="submit" name="제출">
-   		</td>
-   </tr>
+            <button type="submit" class="submit-button">작성완료</button>
+        </form>
+    </div>
 
-</table>
+    <!-- 하단 네비게이션 -->
+    <nav class="bottom-nav">
+        <div class="nav-item active">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-house"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-envelope"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-bell"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-user"></i></a></div>
+        </div>
+    </nav>
 
-
-</form>
-
-
-</div>
-</div>
-
-
-
+    <!-- 플로팅 버튼 -->
+    <div class="cta-button"><i class="fa-solid fa-arrow-up"></i></div>
 </body>
 </html>

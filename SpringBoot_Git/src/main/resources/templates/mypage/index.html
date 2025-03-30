@@ -3,6 +3,8 @@
 <head>
     <title>마이페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/mypage/profileEdit.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .profile-img {
             width: 150px;
@@ -13,15 +15,26 @@
     </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container-mt-5">
         <h1>마이페이지</h1>
+        <hr>
+        <!-- 유저 정보 -->
+        <div class="mt-4">
+            <h2>유저 정보</h2>
+            <div th:if="${userDTO != null}">
+                <img th:src="${profileDTO.profileImg != null ? profileDTO.profileImg : '/images/default-profile.png'}" 
+                     alt="Profile Image" class="profile-img mb-3">
+                <p><strong>이메일:</strong> <span th:text="${userDTO.userEmail}"></span></p>
+                <p><strong>닉네임:</strong> <span th:text="${userDTO.userNickname}"></span></p>
+                <p><strong>이름:</strong> <span th:text="${userDTO.userName}"></span></p>
+                <p><strong>주소:</strong> <span th:text="${userDTO.userAddr}"></span></p>
+            </div>
+        </div>
 
         <!-- 프로필 정보 -->
         <div class="mt-4">
             <h2>프로필 정보</h2>
             <div th:if="${profileDTO != null}">
-                <img th:src="${profileDTO.profileImg != null ? profileDTO.profileImg : '/images/default-profile.png'}" 
-                     alt="Profile Image" class="profile-img mb-3">
                 <p><strong>MBTI:</strong> <span th:text="${profileDTO.userMbti != null ? profileDTO.userMbti : '미설정'}"></span></p>
                 <p><strong>나이:</strong> <span th:text="${userDTO.userAge != null ? userDTO.userAge : '미설정'}"></span></p>
                 <p><strong>성별:</strong> <span th:text="${userDTO.userGender != null ? userDTO.userGender : '미설정'}"></span></p>
@@ -31,24 +44,36 @@
             </div>
         </div>
 
-        <!-- 유저 정보 -->
-        <div class="mt-4">
-            <h2>유저 정보</h2>
-            <div th:if="${userDTO != null}">
-                <p><strong>이메일:</strong> <span th:text="${userDTO.userEmail}"></span></p>
-                <p><strong>닉네임:</strong> <span th:text="${userDTO.userNickname}"></span></p>
-                <p><strong>이름:</strong> <span th:text="${userDTO.userName}"></span></p>
-                <p><strong>주소:</strong> <span th:text="${userDTO.userAddr}"></span></p>
-            </div>
-        </div>
 
         <!-- 링크 -->
-        <div class="mt-4">
-            <a th:href="@{/mypage/userEdit}" class="btn btn-primary me-2">유저 정보 수정하기</a>
-            <a th:href="@{/mypage/profileEdit}" class="btn btn-primary me-2">프로필 정보 수정하기</a>
-            <a th:href="@{/mypage/favoriteBoard}" class="btn btn-primary me-2">게시글 찜한 목록</a>
+        <div class="mt-4 d-flex flex-column gap-2">
+            <a th:href="@{/mypage/userEdit}" class="btn btn-primary">유저 정보 수정하기</a>
+            <a th:href="@{/mypage/profileEdit}" class="btn btn-primary">프로필 정보 수정하기</a>
+            <a th:href="@{/mypage/favoriteBoard}" class="btn btn-primary">게시글 찜한 목록</a>
             <a th:href="@{/main}" class="btn btn-secondary">메인으로 돌아가기</a>
         </div>
     </div>
+
+    <!-- 하단 네비게이션 -->
+    <nav class="bottom-nav">
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-house"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-envelope"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-bell"></i></a></div>
+        </div>
+        <div class="nav-item active">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-user"></i></a></div>
+        </div>
+    </nav>
+
+    <!-- 플로팅 버튼 -->
+    <div class="cta-button"><i class="fa-solid fa-arrow-up"></i></div>
 </body>
 </html>

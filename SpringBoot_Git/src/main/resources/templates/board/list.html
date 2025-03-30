@@ -9,29 +9,21 @@
     <div class="container mt-5">
         <h1>게시글 목록</h1>
 
-        <h2>룸메 찾기</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>MBTI</th>
-                    <th>나이</th>
-                    <th>작성일</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="board : ${roomBoards}">
-                    <td><a th:href="@{/board/detail/{bidx}(bidx=${board.bidx})}" th:text="${board.btitle}"></a></td>
-                    <td th:text="${board.userNickname} ?: '알 수 없음'"></td>
-                    <td th:text="${board.userMbti} ?: '미등록'"></td>
-                    <td th:text="${board.userAge} ?: '미등록'"></td>
-                    <td th:text="${board.createdAt}"></td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- 탭 메뉴 -->
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${currentType == 'all'} ? 'active'" th:href="@{/board/list(type='all')}" th:text="'전체 (' + ${allCount} + ')'"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${currentType == 'room'} ? 'active'" th:href="@{/board/list(type='room')}" th:text="'룸메 찾기 (' + ${roomCount} + ')'"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${currentType == 'mate'} ? 'active'" th:href="@{/board/list(type='mate')}" th:text="'방 찾기 (' + ${mateCount} + ')'"></a>
+            </li>
+        </ul>
 
-        <h2>방 찾기</h2>
+        <!-- 선택된 탭에 따른 게시글 목록 -->
+        <h2 th:text="${displayTitle}"></h2>
         <table class="table">
             <thead>
                 <tr>
@@ -40,15 +32,24 @@
                     <th>MBTI</th>
                     <th>나이</th>
                     <th>작성일</th>
+                    <th th:if="${userRole == 'a'}">관리</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="board : ${mateBoards}">
+                <tr th:each="board : ${displayBoards}">
                     <td><a th:href="@{/board/detail/{bidx}(bidx=${board.bidx})}" th:text="${board.btitle}"></a></td>
                     <td th:text="${board.userNickname} ?: '알 수 없음'"></td>
                     <td th:text="${board.userMbti} ?: '미등록'"></td>
                     <td th:text="${board.userAge} ?: '미등록'"></td>
                     <td th:text="${board.createdAt}"></td>
+                    <td th:if="${userRole == 'a'}">
+                        <form th:action="@{/board/admin/delete/{bidx}(bidx=${board.bidx})}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(displayBoards)}">
+                    <td colspan="6" class="text-center">게시글이 없습니다.</td>
                 </tr>
             </tbody>
         </table>

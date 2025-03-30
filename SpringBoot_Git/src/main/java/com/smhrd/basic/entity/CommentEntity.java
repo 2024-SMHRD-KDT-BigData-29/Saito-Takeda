@@ -24,23 +24,23 @@ public class CommentEntity {
     // 댓글 식별자
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name="cmt_idx", nullable = false)
     private int cmtIdx;
 
     // 원글 식별자 (BoardEntity와 연관)
-    @Column(nullable = false)
+    @Column(name="b_idx", nullable = false)
     private int bidx;
 
     // 댓글 내용
-    @Column(nullable = false, length = 1000)
+    @Column(name="cmt_content", nullable = false, length = 1000)
     private String cmtContent;
 
     // 댓글 작성일자
-    @Column(nullable = false)
+    @Column(name="created_at", nullable = false)
     private Timestamp createdAt;
 
     // 댓글 작성자 (UserEntity와 연관)
-    @Column(nullable = false, length = 50)
+    @Column(name="user_email", nullable = false, length = 50)
     private String userEmail;
 
     // 연관 관계 설정 (선택 사항)

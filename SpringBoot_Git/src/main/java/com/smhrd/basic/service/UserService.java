@@ -74,6 +74,7 @@ public class UserService {
                     entity.getUserRegnum(),
                     entity.getUserAddr(),
                     entity.getUserNickname(),
+                    entity.getUserRole(), 
                     entity.getUserAge()
             );
         }
@@ -91,22 +92,20 @@ public class UserService {
  // 이메일로 유저 조회
     @Transactional
     public UserDTO findByUserEmail(String userEmail) {
-        System.out.println("유저 조회 요청: userEmail = " + userEmail);
-        UserEntity entity = userRepository.findByUserEmail(userEmail);
-        if (entity == null) {
-            System.out.println("유저 조회 실패: userEmail = " + userEmail);
+        UserEntity userEntity = userRepository.findByUserEmail(userEmail);
+        if (userEntity == null) {
             return null;
         }
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserEmail(entity.getUserEmail());
-        userDTO.setUserPw(entity.getUserPw());
-        userDTO.setUserNickname(entity.getUserNickname());
-        userDTO.setUserRegnum(entity.getUserRegnum());
-        userDTO.setUserName(entity.getUserName());
-        userDTO.setUserGender(entity.getUserGender());
-        userDTO.setUserAddr(entity.getUserAddr());
-        userDTO.setUserAge(entity.getUserAge());
-        System.out.println("유저 조회 성공: userEmail = " + userEmail);
+        userDTO.setUserEmail(userEntity.getUserEmail());
+        userDTO.setUserPw(userEntity.getUserPw());
+        userDTO.setUserName(userEntity.getUserName());
+        userDTO.setUserGender(userEntity.getUserGender());
+        userDTO.setUserRegnum(userEntity.getUserRegnum());
+        userDTO.setUserAddr(userEntity.getUserAddr());
+        userDTO.setUserRole(userEntity.getUserRole());
+        userDTO.setUserNickname(userEntity.getUserNickname());
+        userDTO.setUserAge(userEntity.getUserAge());
         return userDTO;
     }
 
@@ -122,6 +121,7 @@ public class UserService {
                 entity.getUserRegnum(),
                 entity.getUserAddr(),
                 entity.getUserNickname(),
+                entity.getUserRole(),
                 entity.getUserAge()
         );
     }

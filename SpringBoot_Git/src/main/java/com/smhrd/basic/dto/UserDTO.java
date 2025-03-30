@@ -44,8 +44,8 @@ public class UserDTO {
 //    // 사용자 계정상태 
 //    private String userStatus;
 //
-//    // 사용자 구분 
-//    private String userRole;
+    // 사용자 구분 
+    private String userRole;
 //
 //    // 가입 일자 
 //    private Timestamp joinedAt;

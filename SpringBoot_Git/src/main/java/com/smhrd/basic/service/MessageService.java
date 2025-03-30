@@ -3,8 +3,10 @@ package com.smhrd.basic.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.smhrd.basic.dto.MessageDTO;
 import com.smhrd.basic.entity.MessageEntity;
 import com.smhrd.basic.repository.MessageRepository;
@@ -44,6 +46,16 @@ public class MessageService {
         MessageEntity entity = convertToEntity(messageDTO);
         messageRepository.save(entity);
     }
+    
+    public void deleteMessage(int msgIdx, String userEmail) {
+        MessageEntity entity = messageRepository.findById(msgIdx)
+            .orElseThrow(() -> new RuntimeException("Message not found"));
+        // 발신자 또는 수신자만 삭제 가능
+        if (!entity.getSenderId().equals(userEmail) && !entity.getReceiverId().equals(userEmail)) {
+            throw new RuntimeException("메시지를 삭제할 권한이 없습니다.");
+        }
+        messageRepository.delete(entity);
+    }
 
     private MessageDTO convertToDTO(MessageEntity entity) {
         return new MessageDTO(
@@ -51,7 +63,9 @@ public class MessageService {
             entity.getSenderId(),
             entity.getReceiverId(),
             entity.getMsgContent(),
-            entity.getIsRead()
+            entity.getIsRead(),
+            null, // senderProfileImg은 컨트롤러에서 설정
+            null  // receiverProfileImg은 컨트롤러에서 설정
         );
     }
 
@@ -64,4 +78,6 @@ public class MessageService {
         entity.setIsRead(dto.getIsRead());
         return entity;
     }
+    
+
 }

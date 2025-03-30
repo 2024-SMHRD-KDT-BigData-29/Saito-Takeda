@@ -52,11 +52,15 @@ public class BoardService {
 
     @Transactional
     public BoardDTO findByBidx(int bidx) {
-        BoardEntity entity = boardRepository.findById(bidx).orElse(null);
-        if (entity == null) {
-            return null;
+        BoardEntity boardEntity = boardRepository.findById(bidx)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다: " + bidx));
+        Integer currentViews = boardEntity.getBviews();
+        if (currentViews == null) {
+            currentViews = 0; // null이면 0으로 초기화
         }
-        return entityToDtoWithProfile(entity);
+        boardEntity.setBviews(currentViews + 1); // 조회수 1 증가
+        boardRepository.save(boardEntity);
+        return entityToDtoWithProfile(boardEntity);
     }
 
     @Transactional
@@ -95,12 +99,20 @@ public class BoardService {
     }
 
     @Transactional
-    public void deleteBoard(int bidx, String userEmail) {
-        BoardEntity entity = boardRepository.findById(bidx).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-        if (!entity.getBwriter().equals(userEmail)) {
+    public void deleteBoard(int bidx, String userEmail, String userRole) {
+        BoardEntity entity = boardRepository.findById(bidx)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+        // 관리자(userRole = "a")이거나, 작성자와 현재 사용자가 동일한 경우에만 삭제 허용
+        if (!"a".equals(userRole) && !entity.getBwriter().equals(userEmail)) {
             throw new RuntimeException("게시글을 삭제할 권한이 없습니다.");
         }
         boardRepository.delete(entity);
+    }
+    
+ // 기존 deleteBoard 메서드 오버로드 유지 (관리자 여부 확인 없이 호출되는 경우)
+    @Transactional
+    public void deleteBoard(int bidx, String userEmail) {
+        deleteBoard(bidx, userEmail, "u"); // 기본적으로 userRole을 "u"로 설정
     }
 
     @Transactional
@@ -153,16 +165,14 @@ public class BoardService {
         boardDTO.setUserPhoto(entity.getUserPhoto());
         boardDTO.setDesiredAddress(entity.getDesiredAddress());
 
-        // 작성자의 프로필 정보 추가
         ProfileDTO profileDTO = profileService.findByUserEmail(entity.getBwriter());
-        if (profileDTO != null) { // null 체크 추가
+        if (profileDTO != null) {
             boardDTO.setUserMbti(profileDTO.getUserMbti());
             boardDTO.setProfileImg(profileDTO.getProfileImg());
         }
 
-        // 작성자의 유저 정보 추가
         UserDTO userDTO = userService.findByUserEmail(entity.getBwriter());
-        if (userDTO != null) { // null 체크 추가
+        if (userDTO != null) {
             boardDTO.setUserNickname(userDTO.getUserNickname());
             String regnum = userDTO.getUserRegnum();
             if (regnum != null && regnum.length() >= 7) {

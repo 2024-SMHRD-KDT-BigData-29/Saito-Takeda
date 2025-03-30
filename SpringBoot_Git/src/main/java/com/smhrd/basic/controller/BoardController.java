@@ -3,6 +3,7 @@ package com.smhrd.basic.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,11 +13,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.smhrd.basic.dto.BoardDTO;
+import com.smhrd.basic.dto.UserDTO;
 import com.smhrd.basic.service.BoardService;
+import com.smhrd.basic.service.CommentService;
 import com.smhrd.basic.service.FavoriteService;
 import com.smhrd.basic.service.ProfileService;
+import com.smhrd.basic.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -32,6 +37,12 @@ public class BoardController {
     
     @Autowired
     private FavoriteService favoriteService;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private CommentService commentService;
 
     // 게시글 작성
     @GetMapping("/form")
@@ -125,9 +136,9 @@ public class BoardController {
         }
     }
 
-    // 게시글 목록가기
+ // 게시글 목록가기
     @GetMapping("/list")
-    public String listBoards(Model model, HttpSession session) {
+    public String listBoards(Model model, HttpSession session, @RequestParam(value = "type", defaultValue = "all") String type) {
         String loginEmail = (String) session.getAttribute("loginEmail");
         if (loginEmail == null) {
             return "redirect:/user/login";
@@ -135,10 +146,49 @@ public class BoardController {
         if (profileService.findByUserEmail(loginEmail) == null) {
             return "redirect:/mypage/myprofileEdit";
         }
-        model.addAttribute("roomBoards", boardService.findByBtype("room"));
-        model.addAttribute("mateBoards", boardService.findByBtype("mate"));
+
+        List<BoardDTO> allBoards = boardService.findAll();
+        List<BoardDTO> roomBoards = boardService.findByBtype("room");
+        List<BoardDTO> mateBoards = boardService.findByBtype("mate");
+
+        model.addAttribute("allBoards", allBoards);
+        model.addAttribute("roomBoards", roomBoards);
+        model.addAttribute("mateBoards", mateBoards);
+        model.addAttribute("allCount", allBoards.size());
+        model.addAttribute("roomCount", roomBoards.size());
+        model.addAttribute("mateCount", mateBoards.size());
+
+        model.addAttribute("currentType", type);
+
+        List<BoardDTO> displayBoards;
+        String displayTitle;
+        switch (type) {
+            case "room":
+                displayBoards = roomBoards;
+                displayTitle = "룸메 찾기";
+                break;
+            case "mate":
+                displayBoards = mateBoards;
+                displayTitle = "방 찾기";
+                break;
+            case "all":
+            default:
+                displayBoards = allBoards;
+                displayTitle = "전체";
+                break;
+        }
+        model.addAttribute("displayBoards", displayBoards);
+        model.addAttribute("displayTitle", displayTitle);
+
+     // 현재 로그인한 사용자의 userRole 추가
+        UserDTO userDTO = userService.findByUserEmail(loginEmail);
+        String userRole = (userDTO != null) ? userDTO.getUserRole() : "u"; // 기본값으로 "u" 설정
+        model.addAttribute("userRole", userRole);
+        
         return "board/list";
     }
+    
+    
 
     // 게시글 클릭해서 보기
     @GetMapping("/detail/{bidx}")
@@ -150,7 +200,25 @@ public class BoardController {
         String loginEmail = (String) session.getAttribute("loginEmail");
         model.addAttribute("board", boardDTO);
         model.addAttribute("isOwner", loginEmail != null && loginEmail.equals(boardDTO.getBwriter()));
+        model.addAttribute("comments", commentService.getCommentsByBoardId(bidx));
+        model.addAttribute("profileDTO", profileService.findByUserEmail(boardDTO.getBwriter()));
         return "board/detail";
+    }
+    
+ // 게시글 삭제 (관리자용)
+    @PostMapping("/admin/delete/{bidx}")
+    public String adminDeleteBoard(@PathVariable("bidx") int bidx, HttpSession session) {
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail == null) {
+            return "redirect:/user/login";
+        }
+        UserDTO userDTO = userService.findByUserEmail(loginEmail);
+        if (userDTO == null || !"a".equals(userDTO.getUserRole())) {
+            return "redirect:/board/list"; // 관리자가 아니면 목록으로 리다이렉트
+        }
+        // userRole 전달
+        boardService.deleteBoard(bidx, loginEmail, userDTO.getUserRole());
+        return "redirect:/board/list";
     }
 
     // 게시글 수정하기
@@ -232,30 +300,12 @@ public class BoardController {
         if (loginEmail == null) {
             return "redirect:/user/login";
         }
-        boardService.deleteBoard(bidx, loginEmail);
+        UserDTO userDTO = userService.findByUserEmail(loginEmail);
+        String userRole = (userDTO != null) ? userDTO.getUserRole() : "u";
+        boardService.deleteBoard(bidx, loginEmail, userRole);
         return "redirect:/board/list";
     }
 
-    // 찜한 게시글 GetMapping이 없음
-    @GetMapping("/favoriteBoard/{favoriteIdx}")
-    public String favoriteBoard(@PathVariable("favoriteIdx") Integer favoriteIdx, HttpSession session) {
-        String loginEmail = (String) session.getAttribute("loginEmail");
-        if (loginEmail == null) {
-            return "redirect:/user/login";
-        }
-
-        // 찜 상태 확인
-        boolean isFavorite = favoriteService.isFavorite(loginEmail, favoriteIdx);
-        if (isFavorite) {
-            // 이미 찜한 상태라면 삭제
-            favoriteService.removeFavorite(loginEmail, favoriteIdx);
-        } else {
-            // 찜하지 않은 상태라면 추가
-            favoriteService.addFavorite(loginEmail, favoriteIdx);
-        }
-
-        return "redirect:/mypage/index";
-    }
     
     
     // 찜한 게시글 처리
@@ -265,7 +315,9 @@ public class BoardController {
         if (loginEmail == null) {
             return "redirect:/user/login";
         }
-        boardService.toggleFavorite(bidx, loginEmail);
-        return "redirect:/board/detail" + bidx;
+        favoriteService.toggleFavorite(loginEmail, bidx);
+        return "redirect:/board/detail/" + bidx;
     }
+    
+    
 }

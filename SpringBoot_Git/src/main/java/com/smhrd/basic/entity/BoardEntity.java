@@ -36,7 +36,7 @@ public class BoardEntity {
     @Column(name = "created_at")
     private Timestamp createdAt;
     
-    @Column(name = "b_views")
+    @Column(name = "b_views", nullable = true, columnDefinition = "int default 0")
     private Integer bviews;
 
     @Column(name = "b_likes")

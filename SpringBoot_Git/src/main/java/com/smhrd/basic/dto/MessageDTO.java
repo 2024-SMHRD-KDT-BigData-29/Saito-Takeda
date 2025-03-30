@@ -36,5 +36,10 @@ public class MessageDTO {
 	// 읽음 여부
 	private String isRead;
 	
-	//
+	// 발신자 프로필 이미지 (받은 메시지용)
+    private String senderProfileImg;
+
+    // 수신자 프로필 이미지 (보낸 메시지용)
+    private String receiverProfileImg;
+	
 }
