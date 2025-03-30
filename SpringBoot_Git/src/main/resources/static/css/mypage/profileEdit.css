@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 0 20px 40px 20px;
+    background-color: #f5f5f5;
+}
+
+.container-mt-5 {
+    background-color: #fff;
+    padding: 20px;
+    width: 360px;
+    height: 1000px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    font-size: 24px;
+    color: #666; /* 연한 검정색 */
+    margin-bottom: 10px;
+   
+}
+hr{
+margin-bottom: 15px;
+}
+div.col{
+    padding:0 5px 0 5px
+}
+button{
+    width: 100%;
+    padding: 12px;
+    background-color: #FFEB3B; /* 부드러운 노란색 */
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-top: 20px;  
+}
+.button:hover {
+    background-color: #FFD700; /* 호버 시 약간 어두운 노란색 */
+}
+/* 하단 네비게이션 */
+.bottom-nav {
+    position: absolute;
+    position: fixed;
+    bottom: 0;
+    /* width: 100%; */
+    width: 360px;
+    display: flex;
+    justify-content: space-around;
+    background: #ffffff;
+    border-top: 1px solid #f1f1f1;
+    padding: 10px 0;
+    z-index: 100;
+    
+}
+
+/* .nav-item {
+    text-align: center;
+} */
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    /* background-color: #f1f1f1; */
+    border-radius: 50%;
+    margin: 0 auto 4px;
+}
+
+.nav-label {
+    font-size: 10px;
+   
+    letter-spacing: -0.5px;
+}
+
+.nav-item.active .nav-label {
+    color: #000;
+    font-weight: bold;
+}
+
+/* 버튼 스타일 */
+.cta-button {
+    position: fixed;
+    bottom: 70px;
+    right: 16px;
+    background-color: #000;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 90;
+}

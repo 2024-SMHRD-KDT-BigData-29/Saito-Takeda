@@ -89,7 +89,7 @@ public class UserController {
     @GetMapping("/user/join")
     public String joinForm(Model model) {
         model.addAttribute("userDTO", new UserDTO());
-        return "user/join"; // <- 성규형 UserController 이부분 join 되어있는거 이렇게 고쳐주세요 
+        return "user/join"; 
     }
 
     @PostMapping("/user/join") 
