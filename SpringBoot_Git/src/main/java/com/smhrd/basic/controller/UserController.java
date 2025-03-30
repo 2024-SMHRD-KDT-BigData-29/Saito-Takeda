@@ -38,52 +38,45 @@ public class UserController {
         return "user/login";
     }
     
+ // 로그인 세션 확인 후 이동
     @GetMapping("/main")
     public String mainPage(Model model, HttpSession session) {
         String loginEmail = (String) session.getAttribute("loginEmail");
         if (loginEmail == null) {
-            System.out.println("로그인 세션 없음, 리다이렉트 to /user/login");
+            System.out.println("세션 없음 -> 로그인 페이지로 리다이렉트");
             return "redirect:/user/login";
         }
-        if (profileService.findByUserEmail(loginEmail) == null) {
-            System.out.println("프로필 없음, 리다이렉트 to /mypage/myprofileEdit");
-            return "redirect:/mypage/myprofileEdit";
+
+        // 사용자 정보 조회
+        UserDTO userDTO = userService.findByUserEmail(loginEmail);
+        if (userDTO != null) {
+            model.addAttribute("user", userDTO);
+            System.out.println("사용자 정보 추가: userNickname = " + userDTO.getUserNickname());
+        } else {
+            System.out.println("사용자 정보 조회 실패: " + loginEmail);
         }
-
-        // 로그인 유저의 userMbti 가져오기
-        ProfileDTO loginProfile = profileService.findByUserEmail(loginEmail);
-        String loginUserMbti = loginProfile != null ? loginProfile.getUserMbti() : null;
-        System.out.println("로그인 유저 userMbti: " + loginUserMbti);
-        model.addAttribute("loginUserMbti", loginUserMbti);
-
-        // 룸메찾기와 방찾기 게시글 가져오기
+        //
+     // 모든 게시글 가져오기
         List<BoardDTO> roomBoards = boardService.findByBtype("room");
         List<BoardDTO> mateBoards = boardService.findByBtype("mate");
-        System.out.println("roomBoards 크기: " + roomBoards.size());
-        System.out.println("mateBoards 크기: " + mateBoards.size());
-
-        // 게시글 작성자의 partnerMbti 매핑
-        Map<String, String> boardWriterPartnerMbti = new HashMap<>();
+        //
+     // 게시글 작성자의 userMbti 맵핑
+        Map<String, String> boardWriterMbti = new HashMap<>();
         for (BoardDTO board : roomBoards) {
             ProfileDTO writerProfile = profileService.findByUserEmail(board.getBwriter());
-            String writerPartnerMbti = writerProfile != null ? writerProfile.getPartnerMbti() : null;
-            boardWriterPartnerMbti.put(board.getBwriter(), writerPartnerMbti);
-            System.out.println("room board writer: " + board.getBwriter() + ", PartnerMbti: " + writerPartnerMbti);
+            boardWriterMbti.put(board.getBwriter(), writerProfile != null ? writerProfile.getUserMbti() : null);
         }
         for (BoardDTO board : mateBoards) {
             ProfileDTO writerProfile = profileService.findByUserEmail(board.getBwriter());
-            String writerPartnerMbti = writerProfile != null ? writerProfile.getPartnerMbti() : null;
-            boardWriterPartnerMbti.put(board.getBwriter(), writerPartnerMbti);
-            System.out.println("mate board writer: " + board.getBwriter() + ", PartnerMbti: " + writerPartnerMbti);
+            boardWriterMbti.put(board.getBwriter(), writerProfile != null ? writerProfile.getUserMbti() : null);
         }
 
-        // 모델에 데이터 추가
-        model.addAttribute("roomBoards", roomBoards);
-        model.addAttribute("mateBoards", mateBoards);
-        model.addAttribute("boardWriterPartnerMbti", boardWriterPartnerMbti); // 이 부분이 중요!
-        UserDTO user = userService.findByUserEmail(loginEmail);
-        model.addAttribute("user", user);
-        System.out.println("모델에 데이터 추가 완료, boardWriterPartnerMbti: " + boardWriterPartnerMbti);
+        // 게시글 목록 조회
+        model.addAttribute("roomBoards", boardService.findByBtype("room"));
+        model.addAttribute("mateBoards", boardService.findByBtype("mate"));
+        model.addAttribute("boardWriterMbti", boardWriterMbti);
+        model.addAttribute("user", userService.findByUserEmail(loginEmail)); // userNickname용
+        
 
         return "main";
     }

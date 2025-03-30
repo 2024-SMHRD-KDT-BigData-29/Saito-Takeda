@@ -27,6 +27,12 @@
             <a th:href="@{/user/logout}" class="btn btn-link">로그아웃</a>
         </p>
 
+        <!-- 검색창 -->
+        <div class="box-tf">
+            <input type="text" class="tf-search" placeholder=" ">
+            <i class="fa-solid fa-magnifying-glass icon-search"></i>
+        </div>
+
         <!-- 룸메찾기/방찾기 탭 메뉴 -->
         <div class="tab">
             <ul class="tabnav">
@@ -37,11 +43,9 @@
                 <!-- 룸메찾기 탭 -->
                 <div id="tab01">
                     <div class="roommate-list">
-                        <div class="roommate-card" th:each="board : ${roomBoards}"
-                             th:if="${boardWriterPartnerMbti[board.bwriter] == loginUserMbti}">
+                        <div class="roommate-card" th:each="board : ${roomBoards}">
                             <div class="profile-img">
-                                <img th:src="${board.bfile != null ? board.bfile : '/images/default-profile.png'}"
-                                     alt="게시글 이미지">
+                                <img th:src="${board.bfile}" th:if="${board.bfile != null}" alt="게시글 이미지">
                             </div>
                             <div class="roommate-info">
                                 <div class="roommate-name">
@@ -53,19 +57,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div th:if="${#lists.isEmpty(roomBoards) || #lists.isEmpty(roomBoards.^[boardWriterPartnerMbti[board.bwriter] == loginUserMbti])}">
-                            <p>조건에 맞는 룸메 찾기 게시글이 없습니다.</p>
+                        <div th:if="${#lists.isEmpty(roomBoards)}">
+                            <p>룸메 찾기 게시글이 없습니다.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 방찾기 탭 -->
                 <div id="tab02">
-                    <div class="roommate-card" th:each="board : ${mateBoards}"
-                         th:if="${boardWriterPartnerMbti[board.bwriter] == loginUserMbti}">
+                    <div class="roommate-card" th:each="board : ${mateBoards}">
                         <div class="profile-img">
-                            <img th:src="${board.userPhoto != null ? board.userPhoto : '/images/default-profile.png'}"
-                                 alt="사용자 사진">
+                            <img th:src="${board.userPhoto}" th:if="${board.userPhoto != null}" alt="사용자 사진">
                         </div>
                         <div class="roommate-info">
                             <div class="roommate-name">
@@ -78,8 +80,8 @@
                             </div>
                         </div>
                     </div>
-                    <div th:if="${#lists.isEmpty(mateBoards) || #lists.isEmpty(mateBoards.^[boardWriterPartnerMbti[board.bwriter] == loginUserMbti])}">
-                        <p>조건에 맞는 방 찾기 게시글이 없습니다.</p>
+                    <div th:if="${#lists.isEmpty(mateBoards)}">
+                        <p>방 찾기 게시글이 없습니다.</p>
                     </div>
                 </div>
             </div>
@@ -88,7 +90,7 @@
         <!-- 하단 네비게이션 -->
         <nav class="bottom-nav">
             <div class="nav-item active">
-                <div class="nav-icon"><a href="/main"><i class="fa-solid fa-house"></i></a></div>
+                <div class="nav-icon"><a href="/"><i class="fa-solid fa-house"></i></a></div>
             </div>
             <div class="nav-item">
                 <div class="nav-icon"><a href="/board/list"><i class="fa-solid fa-magnifying-glass"></i></a></div>
