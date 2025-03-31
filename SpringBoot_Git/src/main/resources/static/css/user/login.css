@@ -1,92 +1,115 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-div.container {
-    width: 360px;
-    min-height: 740px;
-    text-align: center;
-    margin: 20px auto;
-    border: 1px solid black;
-    background-color: #ffffff;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#content {
-    font-weight: bold;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-#index_title {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 35px;
-    padding: 50px 0 30px 0; /* 패딩 조정 */
-    margin: 20px;
-}
-
-#userEmail, #userPw {
-    width: 100%;
-    max-width: 300px;
-    padding: 7px 10px;
-    border-color: lightgray;
-    border-radius: 5px;
-    margin: 0 auto 12px auto;
-    box-sizing: border-box;
-    display: block;
-}
-
-#userPw {
-    margin-bottom: 20px;
-}
-
-table {
-    text-align: center;
-    width: 100%;
+    max-width: 360px;
     margin: 0 auto;
+    padding: 0 20px;
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+    height: 100vh;
     display: flex;
-    justify-content: space-between;
-    padding: 0 10px;
+    align-items: center;
 }
 
+.container {
+    background-color: #fff;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* 타이틀 */
+#index_title {
+    font-size: 28px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* 설명 텍스트 */
+#content {
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* 에러 메시지 */
+.alert-danger {
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+}
+
+/* 로그인 폼 테이블 */
+table {
+    width: 100%;
+}
+
+#inputLogin input[type="text"],
+#inputLogin input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    placeholder-color: #999;
+}
+
+#inputLogin input::placeholder {
+    color: #999;
+}
+
+/* 로그인 버튼 */
 #btn_login {
     width: 100%;
-    max-width: 300px;
-    height: 35px;
-    padding: 4px 10px;
-    background-color: black;
-    color: white;
-    margin: 0 auto 10px auto;
-    border-radius: 5px;
+    padding: 12px;
+    background-color: #FFEB3B; /* 노란색 버튼 */
+    color: #333;
     border: none;
-    box-sizing: border-box;
-    display: block;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-#findUser {
-    font-weight: bold;
-    font-size: 15px;
-    color: black;
+#btn_login:hover {
+    background-color: #FFD700; /* 호버 시 약간 어두운 노란색 */
 }
 
-#icon-join {
-    border-left: 3px solid;
-    border-color: rgb(224, 223, 223);
-    color: black;
-    font-weight: bold;
-    font-size: 15px;
+/* 링크 스타일 */
+#btn_join,
+#btn_find {
+    display: inline-block;
+    width: 48%;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: color 0.3s;
+}
+
+#btn_join {
+    margin-right: 4%;
+}
+
+#btn_find {
+    margin-left: 0;
+}
+
+#btn_join:hover,
+#btn_find:hover {
+    color: #FFEB3B;
 }
