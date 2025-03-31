@@ -122,15 +122,15 @@ public class UserController {
             // 이메일 중복 확인
             if (userService.findByUserEmail(userDTO.getUserEmail()) != null) {
                 model.addAttribute("error", "이미 사용 중인 이메일입니다.");
-                return "join";
+                return "user/join";
             }
 
             // 회원가입 처리
             userService.save(userDTO);
-            return "redirect:/user/login";
+            return "redirect:/";
         } catch (Exception e) {
             model.addAttribute("error", "회원가입 중 오류가 발생했습니다: " + e.getMessage());
-            return "join";
+            return "user/join";
         }
     }
 

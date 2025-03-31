@@ -28,33 +28,29 @@
                 <label class="form-label">나의 MBTI</label>
                 <div class="row">
                     <div class="col">
-                        <select name="ei" id="ei" class="form-select" required onchange="updateMbtiPreview()">
-                            <option value="">E/I 선택</option>
-                            <option value="E" th:selected="${profileDTO?.userMbti?.charAt(0) == 'E'}">E (외향)</option>
-                            <option value="I" th:selected="${profileDTO?.userMbti?.charAt(0) == 'I'}">I (내향)</option>
-                        </select>
-                    </div>
+						<select name="ei" id="ei" class="form-select" required onchange="updateMbtiPreview()">
+						    <option value="">E/I 선택</option>
+						    <option value="E" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 0 and profileDTO.userMbti.charAt(0) == 'E'}">E (외향)</option>
+						    <option value="I" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 0 and profileDTO.userMbti.charAt(0) == 'I'}">I (내향)</option>
+						</select>                    </div>
                     <div class="col">
-                        <select name="sn" id="sn" class="form-select" required onchange="updateMbtiPreview()">
-                            <option value="">S/N 선택</option>
-                            <option value="S" th:selected="${profileDTO?.userMbti?.charAt(1) == 'S'}">S (감각)</option>
-                            <option value="N" th:selected="${profileDTO?.userMbti?.charAt(1) == 'N'}">N (직관)</option>
-                        </select>
-                    </div>
+						<select name="sn" id="sn" class="form-select" required onchange="updateMbtiPreview()">
+						    <option value="">S/N 선택</option>
+						    <option value="S" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 1 and profileDTO.userMbti.charAt(1) == 'S'}">S (감각)</option>
+						    <option value="N" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 1 and profileDTO.userMbti.charAt(1) == 'N'}">N (직관)</option>
+						</select>                   </div>
                     <div class="col">
-                        <select name="ft" id="ft" class="form-select" required onchange="updateMbtiPreview()">
-                            <option value="">F/T 선택</option>
-                            <option value="F" th:selected="${profileDTO?.userMbti?.charAt(2) == 'F'}">F (감정)</option>
-                            <option value="T" th:selected="${profileDTO?.userMbti?.charAt(2) == 'T'}">T (사고)</option>
-                        </select>
-                    </div>
+						<select name="ft" id="ft" class="form-select" required onchange="updateMbtiPreview()">
+						    <option value="">F/T 선택</option>
+						    <option value="F" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 2 and profileDTO.userMbti.charAt(2) == 'F'}">F (감정)</option>
+						    <option value="T" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 2 and profileDTO.userMbti.charAt(2) == 'T'}">T (사고)</option>
+						</select>                    </div>
                     <div class="col">
-                        <select name="jp" id="jp" class="form-select" required onchange="updateMbtiPreview()">
-                            <option value="">J/P 선택</option>
-                            <option value="J" th:selected="${profileDTO?.userMbti?.charAt(3) == 'J'}">J (판단)</option>
-                            <option value="P" th:selected="${profileDTO?.userMbti?.charAt(3) == 'P'}">P (인식)</option>
-                        </select>
-                    </div>
+						<select name="jp" id="jp" class="form-select" required onchange="updateMbtiPreview()">
+						    <option value="">J/P 선택</option>
+						    <option value="J" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 3 and profileDTO.userMbti.charAt(3) == 'J'}">J (판단)</option>
+						    <option value="P" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 3 and profileDTO.userMbti.charAt(3) == 'P'}">P (인식)</option>
+						</select>                    </div>
                 </div>
                 <p id="mbtiPreview" class="mt-2"></p>
             </div>

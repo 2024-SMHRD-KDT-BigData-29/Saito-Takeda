@@ -114,15 +114,14 @@ public class MypageController {
             System.out.println("세션 및 userEmail 없음 -> 로그인 페이지로 리다이렉트");
             return "redirect:/user/login";
         }
-        // 세션의 loginEmail이 있으면 우선 사용, 없으면 쿼리 파라미터의 userEmail 사용
         String emailToUse = (loginEmail != null) ? loginEmail : userEmail;
         System.out.println("프로필 입력 페이지 요청: userEmail = " + emailToUse);
 
-        // 기존 프로필 데이터 조회
         ProfileDTO profileDTO = profileService.findByUserEmail(emailToUse);
         if (profileDTO == null) {
             profileDTO = new ProfileDTO();
             profileDTO.setUserEmail(emailToUse);
+            profileDTO.setUserMbti(""); // 기본값으로 빈 문자열 설정
         }
         model.addAttribute("profileDTO", profileDTO);
         return "mypage/profileEdit";
