@@ -3,6 +3,7 @@ package com.smhrd.basic.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,12 +56,31 @@ public class UserController {
         } else {
             System.out.println("사용자 정보 조회 실패: " + loginEmail);
         }
-        //
-     // 모든 게시글 가져오기
-        List<BoardDTO> roomBoards = boardService.findByBtype("room");
-        List<BoardDTO> mateBoards = boardService.findByBtype("mate");
-        //
-     // 게시글 작성자의 userMbti 맵핑
+
+        // 로그인한 유저의 프로필에서 userMbti 가져오기
+        ProfileDTO loginUserProfile = profileService.findByUserEmail(loginEmail);
+        String loginUserMbti = (loginUserProfile != null && loginUserProfile.getUserMbti() != null) ? loginUserProfile.getUserMbti() : "";
+
+        // 모든 게시글 가져오기
+        List<BoardDTO> allRoomBoards = boardService.findByBtype("room");
+        List<BoardDTO> allMateBoards = boardService.findByBtype("mate");
+
+        // 필터링: 작성자의 partnerMbti가 로그인 유저의 userMbti와 일치하는 게시글만 추출
+        List<BoardDTO> roomBoards = allRoomBoards.stream()
+                .filter(board -> {
+                    ProfileDTO writerProfile = profileService.findByUserEmail(board.getBwriter());
+                    return writerProfile != null && loginUserMbti.equals(writerProfile.getPartnerMbti());
+                })
+                .collect(Collectors.toList());
+
+        List<BoardDTO> mateBoards = allMateBoards.stream()
+                .filter(board -> {
+                    ProfileDTO writerProfile = profileService.findByUserEmail(board.getBwriter());
+                    return writerProfile != null && loginUserMbti.equals(writerProfile.getPartnerMbti());
+                })
+                .collect(Collectors.toList());
+
+        // 게시글 작성자의 userMbti 맵핑 (기존 로직 유지)
         Map<String, String> boardWriterMbti = new HashMap<>();
         for (BoardDTO board : roomBoards) {
             ProfileDTO writerProfile = profileService.findByUserEmail(board.getBwriter());
@@ -71,12 +91,11 @@ public class UserController {
             boardWriterMbti.put(board.getBwriter(), writerProfile != null ? writerProfile.getUserMbti() : null);
         }
 
-        // 게시글 목록 조회
-        model.addAttribute("roomBoards", boardService.findByBtype("room"));
-        model.addAttribute("mateBoards", boardService.findByBtype("mate"));
+        // 모델에 데이터 추가
+        model.addAttribute("roomBoards", roomBoards);
+        model.addAttribute("mateBoards", mateBoards);
         model.addAttribute("boardWriterMbti", boardWriterMbti);
-        model.addAttribute("user", userService.findByUserEmail(loginEmail)); // userNickname용
-        
+        model.addAttribute("user", userService.findByUserEmail(loginEmail));
 
         return "main";
     }
@@ -93,7 +112,6 @@ public class UserController {
             session.setAttribute("loginEmail", userEmail);
             System.out.println("세션 저장: loginEmail = " + session.getAttribute("loginEmail"));
 
-            // 프로필 조회
             ProfileDTO profileDTO = profileService.findByUserEmail(userEmail);
             if (profileDTO == null || profileDTO.getUserMbti() == null || profileDTO.getUserMbti().isEmpty()) {
                 System.out.println("프로필 데이터 없음 또는 MBTI 미설정: " + userEmail + " -> profileEdit.html로 이동");

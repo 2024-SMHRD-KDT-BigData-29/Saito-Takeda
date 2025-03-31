@@ -14,8 +14,10 @@ import com.smhrd.basic.dto.ProfileDTO;
 import com.smhrd.basic.dto.UserDTO;
 import com.smhrd.basic.entity.BoardEntity;
 import com.smhrd.basic.entity.FavoriteEntity;
+import com.smhrd.basic.entity.ProfileEntity;
 import com.smhrd.basic.repository.BoardRepository;
 import com.smhrd.basic.repository.FavoriteRepository;
+import com.smhrd.basic.repository.ProfileRepository;
 
 @Service
 public class BoardService {
@@ -31,6 +33,9 @@ public class BoardService {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private ProfileRepository profileRepository;
 
     @Transactional
     public void save(BoardDTO boardDTO) {
@@ -164,13 +169,17 @@ public class BoardService {
         boardDTO.setBudget(entity.getBudget());
         boardDTO.setUserPhoto(entity.getUserPhoto());
         boardDTO.setDesiredAddress(entity.getDesiredAddress());
+        boardDTO.setLeaseContractPath(entity.getLeaseContractPath());
+        boardDTO.setCriminalRecordPath(entity.getCriminalRecordPath());
 
+        // 작성자의 프로필 정보 추가
         ProfileDTO profileDTO = profileService.findByUserEmail(entity.getBwriter());
         if (profileDTO != null) {
             boardDTO.setUserMbti(profileDTO.getUserMbti());
             boardDTO.setProfileImg(profileDTO.getProfileImg());
         }
 
+        // 작성자의 유저 정보 추가
         UserDTO userDTO = userService.findByUserEmail(entity.getBwriter());
         if (userDTO != null) {
             boardDTO.setUserNickname(userDTO.getUserNickname());
@@ -187,4 +196,16 @@ public class BoardService {
 
         return boardDTO;
     }
+    
+    
+ // 로그인 후 메인화면에서 매칭성능향상
+    @Transactional
+    public List<BoardDTO> findByPartnerMbtiAndType(String userMbti, String btype) {
+        List<ProfileEntity> profiles = profileRepository.findByPartnerMbti(userMbti);
+        List<String> writerEmails = profiles.stream().map(ProfileEntity::getUserEmail).collect(Collectors.toList());
+        List<BoardEntity> entities = boardRepository.findByBtypeAndBwriterIn(btype, writerEmails);
+        return entities.stream().map(this::entityToDtoWithProfile).collect(Collectors.toList());
+    }
+    
+    
 }

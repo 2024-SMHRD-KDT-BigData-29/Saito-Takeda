@@ -1,17 +1,27 @@
 package com.smhrd.basic.service;
 
-import com.smhrd.basic.dto.ProfileDTO;
-import com.smhrd.basic.entity.ProfileEntity;
-import com.smhrd.basic.repository.ProfileRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.smhrd.basic.dto.BoardDTO;
+import com.smhrd.basic.dto.ProfileDTO;
+import com.smhrd.basic.entity.BoardEntity;
+import com.smhrd.basic.entity.ProfileEntity;
+import com.smhrd.basic.repository.BoardRepository;
+import com.smhrd.basic.repository.ProfileRepository;
 
 @Service
 public class ProfileService {
 
     @Autowired
     private ProfileRepository profileRepository;
+    
+    @Autowired
+    private BoardRepository boardRepository;
 
     @Transactional
     public ProfileDTO findByUserEmail(String userEmail) {
@@ -45,4 +55,6 @@ public class ProfileService {
         profileRepository.save(entity);
         System.out.println("프로필 저장 성공: userEmail = " + profileDTO.getUserEmail());
     }
+    
+    
 }
