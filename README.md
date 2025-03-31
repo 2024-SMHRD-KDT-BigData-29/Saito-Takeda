@@ -15,7 +15,8 @@
 
 == 예시 ==
 # 📎 룸메있어? (팀명: 화공남작)
-![image](https://user-images.githubusercontent.com/25995055/178401309-2a2ffc86-ef45-439b-bfd8-6978312100bc.png)
+![image](https://github.com/user-attachments/assets/c03950e4-809d-4706-b156-21b1a8545087)
+
 
 
 ## 👀 서비스 소개
