@@ -97,7 +97,7 @@ public class UserController {
             ProfileDTO profileDTO = profileService.findByUserEmail(userEmail);
             if (profileDTO == null || profileDTO.getUserMbti() == null || profileDTO.getUserMbti().isEmpty()) {
                 System.out.println("프로필 데이터 없음 또는 MBTI 미설정: " + userEmail + " -> profileEdit.html로 이동");
-                return "redirect:/mypage/update";
+                return "redirect:/mypage/profileEdit";
             } else {
                 System.out.println("프로필 데이터 및 MBTI 설정됨: " + userEmail + " -> main.html로 이동");
                 return "redirect:/main";
@@ -134,7 +134,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/logout")
+    @PostMapping("/user/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/user/login";
