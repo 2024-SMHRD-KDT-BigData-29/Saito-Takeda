@@ -49,7 +49,7 @@
                             </div>
                             <div class="roommate-info">
                                 <div class="roommate-name">
-                                    <a th:href="@{/board/{bidx}(bidx=${board.bidx})}" th:text="${board.btitle}"></a>
+                                    <a th:href="@{/board/detail/{bidx}(bidx=${board.bidx})}" th:text="${board.btitle}"></a>
                                 </div>
                                 <div class="roommate-tags">
                                     <span class="tag" th:text="${board.address} ?: '주소 미설정'"></span><br>
@@ -71,7 +71,7 @@
                         </div>
                         <div class="roommate-info">
                             <div class="roommate-name">
-                                <a th:href="@{/board/{bidx}(bidx=${board.bidx})}" th:text="${board.btitle}"></a>
+                                <a th:href="@{/board/detail/{bidx}(bidx=${board.bidx})}" th:text="${board.btitle}"></a>
                             </div>
                             <div class="roommate-tags">
                                 <span class="tag" th:text="'만 ' + ${board.userAge} + '세' ?: '나이 미설정'"></span><br>
@@ -90,10 +90,10 @@
         <!-- 하단 네비게이션 -->
         <nav class="bottom-nav">
             <div class="nav-item active">
-                <div class="nav-icon"><a href="/"><i class="fa-solid fa-house"></i></a></div>
+                <div class="nav-icon"><a href="/main"><i class="fa-solid fa-house"></i></a></div>
             </div>
             <div class="nav-item">
-                <div class="nav-icon"><a href="/board/list"><i class="fa-solid fa-magnifying-glass"></i></a></div>
+                <div class="nav-icon"><a th:href="@{/board/list}"><i class="fa-solid fa-magnifying-glass"></i></a></div>
             </div>
             <div class="nav-item">
                 <div class="nav-icon"><a href="/board/message"><i class="fa-solid fa-envelope"></i></a></div>

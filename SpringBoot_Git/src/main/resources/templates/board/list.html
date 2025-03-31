@@ -41,7 +41,7 @@
                     <td th:text="${board.userNickname} ?: '알 수 없음'"></td>
                     <td th:text="${board.userMbti} ?: '미등록'"></td>
                     <td th:text="${board.userAge} ?: '미등록'"></td>
-                    <td th:text="${board.createdAt}"></td>
+                    <!-- <td th:text="${board.createdAt}"></td> -->
                     <td th:if="${userRole == 'a'}">
                         <form th:action="@{/board/admin/delete/{bidx}(bidx=${board.bidx})}" method="post" style="display:inline;">
                             <button type="submit" class="btn btn-danger btn-sm">삭제</button>

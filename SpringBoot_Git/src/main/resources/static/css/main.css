@@ -1,171 +1,114 @@
-body{
-    margin: 0;
-    
-}
-div.container{
-    max-width: 360px;
+
+/* 팀의 스타일을 가져와서 적용 (필요한 부분만) */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
     margin: 0 auto;
-    
-    text-align: center;
-     
-    /* border: 1px solid ; */
-    
-    position: relative;
-    
-  
+    padding: 20px;
+    background-color: #f5f5f5;
 }
-
-#mainTitle{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 35px;
-    padding: 100px 0 50px 0 ;
+h1 {
+    font-size: 24px;
+    color: #666;
+    margin-bottom: 10px;
 }
-
-.write{
-    
-    text-align:  right;
-    
+hr {
+    border: solid 1px #ddd;
+    margin: 20px 0;
 }
-.write-icon{
-    padding-right: 20px;
-    padding-top: 10px;
-   
-
+.post-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
-/* 
-.container{
-   
-    width: 500px;
-    height: 700px;
-    text-align: center;
-    margin:0 auto; 
-  
-}  */
-
-/* 검색창  */
-.tf-search{
-            
-    height: 35px;
-    width: 300px;
-    font-size: 20px;
-    border-radius: 4px;
-    padding: 0 0 0 30px;
-
+.post-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
-.box-tf{
-    position: relative;
-}
-.icon-search{
-    position: absolute;
-    top: 13px;
-    left: 23px;
-    cursor: pointer;
-}
-
-/* 탭메뉴  */
-ul,li{margin:0; padding:0;}
-
-.tab{float:left; width:360px; height: 500px;}
-.tabnav{font-size:0; width:330px; border:0.1px solid #ddd; border-radius: 12px; margin-left :15px; margin-top:12px;}
-.tabnav li{display: inline-block;  height:40px; text-align:center; }
-.tabnav li a:before{content:""; position:absolute; left:0; top:0px; width:100%; height:3px; }
-.tabnav li a.active:before{background:#fff;}
-
-
-.tabnav li a.active{border-bottom:1px solid #fff;}
-.tabnav li a{ position:relative; display:block; background: #fff; color: #000; padding:0 50px; line-height:36px; text-decoration:none; font-size:16px; border-radius: 12px;}
-.tabnav li a:hover,
-.tabnav li a.active{background:#f8f8f8; color:#000; }
-.tabcontent{padding: 20px; height: 350px; border:1px solid #ddd; border-top:none;}
-
-
-
-
-
-
-
-
- /* 하단 네비게이션 */
- .bottom-nav {
-    position: absolute;
-    position: fixed;
-    bottom: 0;
+#map {
     width: 100%;
-    max-width: 360px;
-    display: flex;
-    justify-content: space-around;
-    background: #ffffff;
-    border-top: 1px solid #f1f1f1;
-    padding: 10px 0;
-    z-index: 100;
-    
+    height: 400px;
+    margin: 10px 0;
+    border-radius: 5px;
 }
-
-.nav-item {
-    text-align: center;
+.comment-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-.nav-icon {
-    width: 24px;
-    height: 24px;
-    /* background-color: #f1f1f1; */
-    border-radius: 50%;
-    margin: 0 auto 4px;
+.comment-input {
+    width: calc(100% - 80px);
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
 }
-
-.nav-label {
-    font-size: 10px;
-   
-    letter-spacing: -0.5px;
-}
-
-.nav-item.active .nav-label {
-    color: #000;
+.comment-submit {
+    padding: 10px 20px;
+    background-color: #FFEB3B;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     font-weight: bold;
 }
-
-/* 버튼 스타일 */
-.cta-button {
-    position: fixed;
-    bottom: 70px;
-    right: 16px;
-    background-color: #000;
-    color: #fff;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+.comment-submit:hover {
+    background-color: #FFD700;
+}
+.comment-list {
+    margin-top: 20px;
+}
+.comment-item {
     display: flex;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 90;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+.comment-item button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #ccc;
+}
+.comment-item button:hover {
+    color: #FFB6C1;
+}
+.comment-item span {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #777;
 }
 
-/* 룸메 찾기 */
-.roommate-card {
-    display: flex;
-    padding: 16px 0;
-    border-bottom: 1px solid #f1f1f1;
-    text-align: left;
-    padding-left: 20px;
-    padding-right: 20px;
-    
-}
-
-.profile-img {
-    width: 80px;
-    height: 80px;
-    background-color: #f1f1f1;
-    border-radius: 4px;
-    margin-right: 15px;
-    flex-shrink: 0;
-    
-}
-
-.feature-card {
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: 15px;
-    min-height: 100px;
+/* 모바일 최적화 */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 20px;
+    }
+    .post-container, .comment-section {
+        padding: 15px;
+    }
+    #map {
+        height: 300px;
+    }
+    .comment-input {
+        width: calc(100% - 60px);
+        font-size: 12px;
+    }
+    .comment-submit {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .comment-item {
+        font-size: 14px;
+    }
 }
