@@ -123,7 +123,7 @@ public class UserController {
         } else {
             System.out.println("사용자 인증 실패: " + userEmail);
             model.addAttribute("error", "이메일 또는 비밀번호가 잘못되었습니다.");
-            return "index";
+            return "user/login";
         }
     }
 

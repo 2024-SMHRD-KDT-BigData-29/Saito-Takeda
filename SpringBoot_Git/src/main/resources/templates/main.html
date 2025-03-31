@@ -23,15 +23,11 @@
         <!-- 환영 메시지 -->
         <p id="content">
             환영합니다, <span th:text="${user?.userNickname} ?: '사용자'"></span>님!
-            <a th:href="@{/mypage/index}" class="btn btn-link">마이페이지</a>
+            <!--  <a th:href="@{/mypage/index}" class="btn btn-link">마이페이지</a> -->
             <a th:href="@{/user/logout}" class="btn btn-link">로그아웃</a>
         </p>
 
-        <!-- 검색창 -->
-        <div class="box-tf">
-            <input type="text" class="tf-search" placeholder=" ">
-            <i class="fa-solid fa-magnifying-glass icon-search"></i>
-        </div>
+		<p> 추천 게시글 </p>
 
         <!-- 룸메찾기/방찾기 탭 메뉴 -->
         <div class="tab">
