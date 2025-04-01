@@ -227,9 +227,15 @@ hr {
     .post-container, .comment-section {
         padding: 15px;
     }
-    #map {
-        height: 250px; /* Slightly smaller for smaller screens */
-    }
+	.map-container {
+	    width: 100%;
+	    height: 300px;
+	    margin: 10px 0;
+	    border-radius: 5px;
+	    z-index: 10;
+    	position: relative; /* 필수 */
+	    
+	}    
     .comment-input {
         width: calc(100% - 60px);
         font-size: 12px;
