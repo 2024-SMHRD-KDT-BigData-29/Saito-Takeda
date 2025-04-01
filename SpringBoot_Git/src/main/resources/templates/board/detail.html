@@ -6,6 +6,9 @@
     <link rel="stylesheet" th:href="@{/css/board/detail.css}">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="text/javascript"
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=4aa43d4aa2a6938302b87c03412236d4&libraries=services,clusterer,drawing">
+    </script>
 </head>
 <body>
     <div class="container mt-5 post-container">
@@ -32,7 +35,7 @@
         <div th:if="${board.btype == 'room'}">
             <div class="mb-3">
                 <strong>주소:</strong> <span th:text="${board.address}"></span>
-                <div id="roomMap" class="map-container" th:data-address="${board.address}" style="width: 100%; height: 300px;"></div>
+                <div class="map-container" id="roomMap" th:data-address="${board.address}" style="width: 100%; height: 300px;"></div>
             </div>
             <div class="mb-3"><strong>집 유형:</strong> <span th:text="${board.houseType}"></span></div>
             <div class="mb-3"><strong>월세:</strong> <span th:text="${board.monthlyRent}"></span> 원</div>
@@ -49,7 +52,7 @@
             <div class="mb-3"><strong>월 예산:</strong> <span th:text="${board.budget}"></span> 원</div>
             <div class="mb-3">
                 <strong>희망 주소지:</strong> <span th:text="${board.desiredAddress}"></span>
-                <div id="mateMap" class="map-container" th:data-address="${board.desiredAddress}" style="width: 100%; height: 300px;"></div>
+                <div class="map-container" id="mateMap" th:data-address="${board.desiredAddress}" style="width: 100%; height: 300px;"></div>
             </div>
         </div>
 
@@ -79,47 +82,43 @@
 
     <!-- Kakao Maps API -->
     <script>
-        function initKakaoMap() {
-            function loadMap(containerId) {
-                var mapContainer = document.getElementById(containerId);
-                if (!mapContainer) return;
+    window.onload = function() {
+        initKakaoMap();
+    };
 
-                var address = mapContainer.getAttribute("data-address")?.trim();
-                if (!address) {
-                    console.error("지도 표시 실패: 주소가 존재하지 않습니다.");
-                    return;
+    function initKakaoMap() {
+        console.log("지도 로드 시도...");
+
+        var geocoder = new kakao.maps.services.Geocoder();
+        var mapContainers = document.querySelectorAll(".map-container");
+
+        mapContainers.forEach(function(mapContainer) {
+            var address = mapContainer.getAttribute("data-address")?.trim();
+            if (!address) {
+                console.error("주소 없음", mapContainer);
+                return;
+            }
+
+            console.log("주소 검색 중:", address);
+
+            geocoder.addressSearch(address, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    var map = new kakao.maps.Map(mapContainer, {
+                        center: coords,
+                        level: 3
+                    });
+
+                    var marker = new kakao.maps.Marker({ position: coords });
+                    marker.setMap(map);
+
+                    console.log("지도 로드 완료:", coords);
+                } else {
+                    console.error("주소 검색 실패:", status);
                 }
-
-                console.log("주소 검색 중:", address);
-
-                var geocoder = new kakao.maps.services.Geocoder();
-                geocoder.addressSearch(address, function(result, status) {
-                    if (status === kakao.maps.services.Status.OK) {
-                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                        var map = new kakao.maps.Map(mapContainer, {
-                            center: coords,
-                            level: 3
-                        });
-
-                        var marker = new kakao.maps.Marker({ position: coords });
-                        marker.setMap(map);
-                    } else {
-                        console.error("주소 검색 실패: " + status);
-                    }
-                });
-            }
-
-            if (document.getElementById("roomMap")) {
-                loadMap("roomMap");
-            }
-            if (document.getElementById("mateMap")) {
-                loadMap("mateMap");
-            }
-        }
+            });
+        });
+    }
     </script>
-
-    <script type="text/javascript"
-        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=d4c4c50e6b129430b1dedbebac350737&libraries=services,clusterer,drawing"
-        onload="initKakaoMap()"></script>
 </body>
 </html>
