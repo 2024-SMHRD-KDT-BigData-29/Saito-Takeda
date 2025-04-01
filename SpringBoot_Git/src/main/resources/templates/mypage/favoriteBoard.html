@@ -9,63 +9,44 @@
     <div class="container-mt-5">
         <h1>찜한 게시글</h1>
         <hr>
-        <div th:if="${favoriteBoards.isEmpty()}">
+        <div th:if="${favoriteBoards.isEmpty()}" class="empty-message">
             <p>찜한 게시글이 없습니다.</p>
         </div>
-        <div th:unless="${favoriteBoards.isEmpty()}">
+        <div th:unless="${favoriteBoards.isEmpty()}" class="board-list">
             <ul class="list-group">
                 <li th:each="board : ${favoriteBoards}" class="list-group-item">
                     <h3 th:text="${board.btitle}"></h3>
                     <p th:text="${board.bcontent}"></p>
-                    <p>작성자: <span th:text="${board.userNickname}"></span></p>
-                    <a th:href="@{/favoriteBoard/{favoriteIdx}(favoriteIdx=${board.bidx})}" class="btn btn-danger">찜 해제</a>
+                    <p class="author">작성자: <span th:text="${board.userNickname}"></span></p>
+                    <a th:href="@{/favoriteBoard/{favoriteIdx}(favoriteIdx=${board.bidx})}" class="btn btn-primary">찜 해제</a>
                 </li>
             </ul>
         </div>
-        <a th:href="@{/mypage/index}" class="btn-btn-secondary-mt-3">마이페이지로 돌아가기</a>
+        <div class="mt-4">
+            <a th:href="@{/mypage/index}" class="btn btn-secondary">마이페이지로 돌아가기</a>
+        </div>
     </div>
 
+    <!-- 하단 네비게이션 -->
+    <nav class="bottom-nav">
+        <div class="nav-item">
+            <div class="nav-icon"><a href="/"><i class="fa-solid fa-house"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="/board/list"><i class="fa-solid fa-magnifying-glass"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="/board/message"><i class="fa-solid fa-envelope"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-bell"></i></a></div>
+        </div>
+        <div class="nav-item active">
+            <div class="nav-icon"><a th:href="@{/mypage/index}"><i class="fa-solid fa-user"></i></a></div>
+        </div>
+    </nav>
 
-<!-- 하단 메뉴바 -->
-<!-- 하단 네비게이션 -->
-<nav class="bottom-nav">
-    <div class="nav-item active">
-        <div class="nav-icon"><a href="/"><i class="fa-solid fa-house"></i></a></div>
-    </div>
-    <div class="nav-item">
-        <div class="nav-icon"><a href="/board/list"><i class="fa-solid fa-magnifying-glass"></i></a></div>
-    </div>
-    <div class="nav-item">
-        <div class="nav-icon"><a href="/board/message"><i class="fa-solid fa-envelope"></i></a></div>
-    </div>
-    <div class="nav-item">
-        <div class="nav-icon"><a href="#"><i class="fa-solid fa-bell"></i></a></div>
-    </div>
-    <div class="nav-item">
-        <div class="nav-icon"><a th:href="@{/mypage/index}"><i class="fa-solid fa-user"></i></a></div>
-    </div>
-        
-
-    <div class="nav-item">
-        <div class="nav-icon"><a href="#"><i class="fa-solid fa-bell"></i></a></div>
-        <!-- <div class="nav-label"></div> -->
-    </div>
-    
-    <div class="nav-item">
-        <div class="nav-icon"><a href="#"><i class="fa-solid fa-user"></i></a></div>
-        <!-- <div class="nav-label"></div> -->
-    </div>
-</nav>
-
-<!-- 플로팅 버튼 -->
-<div class="cta-button"><i class="fa-solid fa-arrow-up"></i></div>
-
-
-
-
-
-
-
-
+    <!-- 플로팅 버튼 -->
+    <div class="cta-button"><i class="fa-solid fa-arrow-up"></i></div>
 </body>
 </html>

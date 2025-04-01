@@ -1,75 +1,159 @@
 body {
     font-family: Arial, sans-serif;
+    max-width: 360px;
     margin: 0 auto;
-    padding: 0 20px 40px 20px;
+    padding: 0 20px 80px 20px;
     background-color: #f5f5f5;
+    overflow-x: hidden;
+    min-height: 100vh;
 }
-h1 {
-    font-size: 24px;
-    color: #666; /* 연한 검정색 */
-    margin-bottom: 10px;
-   
-}
-hr{
-margin-bottom: 15px;
-}
-
 
 .container-mt-5 {
-
     background-color: #fff;
     padding: 20px;
-    max-width: 360px;
-    height: 1000px;
-    /* border-radius: 8px; */
+    min-height: 100vh;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 60px;
+    position: relative;
+    width: calc(100% - 40px); /* Account for padding */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    font-size: 24px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+hr {
+    border: solid 1px #ddd;
+    margin: 20px 0;
+}
+
+.empty-message {
+    text-align: center;
+    color: #666;
+    margin: 30px 0;
+}
+
+.list-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-group-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fcfcfc;
+}
+
+.list-group-item h3 {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.list-group-item p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.list-group-item .author {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.mt-4 {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+/* 버튼 스타일 */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: #FFEB3B;
+    color: #333;
+    width: 100%;
+    max-width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #FFD700;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
 }
 
 /* 하단 네비게이션 */
 .bottom-nav {
-    position: absolute;
     position: fixed;
     bottom: 0;
     width: 100%;
     max-width: 360px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: space-around;
     background: #ffffff;
     border-top: 1px solid #f1f1f1;
     padding: 10px 0;
     z-index: 100;
-    
 }
 
 .nav-item {
     text-align: center;
 }
 
-.nav-icon {
-    width: 24px;
-    height: 24px;
-    /* background-color: #f1f1f1; */
-    border-radius: 50%;
-    margin: 0 auto 4px;
+.nav-icon a {
+    color: #666;
+    font-size: 20px;
+    text-decoration: none;
 }
 
-.nav-label {
-    font-size: 10px;
-   
-    letter-spacing: -0.5px;
+.nav-item.active .nav-icon a {
+    color: #FFEB3B;
 }
 
-.nav-item.active .nav-label {
-    color: #000;
-    font-weight: bold;
-}
-
-/* 버튼 스타일 */
+/* 플로팅 버튼 */
 .cta-button {
     position: fixed;
     bottom: 70px;
     right: 16px;
-    background-color: #000;
+    background-color: #333;
     color: #fff;
     width: 50px;
     height: 50px;
@@ -79,4 +163,52 @@ margin-bottom: 15px;
     justify-content: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     z-index: 90;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #FFEB3B;
+    color: #333;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+    body {
+        padding: 0 10px 80px 10px;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    .container-mt-5 {
+        padding: 15px;
+        width: calc(100% - 30px); /* Adjust for smaller padding */
+    }
+    
+    .list-group-item {
+        padding: 12px;
+    }
+    
+    .list-group-item h3 {
+        font-size: 16px;
+    }
+    
+    .btn {
+        padding: 8px 15px;
+        font-size: 14px;
+        width: 100%;
+    }
+    
+    .cta-button {
+        right: 10px;
+        bottom: 65px;
+    }
+}
+
+/* Fix for button alignment */
+.list-group-item .btn {
+    display: block;
+    width: 100%;
 }
