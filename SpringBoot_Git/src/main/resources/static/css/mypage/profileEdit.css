@@ -2,90 +2,177 @@ body {
     font-family: Arial, sans-serif;
     max-width: 360px;
     margin: 0 auto;
-    padding: 0 20px 40px 20px;
+    padding: 0 20px 80px 20px;
     background-color: #f5f5f5;
+    overflow-x: hidden;
+    min-height: 100vh;
 }
 
 .container-mt-5 {
     background-color: #fff;
     padding: 20px;
-    width: 360px;
-    height: 1000px;
+    min-height: 100vh;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 60px;
+    position: relative;
+    width: calc(100% - 40px);
+    margin-left: auto;
+    margin-right: auto;
 }
+
 h1 {
     font-size: 24px;
-    color: #666; /* 연한 검정색 */
-    margin-bottom: 10px;
-   
-}
-hr{
-margin-bottom: 15px;
-}
-div.col{
-    padding:0 5px 0 5px
-}
-button{
-    width: 100%;
-    padding: 12px;
-    background-color: #FFEB3B; /* 부드러운 노란색 */
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 15px;
     font-weight: bold;
-    cursor: pointer;
+}
+
+hr {
+    border: solid 1px #ddd;
+    margin: 20px 0;
+}
+
+.mb-3 {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.row {
+    display: flex;
+    margin: 0 -5px;
+}
+
+.col {
+    flex: 1;
+    padding: 0 5px;
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8.825L1.175 4 2.238 2.938 6 6.7l3.762-3.762L10.825 4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.mt-2 {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #FFEB3B;
+}
+
+.profile-preview {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.profile-preview img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
     margin-top: 20px;
-    margin-top: 20px;  
 }
-.button:hover {
-    background-color: #FFD700; /* 호버 시 약간 어두운 노란색 */
+
+.btn {
+    display: inline-block;
+    padding: 12px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    flex: 1;
 }
+
+.btn-primary {
+    background-color: #FFEB3B;
+    color: #333;
+}
+
+.btn-primary:hover {
+    background-color: #FFD700;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
 /* 하단 네비게이션 */
 .bottom-nav {
-    position: absolute;
     position: fixed;
     bottom: 0;
-    /* width: 100%; */
-    width: 360px;
+    width: 100%;
+    max-width: 360px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: space-around;
     background: #ffffff;
     border-top: 1px solid #f1f1f1;
     padding: 10px 0;
     z-index: 100;
-    
 }
 
-/* .nav-item {
+.nav-item {
     text-align: center;
-} */
-
-.nav-icon {
-    width: 24px;
-    height: 24px;
-    /* background-color: #f1f1f1; */
-    border-radius: 50%;
-    margin: 0 auto 4px;
 }
 
-.nav-label {
-    font-size: 10px;
-   
-    letter-spacing: -0.5px;
+.nav-icon a {
+    color: #666;
+    font-size: 20px;
+    text-decoration: none;
 }
 
-.nav-item.active .nav-label {
-    color: #000;
-    font-weight: bold;
+.nav-item.active .nav-icon a {
+    color: #FFEB3B;
 }
 
-/* 버튼 스타일 */
+/* 플로팅 버튼 */
 .cta-button {
     position: fixed;
     bottom: 70px;
     right: 16px;
-    background-color: #000;
+    background-color: #333;
     color: #fff;
     width: 50px;
     height: 50px;
@@ -95,4 +182,46 @@ button{
     justify-content: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     z-index: 90;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #FFEB3B;
+    color: #333;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+    body {
+        padding: 0 10px 80px 10px;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    .container-mt-5 {
+        padding: 15px;
+        width: calc(100% - 30px);
+    }
+    
+    .form-control, .form-select {
+        padding: 8px;
+    }
+    
+    .btn {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .cta-button {
+        right: 10px;
+        bottom: 65px;
+    }
+    
+    .profile-preview img {
+        width: 120px;
+        height: 120px;
+    }
 }

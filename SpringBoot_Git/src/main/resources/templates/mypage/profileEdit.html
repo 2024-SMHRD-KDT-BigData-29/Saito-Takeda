@@ -15,8 +15,8 @@
             <div class="mb-3">
                 <label for="profileFile" class="form-label">프로필 사진</label>
                 <input type="file" name="profileFile" id="profileFile" class="form-control" />
-                <div th:if="${profileDTO?.profileImg}">
-                    <img th:src="${profileDTO.profileImg}" alt="프로필 사진" style="max-width: 200px; margin-top: 10px;" />
+                <div th:if="${profileDTO?.profileImg}" class="profile-preview">
+                    <img th:src="${profileDTO.profileImg}" alt="프로필 사진" />
                 </div>
             </div>
             <div class="mb-3">
@@ -27,29 +27,33 @@
                 <label class="form-label">나의 MBTI</label>
                 <div class="row">
                     <div class="col">
-						<select name="ei" id="ei" class="form-select" required onchange="updateMbtiPreview()">
-						    <option value="">E/I 선택</option>
-						    <option value="E" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 0 and profileDTO.userMbti.charAt(0) == 'E'}">E (외향)</option>
-						    <option value="I" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 0 and profileDTO.userMbti.charAt(0) == 'I'}">I (내향)</option>
-						</select>                    </div>
+                        <select name="ei" id="ei" class="form-select" required onchange="updateMbtiPreview()">
+                            <option value="">E/I 선택</option>
+                            <option value="E" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 0 and profileDTO.userMbti.charAt(0) == 'E'}">E (외향)</option>
+                            <option value="I" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 0 and profileDTO.userMbti.charAt(0) == 'I'}">I (내향)</option>
+                        </select>
+                    </div>
                     <div class="col">
-						<select name="sn" id="sn" class="form-select" required onchange="updateMbtiPreview()">
-						    <option value="">S/N 선택</option>
-						    <option value="S" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 1 and profileDTO.userMbti.charAt(1) == 'S'}">S (감각)</option>
-						    <option value="N" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 1 and profileDTO.userMbti.charAt(1) == 'N'}">N (직관)</option>
-						</select>                   </div>
+                        <select name="sn" id="sn" class="form-select" required onchange="updateMbtiPreview()">
+                            <option value="">S/N 선택</option>
+                            <option value="S" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 1 and profileDTO.userMbti.charAt(1) == 'S'}">S (감각)</option>
+                            <option value="N" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 1 and profileDTO.userMbti.charAt(1) == 'N'}">N (직관)</option>
+                        </select>
+                    </div>
                     <div class="col">
-						<select name="ft" id="ft" class="form-select" required onchange="updateMbtiPreview()">
-						    <option value="">F/T 선택</option>
-						    <option value="F" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 2 and profileDTO.userMbti.charAt(2) == 'F'}">F (감정)</option>
-						    <option value="T" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 2 and profileDTO.userMbti.charAt(2) == 'T'}">T (사고)</option>
-						</select>                    </div>
+                        <select name="ft" id="ft" class="form-select" required onchange="updateMbtiPreview()">
+                            <option value="">F/T 선택</option>
+                            <option value="F" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 2 and profileDTO.userMbti.charAt(2) == 'F'}">F (감정)</option>
+                            <option value="T" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 2 and profileDTO.userMbti.charAt(2) == 'T'}">T (사고)</option>
+                        </select>
+                    </div>
                     <div class="col">
-						<select name="jp" id="jp" class="form-select" required onchange="updateMbtiPreview()">
-						    <option value="">J/P 선택</option>
-						    <option value="J" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 3 and profileDTO.userMbti.charAt(3) == 'J'}">J (판단)</option>
-						    <option value="P" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 3 and profileDTO.userMbti.charAt(3) == 'P'}">P (인식)</option>
-						</select>                    </div>
+                        <select name="jp" id="jp" class="form-select" required onchange="updateMbtiPreview()">
+                            <option value="">J/P 선택</option>
+                            <option value="J" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 3 and profileDTO.userMbti.charAt(3) == 'J'}">J (판단)</option>
+                            <option value="P" th:selected="${profileDTO?.userMbti != null and profileDTO.userMbti.length() > 3 and profileDTO.userMbti.charAt(3) == 'P'}">P (인식)</option>
+                        </select>
+                    </div>
                 </div>
                 <p id="mbtiPreview" class="mt-2"></p>
             </div>
@@ -65,44 +69,34 @@
                     <option value="night" th:selected="${profileDTO?.lifestyle == 'night'}">올빼미형 인간</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">저장</button>
-            <button type="submit" class="btn btn-primary">뒤로가기</button>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">저장</button>
+                <a th:href="@{/mypage/index}" class="btn btn-secondary">뒤로가기</a>
+            </div>
         </form>
     </div>
 
-<!-- 하단 메뉴바 -->
-<!-- 하단 네비게이션 -->
-<nav class="bottom-nav">
-    <div class="nav-item active">
-        <div class="nav-icon" ><a href="#"><i class="fa-solid fa-house"></i></a></div>
-        
-        <!-- <div class="nav-label"></div> -->
-    </div>
-    <div class="nav-item">
-        <div class="nav-icon"><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></div>
-        
-    </div>
-    <div class="nav-item">
-        <div class="nav-icon"><a href="#"><i class="fa-solid fa-envelope"></i></a></div>
-        <!-- <div class="nav-label"></div> -->
-    </div>
+    <!-- 하단 네비게이션 -->
+    <nav class="bottom-nav">
+        <div class="nav-item">
+            <div class="nav-icon"><a href="/"><i class="fa-solid fa-house"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="/board/list"><i class="fa-solid fa-magnifying-glass"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="/board/message"><i class="fa-solid fa-envelope"></i></a></div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon"><a href="#"><i class="fa-solid fa-bell"></i></a></div>
+        </div>
+        <div class="nav-item active">
+            <div class="nav-icon"><a th:href="@{/mypage/index}"><i class="fa-solid fa-user"></i></a></div>
+        </div>
+    </nav>
 
-    <div class="nav-item">
-        <div class="nav-icon"><a href="#"><i class="fa-solid fa-bell"></i></a></div>
-        <!-- <div class="nav-label"></div> -->
-    </div>
-    
-    <div class="nav-item">
-        <div class="nav-icon"><a href="#"><i class="fa-solid fa-user"></i></a></div>
-        <!-- <div class="nav-label"></div> -->
-    </div>
-</nav>
-
-<!-- 플로팅 버튼 -->
-<div class="cta-button"><i class="fa-solid fa-arrow-up"></i></div>
-
-
-
+    <!-- 플로팅 버튼 -->
+    <div class="cta-button"><i class="fa-solid fa-arrow-up"></i></div>
 
     <script>
         function updateMbtiPreview() {
