@@ -89,7 +89,8 @@
 <br>
 
 ## ⚙ 시스템 아키텍처(구조) 예시 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/5bca170a-a9bb-4a3d-9aab-d6582e9f0606)
+
 <br>
 
 ## 📌 SW유스케이스
