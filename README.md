@@ -13,7 +13,6 @@
 
 
 
-== 예시 ==
 # 📎 룸메있어? (팀명: 화공남작)
 ![image](https://github.com/user-attachments/assets/c03950e4-809d-4706-b156-21b1a8545087)
 
@@ -29,11 +28,11 @@
 <br>
 
 ## ⭐ 주요 기능
-* 기능1
-* 기능2
-* 기능3
-* 기능4
-* 기능5
+* 처음 로그인한 회원은 매칭에 필요한 DB정보 입력페이지로 이동 기능
+* 게시글 CRUD 및 찜하기 기능
+* 게시글 댓글기능 및 카카오맵API 위치정보 표시 기능
+* DB기반 추천유저 매칭기능
+* 유저간의 메시지 기능
 <br>
 
 ## ⛏ 기술스택
@@ -62,8 +61,6 @@
         <td>개발도구</td>
         <td>
             <img src="https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=Eclipse&logoColor=white"/>
-            <img src="https://img.shields.io/badge/RaskpberryPi-A22846?style=for-the-badge&logo=RaskpberryPi&logoColor=white"/>
-            <img src="https://img.shields.io/badge/Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white"/>
             <img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=VisualStudioCode&logoColor=white"/>
         </td>
     </tr>
