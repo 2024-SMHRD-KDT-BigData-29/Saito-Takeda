@@ -135,7 +135,8 @@
 html에서 작성한 코드가 브라우저에 반영이 안되어있는 모습인데요<br>
 해결 : 기존에 남아 있던 브라우저의 캐시를 지우고 프로젝트를 Clean 진행 후 해결되었습니다. <br>
 * 문제2<br>
-![image](https://github.com/user-attachments/assets/b4d44c4b-fd37-4df2-ba65-89cc0a39fd7d)
+![image](https://github.com/user-attachments/assets/05f55704-bd18-42f6-a6f3-a7eaea765bb1)
+<br>
 <br>
 메인페이지에서 룸메이트 추천기능을 넣는게 쉽지않았는데요<br>
 해결 : stream함수와 filter함수를 공부하고 하드코딩으로 해결하였습니다.
