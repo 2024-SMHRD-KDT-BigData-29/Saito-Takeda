@@ -107,12 +107,16 @@
 
 ## 🖥 화면 구성
 
-### 로그인/회원가입/회원괸리/회원수정/회원탈퇴
-![image](https://user-images.githubusercontent.com/25995055/178401098-95f15a0e-a2de-415e-83d5-883bb4cb0656.png)
+### 로그인/회원가입/회원괸리/회원수정
+![제목을 입력하세요](https://github.com/user-attachments/assets/7d10d400-8e52-4807-90ae-7975eb764732)
 <br>
 
-### 게시글/메시지
-![image](https://user-images.githubusercontent.com/25995055/178401127-287e6de2-4396-49fc-a107-59c4d5cd55c7.png)
+### 게시글
+![제목을 입력하세요 (1)](https://github.com/user-attachments/assets/55dd0681-1af8-4079-bce3-31145109fc1d)
+<br>
+
+### 메인화면/메시지/마이페이지/찜목록
+![제목을 입력하세요 (2)](https://github.com/user-attachments/assets/12177429-e295-4a62-ab9e-5794668f3fdf)
 <br>
 
 ## 👨‍👩‍👦‍👦 팀원 역할
@@ -134,12 +138,6 @@
     <td align="center"><b>Backend</b></td>
     <td align="center"><b>Frontend, 산출문서</b></td>
     <td align="center"><b>Frontend, Figma</b></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/자신의username작성해주세요" target='_blank'>github</a></td>
-    <td align="center"><a href="https://github.com/자신의username작성해주세요" target='_blank'>github</a></td>
-    <td align="center"><a href="https://github.com/자신의username작성해주세요" target='_blank'>github</a></td>
-    <td align="center"><a href="https://github.com/자신의username작성해주세요" target='_blank'>github</a></td>
   </tr>
 </table>
 
