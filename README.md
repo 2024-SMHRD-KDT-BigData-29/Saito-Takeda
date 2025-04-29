@@ -120,11 +120,15 @@
   </tr>
   <tr>
     <td align="center"><b>PM, Backend</b></td>
-    <td align="center"><b>Backend</b></td>
+    <td align="center"><b>Backend, DB</b></td>
     <td align="center"><b>Frontend, 산출문서</b></td>
     <td align="center"><b>Frontend, Figma</b></td>
   </tr>
-</table>
+</table><br>
+장우주 : 이번 프로젝트 팀장으로서 WBS로 일정관리와 업무조율 및 Backend 메인을 담당하게 되었습니다.
+조성규 : 이번 프로젝트에서 Backend Sub 및 DB를 담당했습니다.
+조유진 : 이번 프로젝트에서 Main FrontEnd와 산출문서를 담당했습니다.
+이선홍 : 이번 프로젝트에서 Figma와 FrontEnd Sub를 담당했습니다.
 
 ## 🤾‍♂️ 트러블슈팅
 
